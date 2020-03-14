@@ -21,12 +21,6 @@ const validateMessages = {
     },
 };
 
-const instance = axios.create({
-    baseURL: 'http://192.168.1.97:5000',
-    timeout: 1000,
-    headers: {'X-Custom-Header': 'foobar'}
-});
-
 
 class Register extends Component {
     constructor(props){
@@ -37,7 +31,9 @@ class Register extends Component {
     }
     onFinish = (values) => {
         //发送请求
-        axios.get('http://192.168.1.97:5000/company/register')
+        axios.post('/company/register',{
+            ...values
+        })
             .then(function(response) {
             console.log(response.data);
             console.log(response.status);
@@ -54,13 +50,13 @@ class Register extends Component {
         return (
             <div className="register-template">
             <Form {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
-                <Form.Item name={['user', 'name']} label="用户名" rules={[{required: true}]}>
+                <Form.Item name="username" label="用户名" rules={[{required: true}]}>
                     <Input placeholder="字母、数字和符号的6-16字符组合"/>
                 </Form.Item>
-                <Form.Item name={['user', 'email']} label="企业名称" rules={[{required: true}]}>
+                <Form.Item name="company_name" label="企业名称" rules={[{required: true}]}>
                     <Input/>
                 </Form.Item>
-                <Form.Item name={['user', 'age']} label="手机号" rules={[{required: true}]}>
+                <Form.Item name="mobile" label="手机号" rules={[{required: true}]}>
                     <InputNumber/>
                 </Form.Item>
                 <Form.Item name='password' label="登录密码" rules={[{required: true}]}>
@@ -89,7 +85,7 @@ class Register extends Component {
                     <Input.Password placeholder="再次输入密码"/>
                 </Form.Item>
                 <Form.Item label="短信验证码">
-                    <Form.Item name="短信验证码" noStyle  rules={[{required: true}]}>
+                    <Form.Item name="yzm" noStyle  rules={[{required: true}]}>
                         <InputNumber min={1} max={10} />
                     </Form.Item>
                     <Button className="ant-form-text"> 获取短信验证码</Button>
