@@ -47,16 +47,16 @@ class Top extends Component {
                 <div>
                     <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal" theme="dark">
                         <Menu.Item key="home">
-                            首页
+                            <a href="/index">首页</a>
                         </Menu.Item>
                         <Menu.Item key="new">
-                            最新政策
+                            <a href="latestPolicy">最新政策</a>
                         </Menu.Item>
                         <Menu.Item key="application">
-                            申报政策
+                            <a href="">申报政策</a>
                         </Menu.Item>
                         <Menu.Item key="center">
-                            个人中心
+                            <a href="login">个人中心</a>
                         </Menu.Item>
                     </Menu>
                 </div>

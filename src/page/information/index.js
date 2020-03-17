@@ -58,11 +58,11 @@ class Information extends Component {
                                         </span>
                                     }
                                 >
-                                    <Menu.Item key="1">企业信息</Menu.Item>
+                                    <Menu.Item key="1"><a href="/information" >企业信息</a></Menu.Item>
                                     <Menu.Item key="2">精准匹配</Menu.Item>
                                     <Menu.Item key="3">我的订阅</Menu.Item>
                                     <Menu.Item key="4">我的收藏</Menu.Item>
-                                    <Menu.Item key="5">账户管理</Menu.Item>
+                                    <Menu.Item key="5"><a href="/accountManagement" >账户管理</a></Menu.Item>
                                 </SubMenu>
                             </Menu>
                         </Col>
