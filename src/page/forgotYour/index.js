@@ -93,7 +93,7 @@ class ForgotYour extends Component {
                             <Button type="primary" htmlType="submit">
                                 提交
                             </Button>
-                            <p><a href="">返回登录</a></p>
+                            <p><a href="/login">返回登录</a></p>
                         </Form.Item>
                     </Form>
                 </div>

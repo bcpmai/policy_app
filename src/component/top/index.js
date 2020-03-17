@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {Input, Button, Row, Col,Menu} from 'antd';
+import {Input, Button, Row, Col, Menu} from 'antd';
 import axios from 'axios';
 import {
     MailOutlined,

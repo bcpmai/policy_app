@@ -62,11 +62,11 @@ class Login extends Component {
                             <Input.Password placeholder="请输入密码"/>
                         </Form.Item>
                         <Form.Item wrapperCol={{span: 19, offset: 5}} className="login-button">
-                            <p><a href="">忘记密码？</a></p>
+                            <p><a href="/forgotYour">忘记密码？</a></p>
                             <Button type="primary" htmlType="submit">
                                 登录
                             </Button>
-                            <p><a href="">免费注册</a></p>
+                            <p><a href="/register">免费注册</a></p>
                         </Form.Item>
                     </Form>
                 </div>
