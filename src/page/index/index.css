@@ -1,0 +1,39 @@
+.index-template .carousel-box{
+    padding-top: 20px;
+}
+.index-template .carousel-box .ant-carousel .slick-slide img{
+    width: 100%;
+    height: 300px;
+}
+.index-template .item-box{
+   background: #efefef;
+    padding:20px 0;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+.index-template .item-box .ant-col-12{
+    text-align: center;
+}
+.index-template .matching-box{
+
+}
+.index-template .matching-box .matching-label-box{
+    background: #efefef;
+    border-radius: 10px;
+    padding: 20px 15px;
+}
+.index-template .matching-box .matching-button{
+    text-align: center;
+    padding-top: 40px;
+}
+.index-template .application-box{
+    margin-bottom: 20px;
+}
+.index-template .application-box .button-center{
+    text-align: center;
+    margin-top: 10px;
+}
+.index-template .application-box .application-more{
+    text-align: right;
+    padding-top: 5px;
+}

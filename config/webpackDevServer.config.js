@@ -13,6 +13,8 @@ const host = process.env.HOST || '0.0.0.0';
 const sockHost = process.env.WDS_SOCKET_HOST;
 const sockPath = process.env.WDS_SOCKET_PATH; // default: '/sockjs-node'
 const sockPort = process.env.WDS_SOCKET_PORT;
+// const proxyHost = 'http://192.168.1.97:5000';
+const proxyHost = 'http://106.75.17.129:5000';
 
 module.exports = function(proxy, allowedHost) {
   return {
@@ -102,8 +104,9 @@ module.exports = function(proxy, allowedHost) {
     public: allowedHost,
     // `proxy` is run between `before` and `after` `webpack-dev-server` hooks
     proxy:{
+
         '/company': {
-            target: 'http://192.168.1.97:5000',
+            target: proxyHost,
             secure: false
         }
     },

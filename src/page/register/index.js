@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {Form, Input, InputNumber, Button, Row, Col} from 'antd';
+import {Form, Input, InputNumber, Button, Row, Col, Select} from 'antd';
 import axios from 'axios';
-// import './index.sass';
+import Top from './../../component/top';
+import Footer from "../../component/footer";
+import './index.css';
 
-
+const { Option } = Select;
 const layout = {
     labelCol: {span: 8},
     wrapperCol: {span: 10},
@@ -49,57 +51,72 @@ class Register extends Component {
     render() {
         return (
             <div className="register-template">
-            <Form {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
-                <Form.Item name="username" label="用户名" rules={[{required: true}]}>
-                    <Input placeholder="字母、数字和符号的6-16字符组合"/>
-                </Form.Item>
-                <Form.Item name="company_name" label="企业名称" rules={[{required: true}]}>
-                    <Input/>
-                </Form.Item>
-                <Form.Item name="mobile" label="手机号" rules={[{required: true}]}>
-                    <InputNumber/>
-                </Form.Item>
-                <Form.Item name='password' label="登录密码" rules={[{required: true}]}>
-                    <Input.Password placeholder="字母、数字和符号两种以上的6-25字符组合"/>
-                </Form.Item>
-                <Form.Item
-                    name={['user', 'introduction']}
-                    label="确认登录密码"
-                    dependencies={['password']}
-                    hasFeedback
-                    rules={[
-                        {
-                            required: true,
-                            message: '请再次输入密码',
-                        },
-                        ({ getFieldValue }) => ({
-                            validator(rule, value) {
-                                if (!value || getFieldValue('password') === value) {
-                                    return Promise.resolve();
-                                }
-
-                                return Promise.reject('两次密码不一致!');
-                            },
-                        }),
-                    ]}>
-                    <Input.Password placeholder="再次输入密码"/>
-                </Form.Item>
-                <Form.Item label="短信验证码">
-                    <Form.Item name="yzm" noStyle  rules={[{required: true}]}>
-                        <InputNumber min={1} max={10} />
+                <Top />
+                <div className="register-form-box">
+                    <div className="register-title">欢迎注册</div>
+                <Form {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
+                    <Form.Item name="username" label="用户名" rules={[{required: true}]}>
+                        <Input placeholder="字母、数字和符号的6-16字符组合"/>
                     </Form.Item>
-                    <Button className="ant-form-text"> 获取短信验证码</Button>
-                </Form.Item>
+                    <Form.Item name="company_name" label="企业名称" rules={[{required: true}]}>
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item name="mobile" label="统一社会信用代码" rules={[{required: true}]}>
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item name="mobile" label="所属行业" rules={[{required: true}]}>
+                        <Select defaultValue="lucy">
+                            <Option value="jack">1</Option>
+                            <Option value="lucy">2</Option>
+                            <Option value="Yiminghe">3</Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item name="mobile" label="手机号" rules={[{required: true}]}>
+                        <Input/>
+                    </Form.Item>
+                    <Form.Item name='password' label="登录密码" rules={[{required: true}]}>
+                        <Input.Password placeholder="字母、数字和符号两种以上的6-25字符组合"/>
+                    </Form.Item>
+                    <Form.Item
+                        name={['user', 'introduction']}
+                        label="确认登录密码"
+                        dependencies={['password']}
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                                message: '请再次输入密码',
+                            },
+                            ({ getFieldValue }) => ({
+                                validator(rule, value) {
+                                    if (!value || getFieldValue('password') === value) {
+                                        return Promise.resolve();
+                                    }
 
-                <Form.Item wrapperCol={{...layout.wrapperCol, offset: 8}}>
-                    <Button type="primary" htmlType="submit">
-                        立即注册
-                    </Button>
-                    <Button htmlType="submit" className="ml15" onClick={this.onReset}>
-                        返回
-                    </Button>
-                </Form.Item>
-            </Form>
+                                    return Promise.reject('两次密码不一致!');
+                                },
+                            }),
+                        ]}>
+                        <Input.Password placeholder="再次输入密码"/>
+                    </Form.Item>
+                    <Form.Item label="短信验证码">
+                        <Form.Item name="yzm" noStyle  rules={[{required: true}]}>
+                            <Input min={1} max={10} style={{width:100,marginRight:10}} />
+                        </Form.Item>
+                        <Button className="ant-form-text"> 获取短信验证码</Button>
+                    </Form.Item>
+
+                    <Form.Item wrapperCol={{...layout.wrapperCol, offset: 8}}>
+                        <Button type="primary" htmlType="submit">
+                            立即注册
+                        </Button>
+                        <Button htmlType="submit" className="ml15" onClick={this.onReset}>
+                            返回
+                        </Button>
+                    </Form.Item>
+                </Form>
+                </div>
+            <Footer/>
             </div>
         );
     };

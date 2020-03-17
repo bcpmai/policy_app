@@ -1,0 +1,9 @@
+.register-template .register-form-box{
+    padding: 50px 0;
+}
+.register-template .register-title{
+   text-align: center;
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,19 @@
+.declarePush-template{
+}
+.declarePush-template .declarePush-title{
+    margin-top: 20px;
+    color: #333;
+}
+.declarePush-template .declarePush-title:before{
+    content: '';
+    width: 5px;
+    height: 20px;
+    float:left;
+    background: #1890ff;
+    margin-right: 5px;
+}
+.declarePush-template .declarePush-title-h1{
+    font-size: 24px;
+    color: #333;
+    margin: 10px 0;
+}

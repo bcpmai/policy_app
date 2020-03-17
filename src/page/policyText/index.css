@@ -1,0 +1,25 @@
+.policyText-template{}
+.policyText-template .policyText-label-box{
+    padding-top: 20px;
+}
+.policyText-template .policyText-descriptions{
+    border:1px solid #efefef;
+    padding: 10px;
+    margin: 10px 0;
+}
+.policyText-template .policyText-content-box{
+    padding-bottom: 20px;
+}
+.policyText-template .policyText-content{
+    margin-top: 20px;
+}
+.policyText-template .policyText-content .policyText-content-title{
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+    width: 70%;
+    margin: 0 auto;
+}
+.policyText-template .policyText-content .policyText-content-text{
+    padding: 10px 0;
+}

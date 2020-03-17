@@ -1,0 +1,11 @@
+.Label-component-template{
+    margin-top: 10px;
+}
+.Label-component-template .ant-col-2{
+    text-align: right;
+    color: #333;
+}
+.Label-component-template .ant-btn{
+    margin-bottom: 5px;
+    margin-right: 5px;
+}

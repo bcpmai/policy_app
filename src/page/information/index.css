@@ -1,0 +1,35 @@
+.information-template{
+}
+.information-template .information-title{
+    margin-top: 20px;
+    color: #333;
+}
+.information-template .information-title:before{
+    content: '';
+    width: 5px;
+    height: 20px;
+    float:left;
+    background: #1890ff;
+    margin-right: 5px;
+}
+.information-template .information-title-h1{
+    font-size: 24px;
+    color: #333;
+    margin: 10px 0;
+}
+.information-template .button-edit{
+    float:right;
+}
+.information-template .button-matching{
+    margin-left: 10px;
+    vertical-align: 3px;
+}
+.information-template .information-form{
+    border:1px solid #efefef;
+    margin-top: 20px;
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
+.information-template .information-form .information-title{
+    margin-bottom: 10px;
+}
