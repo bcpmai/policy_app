@@ -1,12 +1,16 @@
+/**
+ * 账户管理
+ * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import { Button, Form, Input, InputNumber, Row, Col, Select,DatePicker,Menu} from 'antd';
 //import { EditOutlined } from '@ant-design/icons';
 import { EditOutlined,AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import Top from './../../component/top';
-import Footer from "../../component/footer";
+import Top from '../../../component/top/index';
+// import Footer from "../../../component/footer/index";
 import './index.css';
+import EnterpriseMenu from '../../../component/enterpriseCenterMenu';
 
 const { Option } = Select;
 const { SubMenu } = Menu;
@@ -25,7 +29,6 @@ const validateMessages = {
         range: 'Must be between ${min} and ${max}',
     },
 };
-//账户管理
 class AccountManagement extends Component {
     constructor(props){
         super(props);
@@ -43,28 +46,7 @@ class AccountManagement extends Component {
                 <div className="information-form-box max-weight-box">
                     <Row>
                         <Col span={4}>
-                            <Menu
-                                style={{ width: 220 }}
-                                defaultSelectedKeys={['5']}
-                                defaultOpenKeys={['sub1']}
-                                mode="inline"
-                            >
-                                <SubMenu
-                                    key="sub1"
-                                    title={
-                                        <span>
-                                          <MailOutlined />
-                                          <span>个人中心</span>
-                                        </span>
-                                    }
-                                >
-                                    <Menu.Item key="1"><a href="/information" >企业信息</a></Menu.Item>
-                                    <Menu.Item key="2">精准匹配</Menu.Item>
-                                    <Menu.Item key="3">我的订阅</Menu.Item>
-                                    <Menu.Item key="4">我的收藏</Menu.Item>
-                                    <Menu.Item key="5"><a href="/accountManagement" >账户管理</a></Menu.Item>
-                                </SubMenu>
-                            </Menu>
+                            <EnterpriseMenu menuKey="accountManagement" />
                         </Col>
                         <Col span={20}>
                     <div className="information-title">账户管理</div>
@@ -135,7 +117,7 @@ class AccountManagement extends Component {
                         </Col>
                     </Row>
                 </div>
-                <Footer/>
+                {/*<Footer/>*/}
             </div>
         );
     };

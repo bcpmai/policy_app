@@ -1,0 +1,36 @@
+.latestPolicy-template{
+}
+.latestPolicy-template .latestPolicy-serach{
+    margin-left: 300px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.latestPolicy-template .latestPolicy-serach .serach-arrow{
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.latestPolicy-template .label-box{
+    border:1px solid #efefef;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+.latestPolicy-template .label-box .ant-col-2 {
+    text-align: center;
+    color: #333;
+}
+.latestPolicy-template .latestPolicy-button{
+    text-align: center;
+    margin-top: 20px;
+}
+.latestPolicy-template .label-product-box{
+    position: relative;
+}
+.latestPolicy-template .label-product-box .more-label{
+    color:#333;
+    position: absolute;
+    right:10px;
+    top:0;
+    cursor: pointer;
+}

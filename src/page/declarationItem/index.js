@@ -1,5 +1,5 @@
 /**
- * 最新政策
+ * 申报项目
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
@@ -15,7 +15,7 @@ const { Search } = Input;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-class LatestPolicy extends Component {
+class DeclarationItem extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -33,14 +33,23 @@ class LatestPolicy extends Component {
             labelProduct:{
                 title:"发布机构",
                 item:["全部","国务院","国家发展和改革委员会","工业和信息化部","国务院办公厅","科学技术部","自然资源部","财政部","司法部","人力资源和社会保障部","生态环境部"]
+            },
+            labelDate:{
+                title:"发文日期",
+                item:["全部","2020年","2019年","2018年","2017年","2016年","2015年","2014年","2013年","2012年","2011年"]
             }
         }
         this.columns = [
             {
-                title: '政策标题',
+                title: '项目标题',
                 dataIndex: 'title',
                 key: 'title',
-                render: text => <a href="/policyText">{text}</a>,
+                render: text => <a href="/itemText">{text}</a>,
+            },
+            {
+                title: '应用类型',
+                dataIndex: 'type',
+                key: 'type',
             },
             {
                 title: '发布机构',
@@ -48,7 +57,7 @@ class LatestPolicy extends Component {
                 key: 'address',
             },
             {
-                title: '发文字号',
+                title: '扶持金额',
                 key: 'money',
                 dataIndex: 'money'
             },
@@ -60,7 +69,7 @@ class LatestPolicy extends Component {
             {
                 title: '操作',
                 key: 'action',
-                render: (text, record) => (<span><a>收藏</a></span>),
+                render: (text, record) => (<span><a>立即申报</a><a className="ml15">收藏</a></span>),
             },
         ];
 
@@ -112,19 +121,7 @@ class LatestPolicy extends Component {
     setArrdown = () =>{
         this.setState({
             arrdown:!this.state.arrdown
-        },()=>{
-            if(document.body.clientHeight>document.getElementById("main").offsetHeight) {
-                console.log(document.body.clientHeight)
-                this.setState({
-                    footerClass: {top: document.body.clientHeight-70,position: "absolute",left:0,width: "100%"}
-                });
-            }else{
-                this.setState({
-                    footerClass: {position: "inherit"}
-                });
-            }
         });
-
     }
     setArrProduct = () =>{
         this.setState({
@@ -132,7 +129,7 @@ class LatestPolicy extends Component {
         })
     }
     render() {
-        const {arrdown,labelTheme,labelType,labelProduct,arrProduct,footerClass} = this.state;
+        const {arrdown,labelTheme,labelType,labelProduct,arrProduct,labelDate} = this.state;
         return (
             <div className="latestPolicy-template">
                 <Top />
@@ -183,12 +180,13 @@ class LatestPolicy extends Component {
                                 </Select>
                             </Col>
                         </Row>
-                        <Row className="mt10">
-                            <Col span={2}>发文日期：</Col>
-                            <Col span={22}>
-                                <RangePicker showTime />
-                            </Col>
-                        </Row>
+                        <Label title={labelDate.title} item={labelDate.item} key="labelDate" />
+                        {/*<Row className="mt10">*/}
+                            {/*<Col span={2}>发文日期：</Col>*/}
+                            {/*<Col span={22}>*/}
+                                {/*<RangePicker showTime />*/}
+                            {/*</Col>*/}
+                        {/*</Row>*/}
                         <div className="latestPolicy-button">
                             <Button type="primary">检索</Button>
                             <Button className="ml15">重置</Button>
@@ -202,4 +200,4 @@ class LatestPolicy extends Component {
     };
 }
 
-export default LatestPolicy;
+export default DeclarationItem;

@@ -1,0 +1,17 @@
+.enterpriseMenu-component-template{
+
+}
+.enterpriseMenu-component-template .welcome-box{
+    border-bottom: 1px solid #efefef;
+    padding:5px;
+}
+.enterpriseMenu-component-template .welcome-box .right-button{
+    text-align: right;
+}
+.enterpriseMenu-component-template .logo-box{
+    padding:20px;
+}
+.enterpriseMenu-component-template .logo-box .logo{
+    font-size: 24px;
+    color:#333;
+}

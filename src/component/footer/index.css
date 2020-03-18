@@ -3,8 +3,13 @@
     line-height: 70px;
     background: #efefef;
     text-align: center;
-    position: absolute;
-    left:0;
-    bottom:0;
-    width: 100%;
 }
+.footer-component-template{
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    background-color: #eee;
+    z-index: 1;
+}
+

@@ -1,9 +1,12 @@
+/**
+ * 登录
+ * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {Form, Input, InputNumber, Button, Row, Col, Select} from 'antd';
 import axios from 'axios';
 import Top from './../../component/top';
-import Footer from "../../component/footer";
+// import Footer from "../../component/footer";
 import './index.css';
 
 const { Option } = Select;
@@ -70,7 +73,7 @@ class Login extends Component {
                         </Form.Item>
                     </Form>
                 </div>
-                <Footer/>
+                {/*<Footer/>*/}
             </div>
         );
     };

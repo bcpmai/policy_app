@@ -1,8 +1,10 @@
 .index-template .carousel-box{
     padding-top: 20px;
 }
+.index-template .carousel-box .ant-carousel .slick-slide{
+    text-align: center;
+}
 .index-template .carousel-box .ant-carousel .slick-slide img{
-    width: 100%;
     height: 300px;
 }
 .index-template .item-box{

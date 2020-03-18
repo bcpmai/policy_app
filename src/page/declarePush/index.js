@@ -1,13 +1,13 @@
+/**
+ * 申报推送
+ * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import { Table, Tag } from 'antd';
 import axios from 'axios';
 import Top from './../../component/top';
-import Footer from "../../component/footer";
+// import Footer from "../../component/footer";
 import './index.css';
-
-
-
 
 class DeclarePush extends Component {
     constructor(props){
@@ -103,7 +103,7 @@ class DeclarePush extends Component {
                     <div className="declarePush-title-h1">根据您所填信息，您可申报以下项目</div>
                     <Table columns={this.columns} dataSource={this.data} pagination={this.pagination} />
                 </div>
-                <Footer/>
+                {/*<Footer/>*/}
             </div>
         );
     };

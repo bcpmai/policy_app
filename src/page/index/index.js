@@ -1,10 +1,13 @@
+/**
+ * 首页
+ * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import { Carousel, Row, Col, Button, Divider, Card } from 'antd';
 import { BarsOutlined,SearchOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import Top from './../../component/top';
-import Footer from "../../component/footer";
+// import Footer from "../../component/footer";
 import Label from "../../component/label";
 
 import './index.css';
@@ -133,10 +136,10 @@ class Register extends Component {
                                 </Card>
                             </Col>
                         </Row>
-                        <div className="application-more"><a href="">更多</a></div>
+                        <div className="application-more"><a href="/policyList">更多</a></div>
                     </div>
                 </div>
-            <Footer/>
+            {/*<Footer/>*/}
             </div>
         );
     };

@@ -26,10 +26,17 @@ code {
 .mt10{
   margin-top: 10px;
 }
+.mr15{
+  margin-right: 15px;
+}
 .main-box{
+  /*position: relative;*/
+  /*margin: 0 auto;*/
+  /*height: auto !important;*/
+  /*height: 100%;*/
+  /*min-height: 100%;*/
+  margin-bottom: 90px;
   position: relative;
-  margin: 0 auto;
-  height: auto !important;
-  height: 100%;
-  min-height: 100%;
+  z-index: 2;
+  background: #fff;
 }

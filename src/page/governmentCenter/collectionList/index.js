@@ -1,21 +1,21 @@
 /**
- *  政策列表
+ *  采集列表
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import { Table, Tag, Input, Row, Col, Button, Select, DatePicker, Breadcrumb } from 'antd';
+import { Table, Input, Row, Col, Button, Select, DatePicker, Breadcrumb } from 'antd';
 import { ArrowUpOutlined,ArrowDownOutlined,PlusOutlined,MinusOutlined } from '@ant-design/icons';
+import { Link } from "react-router-dom";
 import axios from 'axios';
-import Top from './../../component/top';
-import Footer from "../../component/footer";
-import Label from "../../component/label";
+import Top from '../../../component/top/index';
+import Label from "../../../component/label/index";
+import PolicyManagementMenu from "../../../component/policyManagementMenu/index";
 import './index.css';
 
-const { Search } = Input;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-class PolicyList extends Component {
+class CollectionList extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -48,6 +48,7 @@ class PolicyList extends Component {
                 title: '政策标题',
                 dataIndex: 'title',
                 key: 'title',
+                width:400,
                 render: text => <a>{text}</a>,
             },
             {
@@ -61,79 +62,65 @@ class PolicyList extends Component {
                 key: 'address',
             },
             {
-                title: '政策主题',
-                dataIndex: 'theme',
-                key: 'theme'
-            },
-            {
-                title: '应用类型',
-                dataIndex: 'type',
-                key: 'type'
-            },
-            {
-                title: '关联解析',
-                dataIndex: 'analysis',
-                key: 'analysis'
-            },
-            {
-                title: '状态',
-                dataIndex: 'status',
-                key: 'status'
-            },
-            {
-                title: '来源',
-                dataIndex: 'source',
-                key: 'source'
-            },
-            {
-                title: '操作时间',
+                title: '采集时间',
                 key: 'time',
-                dataIndex: 'time'
-            },
-            {
-                title: '操作人员',
-                key: 'money',
-                dataIndex: 'money'
-            },
-            {
-                title: '操作',
-                key: 'action',
-                render: (text, record) => (<span><a>收藏</a></span>),
-            },
+                dataIndex: 'time',
+                width:200
+            }
         ];
 
         this.data = [
             {
                 key: '1',
-                title: '科技部国际合作司关于征集2020年度中国亚太经合组织合作基金项目的通知',
-                type: "资金支持",
-                address: '工业和信息化部',
-                money: '10万',
-                time:'2019-08-28至2020-03-14'
+                title: '关于修订《纳税服务投诉管理办法》的公告',
+                hierarchy: "国家",
+                address: '国务院',
+                theme: '税收政策',
+                type:'资金支持',
+                analysis:'-',
+                status:'暂存',
+                source:'人工',
+                time:'2019-02-01 12:05:11',
+                money:'张三'
             },
             {
                 key: '2',
-                title: '科技部国际合作司关于征集2020年度中国亚太经合组织合作基金项目的通知',
-                type: "资金支持",
-                address: '工业和信息化部',
-                money: '10万',
-                time:'2019-08-28至2020-03-14'
+                title: '关于修订《纳税服务投诉管理办法》的公告',
+                hierarchy: "国家",
+                address: '国务院',
+                theme: '税收政策',
+                type:'资金支持',
+                analysis:'-',
+                status:'暂存',
+                source:'人工',
+                time:'2019-02-01 12:05:11',
+                money:'张三'
             },
             {
                 key: '3',
-                title: '科技部国际合作司关于征集2020年度中国亚太经合组织合作基金项目的通知',
-                type: "资金支持",
-                address: '工业和信息化部',
-                money: '10万',
-                time:'2019-08-28至2020-03-14'
+                title: '关于修订《纳税服务投诉管理办法》的公告',
+                hierarchy: "国家",
+                address: '国务院',
+                theme: '税收政策',
+                type:'资金支持',
+                analysis:'-',
+                status:'暂存',
+                source:'人工',
+                time:'2019-02-01 12:05:11',
+                money:'张三'
             },
             {
                 key: '4',
-                title: '科技部国际合作司关于征集2020年度中国亚太经合组织合作基金项目的通知',
-                type: "资金支持",
-                address: '工业和信息化部',
-                money: '10万',
-                time:'2019-08-28至2020-03-14'
+                title: '关于修订《纳税服务投诉管理办法》的公告',
+                hierarchy: "国家",
+                address: '国务院',
+                theme: '税收政策',
+                type:'资金支持',
+                analysis:'-',
+                status:'暂存',
+                source:'人工',
+                time:'2019-02-01 12:05:11',
+                money:'张三'
             }
         ];
         function onShowSizeChange(current, pageSize) {
@@ -157,17 +144,30 @@ class PolicyList extends Component {
             arrdown:!this.state.arrdown
         })
     }
+    onSelectChange = selectedRowKeys => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        this.setState({ selectedRowKeys });
+    };
     render() {
-        const {arrdown,labelTheme,labelType,labelProduct,arrProduct,labelStatus,labelSource} = this.state;
+        const {labelProduct,arrProduct,selectedRowKeys} = this.state;
+        const rowSelection = {
+            selectedRowKeys,
+            onChange: this.onSelectChange,
+        };
         return (
             <div className="policyList-template">
                 <Top />
                 <div className="policyList-label-box max-weight-box">
-                    <div className="information-title">政策列表</div>
+                <Row>
+                    <Col span={4}>
+                        <PolicyManagementMenu />
+                    </Col>
+                    <Col span={20}>
+                    <div className="information-title">采集列表</div>
                     <Breadcrumb separator=">">
                         <Breadcrumb.Item>政策管理</Breadcrumb.Item>
-                        <Breadcrumb.Item href="">政策列表</Breadcrumb.Item>
-                    </Breadcrumb>,
+                        <Breadcrumb.Item href="">采集列表</Breadcrumb.Item>
+                    </Breadcrumb>
                     <div className="label-box">
                         <Row className="mt10">
                             <Col span={2}>政策标题：</Col>
@@ -175,7 +175,6 @@ class PolicyList extends Component {
                                 <Input />
                             </Col>
                         </Row>
-                        <Label title={labelTheme.title} item={labelTheme.item} key="labelTheme" />
                         <Row className="mt10">
                             <Col span={2}>所属层级：</Col>
                             <Col span={22}>
@@ -193,39 +192,32 @@ class PolicyList extends Component {
                             <Label title={labelProduct.title} item={labelProduct.item} key="labelProduct" />
                             {!arrProduct ? <span onClick={this.setArrProduct} className="more-label"><PlusOutlined /> 展开</span> : <span onClick={this.setArrProduct} className="more-label"><MinusOutlined /> 收起</span> }
                         </div>
-                        <Label title={labelType.title} item={labelType.item} key="labelType" />
-                        <Row className="mt10">
-                            <Col span={2}>所属行业：</Col>
-                            <Col span={22}>
-                                <Select defaultValue="lucy" style={{ width: 120 }}>
-                                    <Option value="jack">全部</Option>
-                                    <Option value="lucy">Lucy</Option>
-                                    <Option value="disabled" disabled>
-                                        Disabled
-                                    </Option>
-                                    <Option value="Yiminghe">yiminghe</Option>
-                                </Select>
-                            </Col>
-                        </Row>
                         <Row className="mt10">
                             <Col span={2}>发文日期：</Col>
                             <Col span={22}>
                                 <RangePicker showTime />
                             </Col>
                         </Row>
-                        <Label title={labelStatus.title} item={labelStatus.item} key="labelStatus" />
-                        <Label title={labelSource.title} item={labelSource.item} key="labelSource" />
                         <div className="policyList-button">
                             <Button type="primary">检索</Button>
                             <Button className="ml15">重置</Button>
                         </div>
                     </div>
-                    <Table columns={this.columns} dataSource={this.data} pagination={this.pagination} />
+                        <p align="right">
+                            <Button type="primary">所属层级/发布机构</Button>
+                            <Button type="primary" className="ml15">政策主题</Button>
+                            <Button type="primary" className="ml15">应用类型</Button>
+                            <Button type="primary" className="ml15">所属行业</Button>
+                        </p>
+                    <Table
+                        rowSelection={rowSelection}
+                        columns={this.columns} dataSource={this.data} pagination={this.pagination} />
+                    </Col>
+                </Row>
                 </div>
-                <Footer/>
             </div>
         );
     };
 }
 
-export default PolicyList;
+export default CollectionList;

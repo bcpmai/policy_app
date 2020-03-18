@@ -1,0 +1,12 @@
+.title-component-template{
+    color: #333;
+}
+.title-component-template:before{
+    content: '';
+    width: 5px;
+    height: 20px;
+    float:left;
+    background: #1890ff;
+    margin-right: 5px;
+}
+

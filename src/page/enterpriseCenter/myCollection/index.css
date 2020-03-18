@@ -1,0 +1,45 @@
+.myCollection-template{
+}
+.myCollection-template .myCollection-title{
+    margin-top: 20px;
+    color: #333;
+}
+.myCollection-template .myCollection-title:before{
+    content: '';
+    width: 5px;
+    height: 20px;
+    float:left;
+    background: #1890ff;
+    margin-right: 5px;
+}
+.myCollection-template .myCollection-title-h1{
+    font-size: 24px;
+    color: #333;
+    margin: 10px 0;
+}
+.myCollection-template .button-edit{
+    float:right;
+}
+.myCollection-template .button-myCollection{
+    margin-left: 10px;
+    vertical-align: 3px;
+}
+.myCollection-template .myCollection-form{
+    border:1px solid #efefef;
+    margin-top: 20px;
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
+.myCollection-template .myCollection-form .myCollection-title{
+    margin-bottom: 10px;
+}
+.myCollection-template .ant-tabs-tabpane{
+    display: none;
+}
+.myCollection-template .myCollection-tab{
+    margin-top: 20px;
+}
+.myCollection-template .myCollection-search{
+    width: 60%;
+    margin: 0 auto 20px;
+}
