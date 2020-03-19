@@ -3,13 +3,12 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {Form, Input, InputNumber, Button, Row, Col, Select} from 'antd';
-import axios from 'axios';
+import {Form, Input, Button, message} from 'antd';
 import Top from './../../component/top';
-// import Footer from "../../component/footer";
 import './index.css';
+import cookie from "react-cookies";
+import {request} from "../../utils/request";
 
-const { Option } = Select;
 const layout = {
     labelCol: {span: 8},
     wrapperCol: {span: 16},
@@ -34,18 +33,31 @@ class ForgotYour extends Component {
 
         }
     }
-    onFinish = (values) => {
+    onFinish = async (values) => {
         //发送请求
-        axios.post('/company/register',{
-            ...values
-        })
-            .then(function(response) {
-                console.log(response.data);
-                console.log(response.status);
-                console.log(response.statusText);
-                console.log(response.headers);
-                console.log(response.config);
-            });
+        const responest = await request('/common/forget-password','POST',{...values});
+        const data = responest.data;
+        if(data && data.success){
+            message.success(data.msg);
+            cookie.save('userId', data.data.id);
+            cookie.save('userName', values.username);
+            cookie.save('userType', 1);
+            setTimeout(()=>{
+                this.props.history.push('/');
+            },1000);
+        }else{
+            message.error(data.msg);
+        }
+        // axios.post('/company/register',{
+        //     ...values
+        // })
+        //     .then(function(response) {
+        //         console.log(response.data);
+        //         console.log(response.status);
+        //         console.log(response.statusText);
+        //         console.log(response.headers);
+        //         console.log(response.config);
+        //     });
 
     };
     onReset = () => {
@@ -58,7 +70,7 @@ class ForgotYour extends Component {
                 <div className="login-form-box">
                     <div className="login-title">忘记密码</div>
                     <Form {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
-                        <Form.Item name="username" label="手机号" rules={[{required: true}]}>
+                        <Form.Item name="mobile" label="手机号" rules={[{required: true}]}>
                             <Input placeholder="请输入手机号"/>
                         </Form.Item>
                         <Form.Item label="短信验证码">
@@ -67,11 +79,31 @@ class ForgotYour extends Component {
                             </Form.Item>
                             <Button className="ant-form-text"> 获取短信验证码</Button>
                         </Form.Item>
-                        <Form.Item name='password' label="登录密码" rules={[{required: true}]}>
+                        <Form.Item name='password' label="登录密码" rules={[
+                            {
+                                required: true,
+                                message: '请输入登录密码'
+                            },
+                            {
+                                message: '请输入6-25位字符组合',
+                                min:6,
+                                max:25
+                            },
+                            ({ getFieldValue }) => ({
+                                validator(rule, value) {
+                                    if(/^(?=.*[a-zA-Z])(?=.*[0-9]).*$/.test(value)){
+                                        return Promise.resolve()
+                                    }
+                                    else{
+                                        return Promise.reject('请包含字母、数字和符号两种以上的6-25字符组合');
+                                    }
+                                },
+                            }),
+                        ]}>
                             <Input.Password placeholder="字母、数字和符号两种以上的6-25字符组合"/>
                         </Form.Item>
                         <Form.Item
-                            name={['user', 'introduction']}
+                            name="confirmPassword"
                             label="确认登录密码"
                             dependencies={['password']}
                             hasFeedback

@@ -13,14 +13,14 @@ class Label extends Component {
     }
 
     render() {
-        const {title,item} = this.props;
+        const {title,item,className,span} = this.props;
         return (
             <div className="Label-component-template">
                 <Row>
                     <Col span={2}>{title}：</Col>
-                    <Col span={22}>
+                    <Col span={span || 22} className={`label-item-${className}`}>
                         {item.map((titem,tidx)=>
-                            <Button shape="round" size="small" key={tidx}>{titem}</Button>
+                            <Button shape="round" size="small" key={titem.id}>{titem.name}</Button>
                         )}
 
                     </Col>

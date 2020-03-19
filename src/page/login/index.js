@@ -4,7 +4,8 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {Form, Input, InputNumber, Button, Row, Col, Select} from 'antd';
-import axios from 'axios';
+// import axios from 'axios';
+import {request} from './../../utils/request';
 import Top from './../../component/top';
 // import Footer from "../../component/footer";
 import './index.css';
@@ -34,18 +35,20 @@ class Login extends Component {
 
         }
     }
-    onFinish = (values) => {
+    onFinish = async (values) => {
         //发送请求
-        axios.post('/company/register',{
-            ...values
-        })
-            .then(function(response) {
-                console.log(response.data);
-                console.log(response.status);
-                console.log(response.statusText);
-                console.log(response.headers);
-                console.log(response.config);
-            });
+        const responest = await request('/common/login','POST',{...values});
+        console.log(responest);
+        // axios.post('/common/login',{
+        //     ...values
+        // })
+        //     .then(function(response) {
+        //         console.log(response.data);
+        //         console.log(response.status);
+        //         console.log(response.statusText);
+        //         console.log(response.headers);
+        //         console.log(response.config);
+        //     });
 
     };
     onReset = () => {

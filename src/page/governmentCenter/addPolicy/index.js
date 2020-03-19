@@ -3,12 +3,11 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import { Table, Tag, Input, Row, Col, Button, Select, DatePicker, Breadcrumb,Form,Upload, message} from 'antd';
+import { Input, Row, Col, Button, Select, DatePicker, Breadcrumb,Form,Upload, message} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import axios from 'axios';
+import {request} from './../../../utils/request';
 import Top from '../../../component/top/index';
-// import Footer from "../../../component/footer/index";
-import Label from "../../../component/label/index";
+import cookie from 'react-cookies';
 import PolicyManagementMenu from "../../../component/policyManagementMenu/index";
 import './index.css';
 
@@ -16,9 +15,7 @@ import E from 'wangeditor'
 
 
 
-const { Search } = Input;
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 const layout = {
     labelCol: {span: 4},
@@ -39,12 +36,8 @@ const validateMessages = {
 class AddPolicy extends Component {
     constructor(props){
         super(props);
-        const children = [];
-        for (let i = 10; i < 36; i++) {
-            children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-        }
         this.state = {
-            children
+
         }
     }
     componentDidMount(){
@@ -69,13 +62,57 @@ class AddPolicy extends Component {
         //     })
         // }, false)
     }
+    async componentWillMount() {
+        const labelThemeData = await request('/common/get-all-policy-theme-label', 'POST'); //政策主题
+        const labelTypeData = await request('/common/get-all-use-type-label', 'POST'); //应用类型
+        const selectBelongData = await request('/common/get-all-belong-label', 'POST'); //所属层级
+        const selectIndustryData = await request('/common/get-all-industry-label', 'POST'); //所属行业
+
+
+        const themData = labelThemeData.data;
+        const typeData = labelTypeData.data;
+        const belongData = selectBelongData.data;
+        const industryData = selectIndustryData.data;
+
+        if (themData && themData.success && typeData && themData.success && belongData && belongData.success && industryData && industryData.success) {
+            const allItem = {id: 0,name: "全部"};
+            themData.data.unshift(allItem);
+            typeData.data.unshift(allItem);
+            belongData.data.unshift(allItem);
+            industryData.data.unshift(allItem);
+            this.setState({
+                themeData: themData.data,
+                typeData: typeData.data,
+                belongData: belongData.data,
+                industryData: industryData.data
+
+            })
+        }
+    }
+    onFinish = async (values) => {
+        console.log(values);
+    }
+    belongChange = async (value) => {
+        const labelProductData = await request('/common/get-all-organization-label', 'POST', {belong_id: value}); //发布机构
+        const productData = labelProductData.data;
+        if (productData && productData.success) {
+            this.setState({
+                productData: productData.data
+            })
+        }
+    }
     onChange = (date, dateString)=> {
+        console.log(date, dateString);
+    }
+    //发文日期
+    onDateChange = (date,dateString) =>{
         console.log(date, dateString);
     }
     handleChange = (value) =>{
         console.log(`selected ${value}`);
     }
     handleUploadChange = info => {
+        console.log(info,"info")
         let fileList = [...info.fileList];
 
         // 1. Limit the number of uploaded files
@@ -94,11 +131,16 @@ class AddPolicy extends Component {
         this.setState({ fileList });
     };
     render() {
-        const {children} = this.state;
+        const {industryData,belongData,themeData,typeData,productData} = this.state;
         const props = {
-            action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+            action: 'http://106.75.17.129:5000/common/upload-file',
             onChange: this.handleUploadChange,
             multiple: true,
+            data:{
+                userId:cookie.load("userId"),
+                userName:cookie.load("userName"),
+                userType:cookie.load("userType"),
+            },
             accept:".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf,ppt,.pptx,.xls,.xlsx,.pdf,.zip,.rar"
         };
         return (
@@ -119,63 +161,61 @@ class AddPolicy extends Component {
                     <div className="label-box">
                         <Form {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
                             <Form.Item name="username" label="政策标题" rules={[{required: true}]}>
-                                <Input placeholder="字母、数字和符号的6-16字符组合"/>
+                                <Input />
                             </Form.Item>
                             <Form.Item name="company_name" label="发文字号" rules={[{required: true}]}>
                                 <Input/>
                             </Form.Item>
-                            <Form.Item name="mobile" label="发文日期" rules={[{required: true}]}>
-                                <DatePicker onChange={this.onChange} />
+                            <Form.Item name="date" label="发文日期" rules={[{required: true}]}>
+                                <DatePicker onChange={this.onDateChange} />
                             </Form.Item>
                             <Form.Item name="mobile" label="所属行业" rules={[{required: true}]}>
                                 <Select
                                     mode="multiple"
                                     style={{ width: '100%' }}
-                                    placeholder="Please select"
-                                    defaultValue={['a10', 'c12']}
                                     onChange={this.handleChange}
                                 >
-                                    {children}
+                                    {industryData ? industryData.map((item, idx) => <Option value={item.id}
+                                                                                        key={item.id}>{item.name}</Option>) : ''}
+
                                 </Select>
                             </Form.Item>
                             <Form.Item name="username" label="政策主题" rules={[{required: true}]}>
                                 <Select
                                     mode="multiple"
                                     style={{ width: '100%' }}
-                                    placeholder="Please select"
-                                    defaultValue={['a10', 'c12']}
                                     onChange={this.handleChange}
                                 >
-                                    {children}
+                                    {themeData ? themeData.map((item, idx) => <Option value={item.id}
+                                                                                            key={item.id}>{item.name}</Option>) : ''}
+
                                 </Select>
                             </Form.Item>
                             <Form.Item name="username" label="应用类型" rules={[{required: true}]}>
                                 <Select
                                     mode="multiple"
                                     style={{ width: '100%' }}
-                                    placeholder="Please select"
-                                    defaultValue={['a10', 'c12']}
                                     onChange={this.handleChange}
                                 >
-                                    {children}
+                                    {typeData ? typeData.map((item, idx) => <Option value={item.id}
+                                                                                      key={item.id}>{item.name}</Option>) : ''}
+
                                 </Select>
                             </Form.Item>
                             <Form.Item name="username" label="所属层级" rules={[{required: true}]}>
-                                <Select defaultValue="lucy" onChange={this.handleChange}>
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="lucy">Lucy</Option>
-                                    <Option value="Yiminghe">yiminghe</Option>
+                                <Select onChange={this.belongChange}>
+                                    {belongData ? belongData.map((item, idx) => <Option value={item.id}
+                                                                                            key={item.id}>{item.name}</Option>) : ''}
                                 </Select>
                             </Form.Item>
                             <Form.Item name="username" label="发布机构" rules={[{required: true}]}>
                                 <Select
                                     mode="multiple"
                                     style={{ width: '100%' }}
-                                    placeholder="Please select"
-                                    defaultValue={['a10', 'c12']}
                                     onChange={this.handleChange}
                                 >
-                                    {children}
+                                    {productData ? productData.map((item, idx) => <Option value={item.id}
+                                                                                        key={item.id}>{item.name}</Option>) : ''}
                                 </Select>
                             </Form.Item>
                             <Form.Item name="username" label="政策正文" rules={[{required: true}]}>
@@ -192,7 +232,7 @@ class AddPolicy extends Component {
                             </Form.Item>
                         </Form>
                         <div className="addPolicy-button">
-                            <Button type="primary">发布</Button>
+                            <Button type="primary" htmlType="submit">发布</Button>
                             <Button type="primary" className="ml15">保存</Button>
                             <Button type="primary" className="ml15" onClick={()=>window.location.href="/policyPreview"}>预览</Button>
                             <Button className="ml15">返回</Button>

@@ -5,9 +5,8 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import { Carousel, Row, Col, Button, Divider, Card } from 'antd';
 import { BarsOutlined,SearchOutlined } from '@ant-design/icons';
-import axios from 'axios';
+import {request} from './../../utils/request';
 import Top from './../../component/top';
-// import Footer from "../../component/footer";
 import Label from "../../component/label";
 
 import './index.css';
@@ -50,23 +49,37 @@ class Register extends Component {
             ]
         }
     }
-    onFinish = (values) => {
-        //发送请求
-        axios.post('/company/register',{
-            ...values
-        })
-            .then(function(response) {
-            console.log(response.data);
-            console.log(response.status);
-            console.log(response.statusText);
-            console.log(response.headers);
-            console.log(response.config);
-        });
+    async componentWillMount() {
+        const labelThemeData = await request('/common/get-all-policy-theme-label', 'POST'); //政策主题
+        const labelTypeData = await request('/common/get-all-use-type-label', 'POST'); //应用类型
+        const selectIndustryData = await request('/common/get-all-industry-label', 'POST'); //所属行业
 
-    };
-    onReset = () => {
-        this.props.form.resetFields();
-    };
+
+        const themData = labelThemeData.data;
+        const typeData = labelTypeData.data;
+        const industryData = selectIndustryData.data;
+
+        if (themData && themData.success && typeData && themData.success && industryData && industryData.success) {
+            const allItem = {id: 0,name: "全部"};
+            themData.data.unshift(allItem);
+            typeData.data.unshift(allItem);
+            industryData.data.unshift(allItem);
+            this.setState({
+                label:[{
+                    title: "政策主题",
+                    item: themData.data
+                },
+                {
+                    title: "应用类型",
+                    item: typeData.data
+                },
+                {
+                    title:"所属行业",
+                    item: industryData.data
+                }]
+            })
+        }
+    }
     render() {
         const { label } = this.state;
         return (
@@ -85,7 +98,7 @@ class Register extends Component {
                     </div>
                     <Row className="item-box" >
                         <Col span={12}>
-                            <Button shape="round" icon={<SearchOutlined />} size="large">
+                            <Button shape="round" icon={<SearchOutlined />} size="large" onClick={()=>{this.props.history.push('/policyList');}}>
                                 找政策
                             </Button>
                         </Col>

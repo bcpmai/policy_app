@@ -3,10 +3,12 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {Form, Input, InputNumber, Button, Row, Col, Select} from 'antd';
-import axios from 'axios';
+import cookie from 'react-cookies'
+import {Form, Input, Button, Select,message} from 'antd';
+// import axios from 'axios';
+import {request} from './../../utils/request';
 import Top from './../../component/top';
-// import Footer from "../../component/footer";
+
 import './index.css';
 
 const { Option } = Select;
@@ -34,24 +36,53 @@ class Register extends Component {
 
         }
     }
-    onFinish = (values) => {
+    async componentWillMount(){
+        const responest = await request('/common/get-all-industry-label','POST');
+        const data = responest.data;
+        if(data && data.success){
+            console.log(111)
+            this.setState({
+                labelSelect:data.data
+            })
+        }
+        console.log(responest,"1");
+    }
+    onFinish = async (values) => {
+        const responest = await request('/company/register','POST',{...values});
+        const data = responest.data;
+        if(data && data.success){
+            message.success(data.msg);
+            cookie.save('userId', data.data.id);
+            cookie.save('userName', values.username);
+            cookie.save('userType', 1);
+            setTimeout(()=>{
+                this.props.history.push('/');
+            },1000);
+        }else{
+            message.error(data.msg);
+        }
         //发送请求
-        axios.post('/company/register',{
-            ...values
-        })
-            .then(function(response) {
-            console.log(response.data);
-            console.log(response.status);
-            console.log(response.statusText);
-            console.log(response.headers);
-            console.log(response.config);
-        });
+        // axios.post('/company/register',{
+        //     ...values
+        // })
+        //     .then(function(response) {
+        //     console.log(response.data);
+        //     console.log(response.status);
+        //     console.log(response.statusText);
+        //     console.log(response.headers);
+        //     console.log(response.config);
+        // });
 
     };
     onReset = () => {
         this.props.form.resetFields();
     };
+    onBack = () =>{
+        this.props.history.push('/login');
+    }
     render() {
+        const {labelSelect} = this.state;
+        console.log(labelSelect);
         return (
             <div className="register-template">
                 <Top />
@@ -64,24 +95,42 @@ class Register extends Component {
                     <Form.Item name="company_name" label="企业名称" rules={[{required: true}]}>
                         <Input/>
                     </Form.Item>
-                    <Form.Item name="mobile" label="统一社会信用代码" rules={[{required: true}]}>
+                    <Form.Item name="code" label="统一社会信用代码" rules={[{required: true}]}>
                         <Input/>
                     </Form.Item>
-                    <Form.Item name="mobile" label="所属行业" rules={[{required: true}]}>
-                        <Select defaultValue="lucy">
-                            <Option value="jack">1</Option>
-                            <Option value="lucy">2</Option>
-                            <Option value="Yiminghe">3</Option>
+                    <Form.Item name="industry_label_id" label="所属行业" rules={[{required: true}]}>
+                        <Select>
+                            {labelSelect ? labelSelect.map((item,idx)=> <Option value={item.id} key={item.id}>{item.name}</Option>) : ''}
                         </Select>
                     </Form.Item>
                     <Form.Item name="mobile" label="手机号" rules={[{required: true}]}>
                         <Input/>
                     </Form.Item>
-                    <Form.Item name='password' label="登录密码" rules={[{required: true}]}>
+                    <Form.Item name='password' label="登录密码" rules={[
+                        {
+                            required: true,
+                            message: '请输入登录密码'
+                        },
+                        {
+                            message: '请输入6-25位字符组合',
+                            min:6,
+                            max:25
+                        },
+                        ({ getFieldValue }) => ({
+                            validator(rule, value) {
+                                if(/^(?=.*[a-zA-Z])(?=.*[0-9]).*$/.test(value)){
+                                    return Promise.resolve()
+                                }
+                                else{
+                                    return Promise.reject('请包含字母、数字和符号两种以上的6-25字符组合');
+                                }
+                            },
+                        }),
+                    ]}>
                         <Input.Password placeholder="字母、数字和符号两种以上的6-25字符组合"/>
                     </Form.Item>
                     <Form.Item
-                        name={['user', 'introduction']}
+                        name={'confirmPassword'}
                         label="确认登录密码"
                         dependencies={['password']}
                         hasFeedback
@@ -113,7 +162,7 @@ class Register extends Component {
                         <Button type="primary" htmlType="submit">
                             立即注册
                         </Button>
-                        <Button htmlType="submit" className="ml15" onClick={this.onReset}>
+                        <Button className="ml15" onClick={this.onBack}>
                             返回
                         </Button>
                     </Form.Item>
