@@ -7,6 +7,7 @@ import {
     MailOutlined,
     AppstoreOutlined,
     SettingOutlined,
+    UserOutlined
 } from '@ant-design/icons';
 import './index.css';
 
@@ -31,36 +32,39 @@ class Top extends Component {
         const { isLogin } = this.state;
         return (
             <div className="top-component-template">
-                <Row className="welcome-box">
+                <div className="welcome-box">
+                <Row className="max-weight-box">
                     <Col span={12}><div>您好，欢迎光临政策与企业匹配服务平台！</div></Col>
                     {!isLogin ? <Col span={12} className="right-button">
-                        <Link to="/login"><Button type="primary" size="small">登录</Button></Link>
+                        <Link to="/login"><Button size="small" icon={<UserOutlined />}>登录</Button></Link>
+                        <u className="line-u">|</u>
                         <Link to="/register"><Button size="small" className="ml15 mr15">注册</Button></Link>
                     </Col> : <Col span={12} className="right-button"><Button size="small" className="mr15">退出</Button></Col>}
 
                 </Row>
-                <Row className="logo-box">
-                    <Col span={8}><div className="logo">政策与企业匹配服务平台</div></Col>
-                    <Col span={8} offset={8}>
-                        <Search placeholder="input search text" onSearch={value => console.log(value)} enterButton />
-                    </Col>
-                </Row>
-                <div>
-                    <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal" theme="dark">
-                        <Menu.Item key="home">
-                            <a href="/">首页</a>
-                        </Menu.Item>
-                        <Menu.Item key="new">
-                            <a href="/latestPolicy">最新政策</a>
-                        </Menu.Item>
-                        <Menu.Item key="application">
-                            <a href="/declarationItem">申报政策</a>
-                        </Menu.Item>
-                        <Menu.Item key="center">
-                            <a href="/information">个人中心</a>
-                        </Menu.Item>
-                    </Menu>
                 </div>
+                <div className="logo-box">
+                    <div className="logo">政策与企业匹配服务平台</div>
+                    <div className="serach"><Search placeholder="请输入关键字查找相关政策" onSearch={value => console.log(value)} enterButton /></div>
+                    <div className="menu-box">
+                        <div className="menu-bg"></div>
+                        <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal" theme="dark">
+                            <Menu.Item key="home">
+                                <a href="/">首页</a>
+                            </Menu.Item>
+                            <Menu.Item key="new">
+                                <a href="/latestPolicy">最新政策</a>
+                            </Menu.Item>
+                            <Menu.Item key="application">
+                                <a href="/declarationItem">申报政策</a>
+                            </Menu.Item>
+                            <Menu.Item key="center">
+                                <a href="/information">个人中心</a>
+                            </Menu.Item>
+                        </Menu>
+                    </div>
+                </div>
+
             </div>
         );
     };

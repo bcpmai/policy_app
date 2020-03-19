@@ -5,9 +5,13 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import { Carousel, Row, Col, Button, Divider, Card } from 'antd';
 import { BarsOutlined,SearchOutlined } from '@ant-design/icons';
+import { Link } from "react-router-dom";
 import {request} from './../../utils/request';
 import Top from './../../component/top';
 import Label from "../../component/label";
+import policyIcon from "./img/policy-icon.jpg";
+import projectIcon from "./img/project-icon.jpg";
+import bannerImg from "./img/img.jpg";
 
 import './index.css';
 
@@ -85,11 +89,11 @@ class Register extends Component {
         return (
             <div className="index-template">
                 <Top />
-                <div className="index-box max-weight-box">
+                <div className="index-box">
                     <div className="carousel-box">
                         <Carousel autoplay>
                             <div>
-                                <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584423146704&di=582d85ae015e111f469bf01a4c33baa1&imgtype=0&src=http%3A%2F%2Fpic.16pic.com%2F00%2F47%2F28%2F16pic_4728317_b.jpg" />
+                                <img src={bannerImg} />
                             </div>
                             <div>
                                 <img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3881320410,3466024303&fm=26&gp=0.jpg" />
@@ -97,21 +101,30 @@ class Register extends Component {
                         </Carousel>
                     </div>
                     <Row className="item-box" >
-                        <Col span={12}>
-                            <Button shape="round" icon={<SearchOutlined />} size="large" onClick={()=>{this.props.history.push('/policyList');}}>
-                                找政策
-                            </Button>
+                        <Col span={12} className="item-policy">
+                            <div className="item-policy-box">
+                                <Link to="/policyList">
+                                    <img src={policyIcon}></img>
+                                    <span>找政策</span>
+                                </Link>
+                            </div>
                         </Col>
-                        <Col span={12}>
-                            <Button shape="round" icon={<BarsOutlined />} size="large">
-                                报项目
-                            </Button>
+                        <Col span={12} className="item-project">
+                            <div className="item-project-box">
+                                <Link to="/policyList">
+                                    <img src={projectIcon}></img>
+                                    <span>报项目</span>
+                                </Link>
+                            </div>
                         </Col>
                     </Row>
-                    <div className="matching-box">
-                        <Divider>快速匹配</Divider>
+                    <div className="matching-box max-weight-box">
+                        <div className="matching-divider">
+                            <span className="title">快速匹配</span>
+                            <p className="desc">请选择您感兴趣的标签，智能匹配相关申报政策。</p>
+                        </div>
+                        <div className="matching-divider-arr"><span className="arr"></span></div>
                         <div className="matching-label-box">
-                            <p>请选择您感兴趣的标签，智能匹配相关申报政策。</p>
                             <div>
                                 {label.map((labelItem,labelIdx)=>{
                                     return <Label title={labelItem.title} item={labelItem.item} key={labelIdx} />
@@ -123,33 +136,54 @@ class Register extends Component {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="application-box">
-                        <Divider>申报政策</Divider>
-                        <Row gutter={16}>
-                            <Col span={8}>
-                                <Card title="关于应对新型冠状病毒肺炎疫情设立渝北区抗击疫情转贷应急周转资金的实施细则" extra={<span>2019-03-15</span>}>
-                                    <p><strong>扶持内容：</strong><span>（一）企业申请的单笔转贷应急周转资金额度原则上不超过1000万元（含）。</span></p>
-                                    <p>（二）转贷应急周转资金使用时间原则上控制在20个工作日以内。资金使用费按每个工作日0.1‰计算收取，收费不满1个工作日的按1个工作日计算收取。若20个工作日还不能······</p>
-                                    <p className="button-center"><Button type="primary" shape="round" >立即申报</Button></p>
-                                </Card>
-                            </Col>
-                            <Col span={8}>
-                                <Card title="关于应对新型冠状病毒肺炎疫情设立渝北区抗击疫情转贷应急周转资金的实施细则" extra={<span>2019-03-15</span>}>
-                                    <p><strong>扶持内容：</strong><span>（一）企业申请的单笔转贷应急周转资金额度原则上不超过1000万元（含）。</span></p>
-                                    <p>（二）转贷应急周转资金使用时间原则上控制在20个工作日以内。资金使用费按每个工作日0.1‰计算收取，收费不满1个工作日的按1个工作日计算收取。若20个工作日还不能······</p>
-                                    <p className="button-center"><Button type="primary" shape="round" >立即申报</Button></p>
-                                </Card>
-                            </Col>
-                            <Col span={8}>
-                                <Card title="关于应对新型冠状病毒肺炎疫情设立渝北区抗击疫情转贷应急周转资金的实施细则" extra={<span>2019-03-15</span>}>
-                                    <p><strong>扶持内容：</strong><span>（一）企业申请的单笔转贷应急周转资金额度原则上不超过1000万元（含）。</span></p>
-                                    <p>（二）转贷应急周转资金使用时间原则上控制在20个工作日以内。资金使用费按每个工作日0.1‰计算收取，收费不满1个工作日的按1个工作日计算收取。若20个工作日还不能······</p>
-                                    <p className="button-center"><Button type="primary" shape="round" >立即申报</Button></p>
-                                </Card>
-                            </Col>
-                        </Row>
-                        <div className="application-more"><a href="/policyList">更多</a></div>
+                        <div className="application-box">
+                            <div className="matching-divider">
+                                <span className="title">申报政策</span>
+                            </div>
+                            <div className="matching-divider-arr"><span className="arr"></span></div>
+                            <Row className="application-item-box">
+                                <Col span={8}>
+                                    <div className="item">
+                                        <span className="tips">资金</span>
+                                        <p className="title"><a href="">关于应对新型冠状病毒肺炎疫情设立渝北区抗击疫情转贷应急周转资金的实施细则</a></p>
+                                        <span className="line"></span>
+                                        <p className="time">2019-03-15</p>
+                                        <div className="desc">
+                                            <p><strong>扶持内容：</strong><span>（一）企业申请的单笔转贷应急周转资金额度原则上不超过1000万元（含）。</span></p>
+                                            <p>（二）转贷应急周转资金使用时间原则上控制在20个工作日以内。资金使用费按每个工作日0.1‰计算收取，收费不满1个工作日的按1个工作日计算收取。若20个工作日还不能······</p>
+                                        </div>
+                                        <p className="button-center"><Button type="primary" shape="round" >立即申报</Button></p>
+                                    </div>
+                                </Col>
+                                <Col span={8}>
+                                    <div className="item">
+                                        <span className="tips">资金</span>
+                                        <p className="title"><a href="">关于应对新型冠状病毒肺炎疫情设立渝北区抗击疫情转贷应急周转资金的实施细则</a></p>
+                                        <span className="line"></span>
+                                        <p className="time">2019-03-15</p>
+                                        <div className="desc">
+                                            <p><strong>扶持内容：</strong><span>（一）企业申请的单笔转贷应急周转资金额度原则上不超过1000万元（含）。</span></p>
+                                            <p>（二）转贷应急周转资金使用时间原则上控制在20个工作日以内。资金使用费按每个工作日0.1‰计算收取，收费不满1个工作日的按1个工作日计算收取。若20个工作日还不能······</p>
+                                        </div>
+                                        <p className="button-center"><Button type="primary" shape="round" >立即申报</Button></p>
+                                    </div>
+                                </Col>
+                                <Col span={8}>
+                                    <div className="item">
+                                        <span className="tips">资金</span>
+                                        <p className="title"><a href="">关于应对新型冠状病毒肺炎疫情设立渝北区抗击疫情转贷应急周转资金的实施细则</a></p>
+                                        <span className="line"></span>
+                                        <p className="time">2019-03-15</p>
+                                        <div className="desc">
+                                            <p><strong>扶持内容：</strong><span>（一）企业申请的单笔转贷应急周转资金额度原则上不超过1000万元（含）。</span></p>
+                                            <p>（二）转贷应急周转资金使用时间原则上控制在20个工作日以内。资金使用费按每个工作日0.1‰计算收取，收费不满1个工作日的按1个工作日计算收取。若20个工作日还不能······</p>
+                                        </div>
+                                        <p className="button-center"><Button type="primary" shape="round" >立即申报</Button></p>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <div className="application-more"><a href="/policyList">更多</a></div>
+                        </div>
                     </div>
                 </div>
             {/*<Footer/>*/}
