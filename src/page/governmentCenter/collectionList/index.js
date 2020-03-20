@@ -155,9 +155,9 @@ class CollectionList extends Component {
             onChange: this.onSelectChange,
         };
         return (
-            <div className="policyList-template">
+            <div className="collectionList-template">
                 <Top />
-                <div className="policyList-label-box max-weight-box">
+                <div className="collectionList-label-box max-weight-box">
                 <Row>
                     <Col span={4}>
                         <PolicyManagementMenu />
@@ -198,7 +198,7 @@ class CollectionList extends Component {
                                 <RangePicker showTime />
                             </Col>
                         </Row>
-                        <div className="policyList-button">
+                        <div className="collectionList-button">
                             <Button type="primary">检索</Button>
                             <Button className="ml15">重置</Button>
                         </div>

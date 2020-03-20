@@ -12,7 +12,6 @@
     cursor: pointer;
 }
 .policyList-template .label-box{
-    border:1px solid #efefef;
     padding: 10px;
     margin-bottom: 20px;
 }
@@ -34,16 +33,20 @@
     top:0;
     cursor: pointer;
 }
-.policyList-template .information-title{
-    margin-top: 20px;
-    color: #333;
-    margin-bottom: 10px;
+.policyList-template .title-component-template{
+    margin-top: 80px;
+    margin-bottom: 60px;
 }
-.policyList-template .information-title:before{
-    content: '';
-    width: 5px;
-    height: 20px;
-    float:left;
-    background: #1890ff;
-    margin-right: 5px;
+/*面包屑*/
+.policyList-template .ant-breadcrumb {
+    background: #ae242b;
+    height: 70px;
+    line-height: 70px;
+    color: #fff;
+    font-size: 18px;
+    padding-left: 110px;
+}
+.policyList-template .ant-breadcrumb > span:last-child a,
+.policyList-template .ant-breadcrumb .ant-breadcrumb-separator {
+    color: #fff;
 }

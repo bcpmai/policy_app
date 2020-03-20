@@ -127,7 +127,7 @@ class Register extends Component {
                         <div className="matching-label-box">
                             <div>
                                 {label.map((labelItem,labelIdx)=>{
-                                    return <Label title={labelItem.title} item={labelItem.item} key={labelIdx} />
+                                    return <Label onClick={()=>this.labelChange()} title={labelItem.title} item={labelItem.item} key={labelIdx} />
                                 })}
                                 <div className="matching-button">
                                     <Button type="primary" shape="round" size="large">

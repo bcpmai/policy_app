@@ -184,4 +184,11 @@
     padding: 0 20px;
     margin:0 17px 34px;
     background: #e6e5e5;
+    border:1px solid #e6e5e5;
+}
+.index-template .Label-component-template .ant-btn:hover{
+    border:1px solid #cc0000;
+}
+.index-template .Label-component-template .select-button{
+    color: #cc0000;
 }

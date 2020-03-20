@@ -29,9 +29,9 @@ class PolicyMenu extends Component {
     render() {
         const { isLogin } = this.state;
         return (
-            <div className="top-component-template">
+            <div className="policy-menu-component-template">
                 <Menu
-                    style={{ width: 220 }}
+                    style={{ width: 200 }}
                     defaultSelectedKeys={['1']}
                     defaultOpenKeys={['sub1']}
                     mode="inline"

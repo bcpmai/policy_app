@@ -9,6 +9,7 @@ import {Link} from "react-router-dom";
 import {request} from './../../../utils/request';
 import Top from '../../../component/top/index';
 import Label from "../../../component/label/index";
+import Title from "../../../component/title/index";
 import PolicyManagementMenu from "../../../component/policyManagementMenu/index";
 import './index.css';
 
@@ -264,7 +265,7 @@ class PolicyList extends Component {
                             <PolicyManagementMenu/>
                         </Col>
                         <Col span={20}>
-                            <div className="information-title">政策列表</div>
+                            <Title name="政策列表" />
                             <Breadcrumb separator=">">
                                 <Breadcrumb.Item>政策管理</Breadcrumb.Item>
                                 <Breadcrumb.Item href="">政策列表</Breadcrumb.Item>

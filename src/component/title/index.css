@@ -1,12 +1,15 @@
 .title-component-template{
     color: #333;
+    font-size: 30px;
+    font-weight: bold;
 }
 .title-component-template:before{
     content: '';
-    width: 5px;
-    height: 20px;
+    width: 12px;
+    height: 38px;
     float:left;
-    background: #1890ff;
-    margin-right: 5px;
+    background: #aa2426;
+    margin-right: 20px;
+    margin-top: 5px;
 }
 
