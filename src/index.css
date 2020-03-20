@@ -40,3 +40,40 @@ code {
   z-index: 2;
   background: #fff;
 }
+/*分页*/
+.ant-pagination .ant-pagination-item-active{
+  border:1px solid #ae242b;
+}
+.ant-pagination .ant-pagination-item-active a{
+  color: #fff;
+  background: #ae242b;
+}
+.ant-pagination .ant-pagination-item-active a:hover{
+  color:#ae242b;
+}
+/*Modal*/
+.ant-modal .ant-modal-content{
+  border-radius: 20px;
+}
+.ant-modal .ant-modal-header{
+  border-radius: 20px 20px 0 0;
+  background: #e5e5e5;
+}
+.ant-modal .ant-modal-footer{
+  text-align: center;
+  border-top:0;
+  padding-bottom: 50px;
+}
+.ant-modal-footer button{
+  border:1px solid #ae242b;
+  color:#ae242b;
+  background: #fff;
+  border-radius: 20px;
+  padding: 0 40px;
+  height: 35px;
+}
+.ant-modal-footer button:hover{
+  background:#ae242b;
+  border:1px solid #ae242b;
+  color:#fff;
+}

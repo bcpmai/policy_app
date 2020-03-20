@@ -54,9 +54,9 @@ class Register extends Component {
         }
     }
     async componentWillMount() {
-        const labelThemeData = await request('/common/get-all-policy-theme-label', 'POST'); //政策主题
-        const labelTypeData = await request('/common/get-all-use-type-label', 'POST'); //应用类型
-        const selectIndustryData = await request('/common/get-all-industry-label', 'POST'); //所属行业
+        const labelThemeData = await request('/api/common/get-all-policy-theme-label', 'POST'); //政策主题
+        const labelTypeData = await request('/api/common/get-all-use-type-label', 'POST'); //应用类型
+        const selectIndustryData = await request('/api/common/get-all-industry-label', 'POST'); //所属行业
 
 
         const themData = labelThemeData.data;
@@ -70,15 +70,15 @@ class Register extends Component {
             industryData.data.unshift(allItem);
             this.setState({
                 label:[{
-                    title: "政策主题",
+                    title: "政策主题：",
                     item: themData.data
                 },
                 {
-                    title: "应用类型",
+                    title: "应用类型：",
                     item: typeData.data
                 },
                 {
-                    title:"所属行业",
+                    title:"所属行业：",
                     item: industryData.data
                 }]
             })

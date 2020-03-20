@@ -31,8 +31,8 @@ class Label extends Component {
         return (
             <div className="Label-component-template">
                 <Row>
-                    <Col span={2}>{title}：</Col>
-                    <Col span={span || 22} className={`label-item-${className}`}>
+                    <Col span={span ? span.title : 2}>{title}</Col>
+                    <Col span={span ? span.label : 22} className={`label-item-${className}`}>
                         {item.map((titem,tidx)=>
                             <Button shape="round" size="small" key={titem.id} onClick={()=>this.onSelect(titem.id)} className={selectId==titem.id ? "select-button":""}>{titem.name}</Button>
                             //<CheckableTag checked={this.state.checked} onChange={this.handleChange} key={titem.id}>{titem.name}</CheckableTag>

@@ -3,7 +3,7 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {Table, Tag, Input, Row, Col, Button, Select, DatePicker, Breadcrumb} from 'antd';
+import {Table, Tag, Input, Row, Col, Button, Select, DatePicker, Breadcrumb, Modal} from 'antd';
 import {ArrowUpOutlined, ArrowDownOutlined, PlusOutlined, MinusOutlined} from '@ant-design/icons';
 import {Link} from "react-router-dom";
 import {request} from './../../../utils/request';
@@ -37,7 +37,7 @@ class PolicyList extends Component {
             //     item:["全部","国务院","国家发展和改革委员会","工业和信息化部","国务院办公厅","科学技术部","自然资源部","财政部","司法部","人力资源和社会保障部","生态环境部"]
             // },
             labelStatus: {
-                title: "状态",
+                title: "状 态",
                 item: [
                     {
                         id: 0,
@@ -53,7 +53,7 @@ class PolicyList extends Component {
                     }]
             },
             labelSource: {
-                title: "来源",
+                title: "来    源",
                 item: [ {
                     id: 0,
                     name: "全部"
@@ -125,7 +125,7 @@ class PolicyList extends Component {
             {
                 title: '操作',
                 key: 'action',
-                render: (text, record) => (<span><a>编辑</a><a className="ml15">删除</a></span>),
+                render: (text, record) => (<span><a onClick={this.showModal}>编辑</a><a onClick={this.showModal} className="ml15">删除</a></span>),
             },
         ];
 
@@ -253,6 +253,25 @@ class PolicyList extends Component {
             })
         }
     }
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+
+    handleOk = e => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    };
+
+    handleCancel = e => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    };
 
     render() {
         const {arrdown, labelTheme, labelType, labelProduct, arrProduct, labelStatus, labelSource, belongData, industryData} = this.state;
@@ -272,16 +291,16 @@ class PolicyList extends Component {
                             </Breadcrumb>
                             <div className="label-box">
                                 <Row className="mt10">
-                                    <Col span={2}>政策标题：</Col>
-                                    <Col span={22}>
+                                    <Col span={4}>政策标题</Col>
+                                    <Col span={20}>
                                         <Input/>
                                     </Col>
                                 </Row>
                                 {labelTheme ?
-                                    <Label title={labelTheme.title} item={labelTheme.item} key="labelTheme"/> : ''}
+                                    <Label span={{title:4,label:20}} title={labelTheme.title} item={labelTheme.item} key="labelTheme"/> : ''}
                                 <Row className="mt10">
-                                    <Col span={2}>所属层级：</Col>
-                                    <Col span={22}>
+                                    <Col span={4}>所属层级</Col>
+                                    <Col span={20}>
                                         <Select style={{width: 300}} onChange={this.belongChange}>
                                             {belongData ? belongData.map((item, idx) => <Option value={item.id}
                                                                                                 key={item.id}>{item.name}</Option>) : ''}
@@ -291,17 +310,17 @@ class PolicyList extends Component {
                                 <div className="label-product-box">
                                     {labelProduct ?
                                         <Label title={labelProduct.title} item={labelProduct.item} key="labelProduct"
-                                               span={21} className={arrProduct ? "allLabel" : "minLabel"}/> : ''}
+                                               span={{title:4,label:20}} className={arrProduct ? "allLabel" : "minLabel"}/> : ''}
                                     {labelProduct ? (!arrProduct ? <span onClick={this.setArrProduct}
                                                                          className="more-label"><PlusOutlined/> 展开</span> :
                                         <span onClick={this.setArrProduct}
                                               className="more-label"><MinusOutlined/> 收起</span>) : ''}
                                 </div>
                                 {labelType ?
-                                    <Label title={labelType.title} item={labelType.item} key="labelType"/> : ''}
+                                    <Label span={{title:4,label:20}} title={labelType.title} item={labelType.item} key="labelType"/> : ''}
                                 <Row className="mt10">
-                                    <Col span={2}>所属行业：</Col>
-                                    <Col span={22}>
+                                    <Col span={4}>所属行业</Col>
+                                    <Col span={20}>
                                         <Select style={{width: 300}}>
                                             {industryData ? industryData.map((item, idx) => <Option value={item.id}
                                                                                                     key={item.id}>{item.name}</Option>) : ''}
@@ -309,24 +328,43 @@ class PolicyList extends Component {
                                     </Col>
                                 </Row>
                                 <Row className="mt10">
-                                    <Col span={2}>发文日期：</Col>
-                                    <Col span={22}>
+                                    <Col span={4}>发文日期</Col>
+                                    <Col span={20}>
                                         <RangePicker showTime/>
                                     </Col>
                                 </Row>
-                                <Label title={labelStatus.title} item={labelStatus.item} key="labelStatus"/>
-                                <Label title={labelSource.title} item={labelSource.item} key="labelSource"/>
+                                <Label span={{title:4,label:20}} title={labelStatus.title} item={labelStatus.item} key="labelStatus"/>
+                                <Label span={{title:4,label:20}} title={labelSource.title} item={labelSource.item} key="labelSource"/>
                                 <div className="policyList-button">
                                     <Button type="primary">检索</Button>
                                     <Button className="ml15">重置</Button>
                                 </div>
                             </div>
-                            <p align="right"><Link to="/addPolicy"><Button type="primary">添加政策</Button></Link></p>
+                            <p align="right" className="add-button"><Link to="/addPolicy"><Button type="primary">添加政策</Button></Link></p>
                             <Table columns={this.columns} dataSource={this.data} pagination={this.pagination}/>
                         </Col>
                     </Row>
                 </div>
                 {/*<Footer/>*/}
+                {}
+                <Modal
+                    title="温馨提示"
+                    visible={this.state.visible}
+                    onOk={this.handleOk}
+                    okText="删除"
+                    cancelText="关闭"
+                    onCancel={this.handleCancel}
+                    footer={[
+                        <Button key="back" onClick={this.handleCancel}>
+                            删除
+                        </Button>,
+                        <Button key="submit" type="primary" onClick={this.handleOk}>
+                            关闭
+                        </Button>,
+                    ]}
+                >
+                    <p style={{padding:"40px 0 10px 0",textAlign:"center",fontSize:"16px",color: "#6e6e6e"}}>确定删除吗？</p>
+                </Modal>
             </div>
         );
     };
