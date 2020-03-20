@@ -44,6 +44,13 @@ code {
 .ant-pagination .ant-pagination-item-active{
   border:1px solid #ae242b;
 }
+.ant-pagination .ant-pagination-item:hover,.ant-pagination .ant-select-selector:hover{
+  border:1px solid #ae242b!important;
+  color:#ae242b;
+}
+.ant-pagination .ant-pagination-item:hover a{
+  color:#ae242b;
+}
 .ant-pagination .ant-pagination-item-active a{
   color: #fff;
   background: #ae242b;
@@ -76,4 +83,24 @@ code {
   background:#ae242b;
   border:1px solid #ae242b;
   color:#fff;
+}
+/*输入框*/
+.ant-input:focus,
+.ant-input:hover,
+.ant-select-selector:focus,
+.ant-select-selector:hover,
+.ant-select-open .ant-select-selector,
+.ant-picker:focus,
+.ant-picker:hover,
+.ant-picker-focused,
+.ant-upload .ant-btn:focus,
+.ant-upload .ant-btn:hover
+{
+  border:1px solid #ae242b!important;
+  box-shadow: 0 0 0 2px rgba(178, 41, 46, 0.2) !important;
+}
+
+.ant-upload .ant-btn:focus,
+.ant-upload .ant-btn:hover{
+  color:#ae242b!important;
 }

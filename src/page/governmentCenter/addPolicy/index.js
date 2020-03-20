@@ -9,6 +9,7 @@ import {request} from './../../../utils/request';
 import Top from '../../../component/top/index';
 import cookie from 'react-cookies';
 import PolicyManagementMenu from "../../../component/policyManagementMenu/index";
+import Title from "../../../component/title/index";
 import './index.css';
 
 import E from 'wangeditor'
@@ -133,7 +134,7 @@ class AddPolicy extends Component {
     render() {
         const {industryData,belongData,themeData,typeData,productData} = this.state;
         const props = {
-            action: 'http://106.75.17.129:5000/common/upload-file',
+            action: 'http://web.js.policy.com/api/common/upload-file',
             onChange: this.handleUploadChange,
             multiple: true,
             data:{
@@ -152,7 +153,7 @@ class AddPolicy extends Component {
                         <PolicyManagementMenu />
                     </Col>
                     <Col span={20}>
-                    <div className="information-title">添加政策</div>
+                    <Title name="添加政策" />
                     <Breadcrumb separator=">">
                         <Breadcrumb.Item>政策管理</Breadcrumb.Item>
                         <Breadcrumb.Item href="">政策列表</Breadcrumb.Item>
