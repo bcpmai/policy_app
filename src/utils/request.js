@@ -31,7 +31,7 @@ export const request = (api, method = MethodType.GET, params = {}, config = {}) 
     }
     return new Promise((resolve, reject) => {
         axios({
-            url: api,
+            url: "/api"+api,
             method,
             [data]: params,
             headers,
