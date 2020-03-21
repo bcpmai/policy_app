@@ -44,7 +44,7 @@ ReactDOM.render(
             <Route exact path="/forgotYour" component={ForgotYour} />
             <Route exact path="/declarePush" component={DeclarePush} />
             <Route exact path="/latestPolicy/:keyString?" component={LatestPolicy} />
-            <Route exact path="/policyText" component={PolicyText} />
+            <Route exact path="/policyText/:id" component={PolicyText} />
             <Route exact path="/information" component={Information} />
             <Route exact path="/accountManagement" component={AccountManagement} />
             <Route exact path="/policyList" component={PolicyList} />

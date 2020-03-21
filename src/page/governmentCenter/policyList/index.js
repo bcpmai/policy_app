@@ -3,7 +3,7 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {Table, Tag, Input, Row, Col, Button, Select, DatePicker, Breadcrumb, Modal, Form, message} from 'antd';
+import {Table, Tag, Input, Row, Col, Button, Select, DatePicker, Breadcrumb, Modal, Form, message, Tooltip} from 'antd';
 import {ArrowUpOutlined, ArrowDownOutlined, PlusOutlined, MinusOutlined} from '@ant-design/icons';
 import {Link} from "react-router-dom";
 import {request} from './../../../utils/request';
@@ -37,6 +37,8 @@ class PolicyList extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            tableData:{},
+            current:1,
             arrdown: true,
             arrProduct: false,
             // labelTheme:{
@@ -89,9 +91,9 @@ class PolicyList extends Component {
                 title: '政策标题',
                 dataIndex: 'title',
                 key: 'title',
-                width: 150,
+                width: 200,
                 render: (text, record) => {
-                    return <a  onClick={()=>this.props.history.push(`/policyPreview/${record.id}`)}>{text}</a>
+                    return <Tooltip placement="topLeft" title={text}><a onClick={()=>this.props.history.push(`/policyPreview/${record.id}`)}>{text.length < 15 ? text : text.substr(0,15)+"..."}</a></Tooltip>
                 }
             },
             {
@@ -113,16 +115,25 @@ class PolicyList extends Component {
                 title: '发布机构',
                 dataIndex: 'organization_label_str',
                 key: 'organization_label_str',
+                render: (text, record) => {
+                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 8 ? text : text.substr(0,8)+"..."}</span></Tooltip>
+                }
             },
             {
                 title: '政策主题',
                 dataIndex: 'policy_theme_label_str',
-                key: 'policy_theme_label_str'
+                key: 'policy_theme_label_str',
+                render: (text, record) => {
+                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 8 ? text : text.substr(0,8)+"..."}</span></Tooltip>
+                }
             },
             {
                 title: '应用类型',
                 dataIndex: 'use_type_label_str',
-                key: 'use_type_label_str'
+                key: 'use_type_label_str',
+                render: (text, record) => {
+                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 8 ? text : text.substr(0,8)+"..."}</span></Tooltip>
+                }
             },
             // {
             //     title: '关联解析',
@@ -133,7 +144,7 @@ class PolicyList extends Component {
                 title: '状态',
                 dataIndex: 'status',
                 key: 'status',
-                width:100,
+                width:70,
                 render: text => {
                     if(text==1) {
                         return "暂存"
@@ -146,7 +157,7 @@ class PolicyList extends Component {
                 title: '来源',
                 dataIndex: 'source',
                 key: 'source',
-                width:100,
+                width:70,
                 render: text => {
                     if(text==1) {
                         return "人工"
@@ -155,37 +166,26 @@ class PolicyList extends Component {
                     }
                 }
             },
-            {
-                title: '操作时间',
-                key: 'updated_at',
-                dataIndex: 'updated_at',
-                width: 130
-            },
+            // {
+            //     title: '操作时间',
+            //     key: 'updated_date',
+            //     dataIndex: 'updated_date',
+            //     width: 130
+            // },
             {
                 title: '操作人员',
                 key: 'username',
-                dataIndex: 'username'
+                dataIndex: 'username',
+                width:80,
             },
             {
                 title: '操作',
                 key: 'action',
-                width:100,
-                render: (text, record) => (<p align="center"><a onClick={()=>this.props.history.push(`/addPolicy/${record.id}`)}>编辑</a><br /><a onClick={()=>this.showModal(record.id)}>删除</a></p>),
+                width:120,
+                render: (text, record) => (<p align="center"><a onClick={()=>this.props.history.push(`/addPolicy/${record.id}`)}>编辑</a><a onClick={()=>this.showModal(record.id)} className="ml15">删除</a></p>),
             },
         ];
 
-        function onShowSizeChange(current, pageSize) {
-            console.log(current, pageSize);
-            //max_line
-        }
-
-        this.pagination = {
-            showSizeChanger: true,
-            defaultCurrent: 1,
-            defaultPageSize:20,
-            pageSizeOptions: ['10', '20', '30', '50', '100', '150'],
-            onShowSizeChange: onShowSizeChange
-        }
     }
 
     async componentWillMount() {
@@ -228,9 +228,26 @@ class PolicyList extends Component {
         const tableData = await request('/policy/list', 'POST',values); //获取table
         if(tableData.status == 200){
             this.setState({
-                tableData: tableData.data
+                tableData: tableData.data,
+                formValues:values
             });
         }
+    }
+
+    onShowSizeChange = (current, pageSize) =>{
+        console.log(current, pageSize);
+        let {formValues={}} = this.state;
+        formValues.page = current;
+        formValues.max_line = pageSize;
+        this.getTableData(formValues);
+    }
+
+    onPaginChange = (page, pageSize) =>{
+        console.log(page, pageSize);
+        let {formValues={}} = this.state;
+        formValues.page = page;
+        formValues.max_line = pageSize;
+        this.getTableData(formValues);
     }
 
     setArrdown = () => {
@@ -271,7 +288,7 @@ class PolicyList extends Component {
                 id:null
             });
             setTimeout(()=>{
-                this.getTableData();
+                this.getTableData(this.state.formValues);
             },1000);
         }else{
             message.error(deleteData.data.msg);
@@ -358,7 +375,18 @@ class PolicyList extends Component {
     };
 
     render() {
-        const {labelTheme, labelType, labelProduct, arrProduct, labelStatus, labelSource, belongData, industryData, source,policy_theme_label_list,organization_label_list,use_type_list,status} = this.state;
+        const {labelTheme, labelType, labelProduct, arrProduct, labelStatus, labelSource, belongData, industryData, source,policy_theme_label_list,organization_label_list,use_type_list,status,tableData,formValues} = this.state;
+        const pagination = {
+            current:formValues && formValues.page ? formValues.page : 1,
+            showSizeChanger: true,
+            defaultCurrent: 1,
+            defaultPageSize:20,
+            total:tableData.sum || 0,
+            showTotal:(total, range) => `共 ${tableData.page_num} 页 总计 ${tableData.sum} 条政策`,
+            pageSizeOptions: ['10', '20', '30', '50', '100', '150'],
+            onShowSizeChange: this.onShowSizeChange,
+            onChange:this.onPaginChange
+        }
         return (
             <div className="policyList-template">
                 <Top/>
@@ -435,7 +463,7 @@ class PolicyList extends Component {
                                 </Form>
                             </div>
                             <p align="right" className="add-button"><Link to="/addPolicy"><Button type="primary">添加政策</Button></Link></p>
-                            <Table columns={this.columns} dataSource={this.state.tableData} pagination={this.pagination} rowKey="id"/>
+                            {tableData ? <Table columns={this.columns} dataSource={tableData.result} pagination={pagination} rowKey="id" /> : null}
                         </Col>
                     </Row>
                 </div>
