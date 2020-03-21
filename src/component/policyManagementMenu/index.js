@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {Link } from "react-router-dom";
-import { Button, Form, Input, InputNumber, Row, Col, Select,DatePicker,Menu} from 'antd';
-import axios from 'axios';
+import {Menu,Affix} from 'antd';
 import {
     MailOutlined,
     AppstoreOutlined,
@@ -33,6 +31,7 @@ class PolicyMenu extends Component {
         const { isLogin,current } = this.state;
         return (
             <div className="policy-menu-component-template">
+                <Affix>
                 <Menu
                     style={{ width: 200 }}
                     defaultSelectedKeys={[current]}
@@ -78,6 +77,7 @@ class PolicyMenu extends Component {
                         <Menu.Item key="36">账户管理</Menu.Item>
                     </SubMenu>
                 </Menu>
+                </Affix>
             </div>
         );
     };

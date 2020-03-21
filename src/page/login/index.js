@@ -74,8 +74,8 @@ class Login extends Component {
                 <div className="login-form-box">
                     <div className="login-title">用户登录</div>
                     <Form {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
-                        <Form.Item name="username" label="用户名" rules={[{required: true}]}>
-                            <Input placeholder="请输入用户名"/>
+                        <Form.Item name="username" label="用户账号" rules={[{required: true}]}>
+                            <Input placeholder="请输入用户账号"/>
                         </Form.Item>
                         <Form.Item name='password' label="登录密码" rules={[{required: true}]}>
                             <Input.Password placeholder="请输入密码"/>

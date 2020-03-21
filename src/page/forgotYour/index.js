@@ -65,12 +65,12 @@ class ForgotYour extends Component {
     };
     render() {
         return (
-            <div className="login-template">
+            <div className="forgotYour-template">
                 <Top />
-                <div className="login-form-box">
-                    <div className="login-title">忘记密码</div>
+                <div className="forgotYour-form-box">
+                    <div className="forgotYour-title">忘记密码</div>
                     <Form {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
-                        <Form.Item name="mobile" label="手机号" rules={[{required: true}]}>
+                        <Form.Item name="mobile" label="手 机 号" rules={[{required: true}]}>
                             <Input placeholder="请输入手机号"/>
                         </Form.Item>
                         <Form.Item label="短信验证码">
@@ -124,7 +124,7 @@ class ForgotYour extends Component {
                             ]}>
                             <Input.Password placeholder="再次输入密码"/>
                         </Form.Item>
-                        <Form.Item wrapperCol={{span: 19, offset: 5}} className="login-button">
+                        <Form.Item wrapperCol={{span: 19, offset: 5}} className="forgotYour-button">
                             <Button type="primary" htmlType="submit">
                                 提交
                             </Button>

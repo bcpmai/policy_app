@@ -59,7 +59,8 @@
     text-align: center;
     padding-top: 40px;
 }
-.index-template .matching-box .matching-button .ant-btn{
+.index-template .matching-box .matching-button .ant-btn,
+.index-template .application-more a{
     height: 56px;
     background: #ae242b;
     color: #fff;
@@ -67,6 +68,16 @@
     border:0px;
     padding: 0 85px;
     margin-bottom: 90px;
+}
+.index-template .application-more a{
+    display: inline-block;
+    margin-top: 30px;
+    font-size: 14px;
+    border-radius: 20px;
+    height: 30px;
+    padding: 0 50px;
+    line-height: 30px;
+    margin-bottom: 0px;
 }
 .index-template .application-box{
     padding-bottom: 60px;
@@ -132,7 +143,7 @@
     margin-top: 10px;
 }
 .index-template .application-box .application-more{
-    text-align: right;
+    text-align: center;
     padding-top: 5px;
 }
 .index-template .matching-divider{
@@ -162,13 +173,13 @@
 .index-template .Label-component-template{
     margin-top: 70px;
 }
-.index-template .Label-component-template .ant-col-2{
+.index-template .Label-component-template .ant-col-3{
     font-size: 18px;
     color: #101746;
     padding-top: 5px;
     font-weight: bold;
 }
-.index-template .Label-component-template .ant-col-2:before{
+.index-template .Label-component-template .ant-col-3:before{
     width: 10px;
     height: 20px;
     display: inline-block;

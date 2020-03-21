@@ -37,14 +37,14 @@ class ItemText extends Component {
     render() {
        // const {arrdown,labelTheme,labelType,labelProduct,arrProduct} = this.state;
         return (
-            <div className="policyText-template">
+            <div className="itemText-template">
                 <Top />
-                <div className="policyText-label-box max-weight-box">
+                <div className="itemText-label-box max-weight-box">
                     <Breadcrumb separator=">">
                         <Breadcrumb.Item>申报政策</Breadcrumb.Item>
                         <Breadcrumb.Item href="">项目正文</Breadcrumb.Item>
                     </Breadcrumb>
-                   <div className="policyText-descriptions">
+                   <div className="itemText-descriptions">
                     <Descriptions title="政策标题：重庆市发改委关于申报2018年XXXXX专项资金的通知">
                         <Descriptions.Item label="发布机构" span={2}><span title="重庆市发改委重庆市发改委重庆市发改委">重庆市发改委</span></Descriptions.Item>
                         <Descriptions.Item label="发文日期">2018-04-13</Descriptions.Item>

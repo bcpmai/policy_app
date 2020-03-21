@@ -4,10 +4,10 @@
 }
 .policyPreview-template .policyPreview-label-box .max-weight-box{
     background: #fff;
-    border-top:70px solid #ae242b;
+    border-top:50px solid #ae242b;
 }
 .policyPreview-template .policyPreview-descriptions{
-    padding: 80px 65px 60px;
+    padding: 40px 35px 30px;
     margin: 10px 0;
     border-bottom: 1px dotted #e6e6e6;
 }
@@ -35,8 +35,8 @@
     margin-bottom: 20px;
 }
 .policyPreview-template .title-component-template{
-    margin-top: 70px;
-    margin-bottom: 60px;
+    margin-top: 50px;
+    margin-bottom: 30px;
 }
 .policyPreview-template .ant-descriptions-item-label{
     font-size: 16px;

@@ -8,13 +8,14 @@
 .Label-component-template .ant-btn{
     font-size: 14px;
     color: #515157;
-    padding: 0px 20px 2px 20px;
-    margin:0 10px 34px;
+    padding: 3px 20px 5px 20px;
+    margin:0 20px 20px 0;
     background: #e6e5e5;
     border:1px solid #e6e5e5;
+    height: auto;
 }
 .Label-component-template .label-item-minLabel{
-    height: 28px;
+    height: 45px;
     overflow: hidden;
 }
 .Label-component-template .ant-btn:hover{

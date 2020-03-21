@@ -91,7 +91,7 @@ class PolicyList extends Component {
                 title: '政策标题',
                 dataIndex: 'title',
                 key: 'title',
-                width: 200,
+                width: 180,
                 render: (text, record) => {
                     return <Tooltip placement="topLeft" title={text}><a onClick={()=>this.props.history.push(`/policyPreview/${record.id}`)}>{text.length < 15 ? text : text.substr(0,15)+"..."}</a></Tooltip>
                 }
@@ -116,7 +116,7 @@ class PolicyList extends Component {
                 dataIndex: 'organization_label_str',
                 key: 'organization_label_str',
                 render: (text, record) => {
-                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 8 ? text : text.substr(0,8)+"..."}</span></Tooltip>
+                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 6 ? text : text.substr(0,6)+"..."}</span></Tooltip>
                 }
             },
             {
@@ -124,7 +124,7 @@ class PolicyList extends Component {
                 dataIndex: 'policy_theme_label_str',
                 key: 'policy_theme_label_str',
                 render: (text, record) => {
-                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 8 ? text : text.substr(0,8)+"..."}</span></Tooltip>
+                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 6 ? text : text.substr(0,6)+"..."}</span></Tooltip>
                 }
             },
             {
@@ -132,7 +132,7 @@ class PolicyList extends Component {
                 dataIndex: 'use_type_label_str',
                 key: 'use_type_label_str',
                 render: (text, record) => {
-                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 8 ? text : text.substr(0,8)+"..."}</span></Tooltip>
+                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 6 ? text : text.substr(0,6)+"..."}</span></Tooltip>
                 }
             },
             // {
@@ -188,7 +188,7 @@ class PolicyList extends Component {
 
     }
 
-    async componentWillMount() {
+    async componentDidMount() {
         this.getTableData();
         const labelThemeData = await request('/common/get-all-policy-theme-label', 'POST'); //政策主题
         const labelTypeData = await request('/common/get-all-use-type-label', 'POST'); //应用类型

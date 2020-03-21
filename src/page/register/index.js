@@ -86,7 +86,7 @@ class Register extends Component {
         return (
             <div className="register-template">
                 <Top />
-                <div className="register-form-box">
+                <div className="register-form-box max-weight-box">
                     <div className="register-title">欢迎注册</div>
                 <Form {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
                     <Form.Item name="username" label="用户名" rules={[{required: true}]}>
@@ -157,15 +157,16 @@ class Register extends Component {
                         </Form.Item>
                         <Button className="ant-form-text"> 获取短信验证码</Button>
                     </Form.Item>
-
-                    <Form.Item wrapperCol={{...layout.wrapperCol, offset: 8}}>
-                        <Button type="primary" htmlType="submit">
-                            立即注册
-                        </Button>
-                        <Button className="ml15" onClick={this.onBack}>
-                            返回
-                        </Button>
-                    </Form.Item>
+                    <div className="register-button">
+                        <Form.Item wrapperCol={{...layout.wrapperCol, offset: 8}} >
+                            <Button type="primary" htmlType="submit">
+                                立即注册
+                            </Button>
+                            <Button className="ml15" onClick={this.onBack}>
+                                返回
+                            </Button>
+                        </Form.Item>
+                    </div>
                 </Form>
                 </div>
             {/*<Footer/>*/}

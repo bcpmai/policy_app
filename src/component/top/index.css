@@ -108,3 +108,33 @@
 .top-component-template .ant-menu-dark .ant-menu-item:nth-child(2){
     border:0;
 }
+/*二级顶部加了min样式*/
+.top-component-template .min-logo-box{
+    height: 200px;
+    padding-top: 30px;
+    background: url('./img/min_banner_bg.jpg') left bottom no-repeat;
+}
+.top-component-template .min-logo-box .logo{
+    font-size: 38px;
+    display: inline-block;
+    margin-left: 295px;
+    font-weight: bold;
+}
+.top-component-template .min-logo-box .serach{
+    margin: 12px 40px 0 0;
+    float:right
+}
+.top-component-template .min-menu-box{
+    height: 50px;
+    margin-top: 61px;
+}
+.top-component-template .min-menu-box .menu-bg{
+    height: 50px;
+}
+.top-component-template .min-menu-box .ant-menu{
+    padding-top: 0;
+    line-height: 40px;
+}
+.top-component-template .min-menu-box .ant-menu-dark .ant-menu-item{
+    margin-top: 0;
+}

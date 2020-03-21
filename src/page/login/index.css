@@ -2,7 +2,7 @@
 
 }
 .login-template .login-form-box{
-    padding: 50px 0;
+    padding: 100px 0;
     width: 500px;
     margin: 0 auto;
 }
@@ -13,9 +13,34 @@
     margin-bottom: 20px;
 }
 .login-template .login-button .ant-btn{
-    width: 100%;
-    margin-bottom: 20px;
+    width: 95%;
+    margin-bottom: 40px;
+    background: #ae242b;
+    color: #fff;
+    border:1px solid #ae242b;
+    border-radius: 20px;
+    height: 40px;
+    padding: 0 45px;
+    font-size: 18px;
+    margin-right: 20px;
 }
 .login-template .login-button p{
     text-align: right;
+}
+.login-template .ant-col-8 {
+    color: #000;
+    text-align: center;
+}
+.login-template .ant-col-8 label{
+    font-size: 18px;
+}
+.login-template .ant-form-item-label > label.ant-form-item-required::before,
+.login-template .ant-form-item-label > label::after{
+    display: none;
+}
+.login-template a{
+    color: #ae242b;
+}
+.login-template a:hover{
+    text-decoration: underline;
 }

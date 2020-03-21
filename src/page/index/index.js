@@ -144,16 +144,18 @@ class Register extends Component {
                             </div>
                         </Col>
                     </Row>
-                    <div className="matching-box max-weight-box">
+                    <div className="matching-box">
                         <div className="matching-divider">
-                            <span className="title">快速匹配</span>
-                            <p className="desc">请选择您感兴趣的标签，智能匹配相关申报政策。</p>
+                            <div className="max-weight-box">
+                                <span className="title">快速匹配</span>
+                                <p className="desc">请选择您感兴趣的标签，智能匹配相关申报政策。</p>
+                            </div>
                         </div>
                         <div className="matching-divider-arr"><span className="arr"></span></div>
-                        <div className="matching-label-box">
+                        <div className="matching-label-box max-weight-box">
                             <div>
                                 {label.map((labelItem,labelIdx)=>{
-                                    return <Label onClick={()=>this.labelChange()} title={labelItem.title} item={labelItem.item} key={labelIdx} />
+                                    return <Label span={{title:3,label:21}} onClick={()=>this.labelChange()} title={labelItem.title} item={labelItem.item} key={labelIdx} />
                                 })}
                                 <div className="matching-button">
                                     <Button type="primary" shape="round" size="large" onClick={this.goDeclarePush}>
@@ -164,9 +166,12 @@ class Register extends Component {
                         </div>
                         <div className="application-box">
                             <div className="matching-divider">
-                                <span className="title">申报政策</span>
+                                <div className="max-weight-box">
+                                    <span className="title">申报政策</span>
+                                </div>
                             </div>
                             <div className="matching-divider-arr"><span className="arr"></span></div>
+                            <div className="max-weight-box">
                             <Row className="application-item-box">
                                 <Col span={8}>
                                     <div className="item">
@@ -208,7 +213,8 @@ class Register extends Component {
                                     </div>
                                 </Col>
                             </Row>
-                            <div className="application-more"><a href="/declarationItem">更多</a></div>
+                            </div>
+                            <div className="application-more max-weight-box"><a href="/declarationItem">查看更多</a></div>
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,7 @@
     cursor: pointer;
 }
 .policyList-template .label-box{
-    padding: 60px 180px;
+    padding: 40px 10px 60px 100px;
     margin-bottom: 20px;
     border-bottom: 2px solid #ae242b;
 }
@@ -33,22 +33,25 @@
     text-align: center;
     margin-top: 20px;
 }
-.policyList-template .add-button{
-    margin-bottom: 40px;
-    margin-top: 47px;
-}
 .policyList-template .policyList-button .ant-btn,
 .policyList-template .add-button .ant-btn{
     background: #fff;
     color: #ae242b;
     border:1px solid #ae242b;
     border-radius: 20px;
-    height: 50px;
-    padding: 0 110px;
+    height: 40px;
+    padding: 0 70px;
     font-size: 18px;
+    margin: 20px 40px 0px 40px;
+}
+.policyList-template .add-button{
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-right: 0;
 }
 .policyList-template .add-button .ant-btn{
     color: #333;
+    margin-right: 0;
 }
 .policyList-template .policyList-button .ant-btn:hover,
 .policyList-template .add-button .ant-btn:hover{
@@ -66,14 +69,14 @@
     cursor: pointer;
 }
 .policyList-template .title-component-template{
-    margin-top: 80px;
-    margin-bottom: 60px;
+    margin-top: 60px;
+    margin-bottom: 40px;
 }
 /*面包屑*/
 .policyList-template .ant-breadcrumb {
     background: #ae242b;
-    height: 70px;
-    line-height: 70px;
+    height: 50px;
+    line-height: 50px;
     color: #fff;
     font-size: 18px;
     padding-left: 110px;
@@ -82,7 +85,7 @@
 .policyList-template .ant-breadcrumb .ant-breadcrumb-separator {
     color: #fff;
 }
-.policyList-template .ant-row{
-    margin-bottom: 60px;
-}
+/*.policyList-template .ant-row{*/
+    /*margin-bottom: 60px;*/
+/*}*/
 

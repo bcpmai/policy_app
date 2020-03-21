@@ -24,20 +24,27 @@ class Top extends Component {
         if(pathName) {
             switch (pathName.replace("/","")) {
                 case "policyList":
-                    current = "login";
                 case "addPolicy":
-                    current = "login";
                 case "collectionList":
+                case "login":
+                case "register":
+                case "forgotYour":
                     current = "login";
                         break;
                 case "policyText":
-                    current = "latestPolicy";
                 case "latestPolicy":
                     current = "latestPolicy";
                     break
 
             }
+            if(pathName.indexOf("addPolicy") != -1 || pathName.indexOf("policyPreview") != -1){
+                current = "login";
+            }
+            if(pathName.indexOf("policyText") != -1){
+                current = "latestPolicy";
+            }
         }
+        console.log(current,"current");
         this.state = {
             isLogin:cookie.load('userId'),
             current
@@ -61,14 +68,14 @@ class Top extends Component {
         cookie.remove('userId');
         cookie.remove('userName');
         cookie.remove('userType');
-        window.location.reload();
+        window.location.href='/login';
     }
     serachLatestPolicy = (keyString) =>{
         window.location.href=`/latestPolicy/${keyString}`
     }
 
     render() {
-        const { isLogin } = this.state;
+        const { isLogin, current } = this.state;
         return (
             <div className="top-component-template">
                 <div className="welcome-box">
@@ -82,12 +89,14 @@ class Top extends Component {
 
                 </Row>
                 </div>
-                <div className="logo-box">
-                    <div className="logo">政策与企业匹配服务平台</div>
-                    <div className="serach"><Search placeholder="请输入关键字查找申报政策" onSearch={this.serachLatestPolicy} enterButton /></div>
-                    <div className="menu-box">
+                <div className={`logo-box ${current!="home" ? 'min-logo-box' : ''}`}>
+                    <div className="max-weight-box">
+                        <div className="logo">政策与企业匹配服务平台</div>
+                        <div className="serach"><Search placeholder="请输入关键字查找申报政策" onSearch={this.serachLatestPolicy} enterButton /></div>
+                    </div>
+                    <div className={`menu-box ${current!="home" ? 'min-menu-box' : ''}`}>
                         <div className="menu-bg"></div>
-                        <Menu onClick={this.handleClick} selectedKeys={[this.state.current || "home"]} mode="horizontal" theme="dark">
+                        <Menu onClick={this.handleClick} selectedKeys={[current || "home"]} mode="horizontal" theme="dark">
                             <Menu.Item key="home">
                                 <a href="/">首页</a>
                             </Menu.Item>

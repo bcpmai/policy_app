@@ -60,8 +60,8 @@ class LatestPolicy extends Component {
             },
             {
                 title: '发文日期',
-                key: 'release_at',
-                dataIndex: 'release_at'
+                key: 'release_date',
+                dataIndex: 'release_date'
             },
             {
                 title: '操作',
@@ -80,8 +80,11 @@ class LatestPolicy extends Component {
             onShowSizeChange:onShowSizeChange
         }
     }
-    async componentWillMount() {
-        this.getTableData();
+    async componentDidMount() {
+        console.log(this.props);
+        const {keyString} = this.props.match.params;
+        this.refs.seachForm.setFieldsValue({title:keyString});
+        this.getTableData({title:keyString});
         const labelThemeData = await request('/common/get-all-policy-theme-label', 'POST'); //政策主题
         const labelTypeData = await request('/common/get-all-use-type-label', 'POST'); //应用类型
         const selectBelongData = await request('/common/get-all-belong-label', 'POST'); //所属层级
