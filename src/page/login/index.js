@@ -3,12 +3,13 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {Form, Input, InputNumber, Button, Row, Col, Select} from 'antd';
+import {Form, Input, InputNumber, Button, Row, Col, Select,message} from 'antd';
 // import axios from 'axios';
 import {request} from './../../utils/request';
 import Top from './../../component/top';
 // import Footer from "../../component/footer";
 import './index.css';
+import cookie from "react-cookies";
 
 const { Option } = Select;
 const layout = {
@@ -38,6 +39,18 @@ class Login extends Component {
     onFinish = async (values) => {
         //发送请求
         const responest = await request('/common/login','POST',{...values});
+        const data = responest.data;
+        if(data && data.success){
+            message.success(data.msg);
+            cookie.save('userId', data.id);
+            cookie.save('userName', data.username);
+            cookie.save('userType', data.member_type);
+            setTimeout(()=>{
+                this.props.history.push('/');
+            },1000);
+        }else{
+            message.error(data.msg);
+        }
         console.log(responest);
         // axios.post('/common/login',{
         //     ...values

@@ -43,7 +43,7 @@ ReactDOM.render(
             <Route exact path="/register" component={Register} />
             <Route exact path="/forgotYour" component={ForgotYour} />
             <Route exact path="/declarePush" component={DeclarePush} />
-            <Route exact path="/latestPolicy" component={LatestPolicy} />
+            <Route exact path="/latestPolicy/:keyString?" component={LatestPolicy} />
             <Route exact path="/policyText" component={PolicyText} />
             <Route exact path="/information" component={Information} />
             <Route exact path="/accountManagement" component={AccountManagement} />

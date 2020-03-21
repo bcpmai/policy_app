@@ -17,3 +17,18 @@
     color: #333;
     margin: 10px 0;
 }
+.declarePush-template .title-component-template{
+    margin-top: 80px;
+    margin-bottom: 60px;
+}
+.declarePush-template .ant-btn
+{
+    border:1px solid #ae242b;
+    color:#ae242b;
+    background: #fff;
+    border-radius: 20px;
+    padding: 0 40px;
+    height: 35px;
+    margin-bottom: 40px;
+    margin-top: 20px;
+}

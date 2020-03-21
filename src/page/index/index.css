@@ -192,3 +192,6 @@
 .index-template .Label-component-template .select-button{
     color: #cc0000;
 }
+.index-template .ant-carousel .slick-initialized .slick-slide{
+    overflow: hidden;
+}

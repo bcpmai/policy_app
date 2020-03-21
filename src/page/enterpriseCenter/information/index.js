@@ -8,7 +8,7 @@ import { Button, Form, Input, InputNumber, Row, Col, Select,DatePicker,Menu} fro
 import { EditOutlined,AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import Top from '../../../component/top/index';
-// import Footer from "../../../component/footer/index";
+import Title from "../../../component/title/index";
 import './index.css';
 import EnterpriseMenu from '../../../component/enterpriseCenterMenu';
 
@@ -50,10 +50,10 @@ class Information extends Component {
                             <EnterpriseMenu menuKey="information" />
                         </Col>
                         <Col span={20}>
-                    <div className="information-title">企业信息</div>
+                    <Title name="企业信息" />
                     <div className="information-title-h1">
                         <span>您可完善企业信息，精准匹配申报政策</span>
-                        <Button type="primary" className="button-matching">精准匹配</Button>
+                        <Button onClick={()=>{window.location.href="/matching"}} type="primary" className="button-matching">精准匹配</Button>
                         <Button type="primary" icon={<EditOutlined />} className="button-edit">编辑</Button>
                     </div>
                     <div className="information-form">

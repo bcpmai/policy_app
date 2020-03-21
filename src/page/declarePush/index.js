@@ -3,10 +3,9 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import { Table, Tag } from 'antd';
-import axios from 'axios';
+import { Table, Tag, Button, Modal, Row, Col } from 'antd';
+import Title from "./../../component/title/index";
 import Top from './../../component/top';
-// import Footer from "../../component/footer";
 import './index.css';
 
 class DeclarePush extends Component {
@@ -20,7 +19,7 @@ class DeclarePush extends Component {
                 title: '项目标题',
                 dataIndex: 'title',
                 key: 'title',
-                render: text => <a>{text}</a>,
+                render: text => <a href="/itemText">{text}</a>,
             },
             {
                 title: '应用类型',
@@ -45,7 +44,7 @@ class DeclarePush extends Component {
             {
                 title: '操作',
                 key: 'action',
-                render: (text, record) => (<span><a>立即申报</a></span>),
+                render: (text, record) => (<span><a onClick={this.showModal}>立即申报</a></span>),
             },
         ];
 
@@ -94,16 +93,62 @@ class DeclarePush extends Component {
             onShowSizeChange:onShowSizeChange
         }
     }
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+    handleOk = e => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    };
+
+    handleCancel = e => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    };
     render() {
         return (
             <div className="declarePush-template">
                 <Top />
                 <div className="declarePush-form-box max-weight-box">
-                    <div className="declarePush-title">申报推送</div>
+                    <Title name="申报推送" />
                     <div className="declarePush-title-h1">根据您所填信息，您可申报以下项目</div>
                     <Table columns={this.columns} dataSource={this.data} pagination={this.pagination} />
+                    <div className="declarePush-title-h1">完善企业信息，推送更精准</div>
+                    <Button type="primary" onClick={()=>{window.location.href="/information"}}>精准匹配</Button>
                 </div>
-                {/*<Footer/>*/}
+                <Modal
+                    title="申报提示"
+                    visible={this.state.visible}
+                    onOk={this.handleOk}
+                    okText="删除"
+                    cancelText="关闭"
+                    onCancel={this.handleCancel}
+                    footer={[
+                        <Button key="submit" type="primary" onClick={this.handleOk}>
+                            关闭
+                        </Button>
+                    ]}
+                >
+                    <p>该项目网上申报后，需提交纸质材料。</p>
+                    <Row>
+                        <Col span={8}>1.点击进入网上申报：</Col>
+                        <Col span={16}>
+                            <span>http://web.js.policy.com</span>
+                            <Button className="model-button" key="submit" onClick={()=>{window.open('http://web.js.policy.com/declarationItem')}}>网上申报</Button>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8}>2.纸质材料提交至</Col>
+                        <Col span={16}>重庆市九龙坡区人民政府<br />王先生  18809870987
+                        </Col>
+                    </Row>
+                </Modal>
             </div>
         );
     };

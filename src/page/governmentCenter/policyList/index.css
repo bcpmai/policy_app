@@ -85,14 +85,4 @@
 .policyList-template .ant-row{
     margin-bottom: 60px;
 }
-.policyList-template .ant-table thead > tr > th{
-    background: #ae242b;
-    color: #fff;
-    font-size: 14px;
-}
-.policyList-template .ant-table .ant-table-tbody tr td{
-    background: #fff;
-}
-.policyList-template .ant-table .ant-table-tbody tr:nth-child(2n) td{
-    background: #e5e5e5;
-}
+

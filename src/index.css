@@ -71,7 +71,8 @@ code {
   border-top:0;
   padding-bottom: 50px;
 }
-.ant-modal-footer button{
+.ant-modal-footer button,
+.ant-modal .model-button{
   border:1px solid #ae242b;
   color:#ae242b;
   background: #fff;
@@ -79,14 +80,26 @@ code {
   padding: 0 40px;
   height: 35px;
 }
-.ant-modal-footer button:hover{
+.ant-modal .model-button{
+  padding: 0 10px;
+  border-radius: 10px;
+  height: 25px;
+  margin-left: 10px;
+  font-size: 12px;
+}
+.ant-modal-footer button:hover,
+.ant-modal .model-button:hover{
   background:#ae242b;
   border:1px solid #ae242b;
-  color:#fff;
+  color:#fff!important;
+}
+.ant-modal-footer button:focus{
+  background:#fff;
 }
 /*输入框*/
 .ant-input:focus,
 .ant-input:hover,
+.ant-input-password,
 .ant-select-selector:focus,
 .ant-select-selector:hover,
 .ant-select-open .ant-select-selector,
@@ -94,13 +107,39 @@ code {
 .ant-picker:hover,
 .ant-picker-focused,
 .ant-upload .ant-btn:focus,
-.ant-upload .ant-btn:hover
+.ant-upload .ant-btn:hover,
+.ant-modal .ant-btn:focus
 {
   border:1px solid #ae242b!important;
   box-shadow: 0 0 0 2px rgba(178, 41, 46, 0.2) !important;
+  color:#ae242b;
 }
-
+.ant-input-password .ant-input:focus,
+.ant-input-password .ant-input:hover{
+  border:0px!important;
+  box-shadow:none!important;
+}
 .ant-upload .ant-btn:focus,
 .ant-upload .ant-btn:hover{
   color:#ae242b!important;
+}
+/*表格*/
+.main-box .ant-table thead > tr > th{
+  background: #ae242b;
+  color: #fff;
+  font-size: 14px;
+}
+.main-box .ant-table .ant-table-tbody tr td{
+  background: #fff;
+}
+.main-box .ant-table .ant-table-tbody tr:nth-child(2n) td{
+  background: #e5e5e5;
+}
+/*tag*/
+.main-box .ant-tag{
+  background: #eeeeee;
+  border-radius:15px ;
+  padding: 5px 20px;
+  font-size: 16px;
+  color: #666;
 }

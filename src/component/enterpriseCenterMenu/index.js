@@ -7,6 +7,7 @@ import {
     MailOutlined,
     AppstoreOutlined,
     SettingOutlined,
+    BankOutlined
 } from '@ant-design/icons';
 import './index.css';
 
@@ -32,7 +33,7 @@ class EnterpriseMenu extends Component {
         return (
             <div className="enterpriseMenu-component-template">
                 <Menu
-                    style={{ width: 220 }}
+                    style={{ width: 200 }}
                     defaultSelectedKeys={[current]}
                     defaultOpenKeys={['sub1']}
                     mode="inline"
@@ -41,7 +42,7 @@ class EnterpriseMenu extends Component {
                         key="sub1"
                         title={
                             <span>
-                                          <MailOutlined />
+                                          <BankOutlined />
                                           <span>个人中心</span>
                                         </span>
                         }

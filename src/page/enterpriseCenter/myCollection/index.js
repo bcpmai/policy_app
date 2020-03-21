@@ -8,7 +8,7 @@ import { Button, Form, Input, InputNumber, Row, Col, Select,DatePicker,Menu,Tabl
 import { EditOutlined,AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import Top from '../../../component/top/index';
-// import Footer from "../../../component/footer/index";
+import Title from "../../../component/title/index";
 import './index.css';
 import EnterpriseMenu from '../../../component/enterpriseCenterMenu';
 
@@ -130,7 +130,7 @@ class MyCollection extends Component {
                             <EnterpriseMenu menuKey="myCollection" />
                         </Col>
                         <Col span={20}>
-                    <div className="myCollection-title">我的收藏</div>
+                        <Title name="我的收藏" />
                     <div className="myCollection-tab">
                         <Tabs onChange={this.callback} type="card">
                             <TabPane tab="最新政策" key="1">
@@ -142,7 +142,7 @@ class MyCollection extends Component {
                         </Tabs>
                     </div>
                             <div className="myCollection-search">
-                                <Search placeholder="input search text" onSearch={value => console.log(value)} enterButton="查询" />
+                                <Search onSearch={value => console.log(value)} enterButton="查询" />
                             </div>
                             <Table columns={this.columns} dataSource={this.data} pagination={this.pagination} />
                         </Col>

@@ -3,9 +3,10 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import { Carousel, Row, Col, Button, Divider, Card } from 'antd';
+import { Carousel, Row, Col, Button, Divider, Card, message, Modal } from 'antd';
 import { BarsOutlined,SearchOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
+import cookie from "react-cookies";
 import {request} from './../../utils/request';
 import Top from './../../component/top';
 import Label from "../../component/label";
@@ -84,6 +85,31 @@ class Register extends Component {
             })
         }
     }
+    goDeclarePush = () =>{
+        if(cookie.load('userId')){
+            this.props.history.push('/declarePush');
+        }else{
+            message.warning('请先登录');
+        }
+    }
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+    handleOk = e => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    };
+
+    handleCancel = e => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    };
     render() {
         const { label } = this.state;
         return (
@@ -103,7 +129,7 @@ class Register extends Component {
                     <Row className="item-box" >
                         <Col span={12} className="item-policy">
                             <div className="item-policy-box">
-                                <Link to="/policyList">
+                                <Link to="/latestPolicy">
                                     <img src={policyIcon}></img>
                                     <span>找政策</span>
                                 </Link>
@@ -111,7 +137,7 @@ class Register extends Component {
                         </Col>
                         <Col span={12} className="item-project">
                             <div className="item-project-box">
-                                <Link to="/policyList">
+                                <Link to="/declarationItem">
                                     <img src={projectIcon}></img>
                                     <span>报项目</span>
                                 </Link>
@@ -130,7 +156,7 @@ class Register extends Component {
                                     return <Label onClick={()=>this.labelChange()} title={labelItem.title} item={labelItem.item} key={labelIdx} />
                                 })}
                                 <div className="matching-button">
-                                    <Button type="primary" shape="round" size="large">
+                                    <Button type="primary" shape="round" size="large" onClick={this.goDeclarePush}>
                                         立即匹配
                                     </Button>
                                 </div>
@@ -152,7 +178,7 @@ class Register extends Component {
                                             <p><strong>扶持内容：</strong><span>（一）企业申请的单笔转贷应急周转资金额度原则上不超过1000万元（含）。</span></p>
                                             <p>（二）转贷应急周转资金使用时间原则上控制在20个工作日以内。资金使用费按每个工作日0.1‰计算收取，收费不满1个工作日的按1个工作日计算收取。若20个工作日还不能······</p>
                                         </div>
-                                        <p className="button-center"><Button type="primary" shape="round" >立即申报</Button></p>
+                                        <p className="button-center" onClick={this.showModal}><Button type="primary" shape="round" >立即申报</Button></p>
                                     </div>
                                 </Col>
                                 <Col span={8}>
@@ -165,7 +191,7 @@ class Register extends Component {
                                             <p><strong>扶持内容：</strong><span>（一）企业申请的单笔转贷应急周转资金额度原则上不超过1000万元（含）。</span></p>
                                             <p>（二）转贷应急周转资金使用时间原则上控制在20个工作日以内。资金使用费按每个工作日0.1‰计算收取，收费不满1个工作日的按1个工作日计算收取。若20个工作日还不能······</p>
                                         </div>
-                                        <p className="button-center"><Button type="primary" shape="round" >立即申报</Button></p>
+                                        <p className="button-center" onClick={this.showModal}><Button type="primary" shape="round" >立即申报</Button></p>
                                     </div>
                                 </Col>
                                 <Col span={8}>
@@ -178,15 +204,41 @@ class Register extends Component {
                                             <p><strong>扶持内容：</strong><span>（一）企业申请的单笔转贷应急周转资金额度原则上不超过1000万元（含）。</span></p>
                                             <p>（二）转贷应急周转资金使用时间原则上控制在20个工作日以内。资金使用费按每个工作日0.1‰计算收取，收费不满1个工作日的按1个工作日计算收取。若20个工作日还不能······</p>
                                         </div>
-                                        <p className="button-center"><Button type="primary" shape="round" >立即申报</Button></p>
+                                        <p className="button-center" onClick={this.showModal}><Button type="primary" shape="round" >立即申报</Button></p>
                                     </div>
                                 </Col>
                             </Row>
-                            <div className="application-more"><a href="/policyList">更多</a></div>
+                            <div className="application-more"><a href="/declarationItem">更多</a></div>
                         </div>
                     </div>
                 </div>
-            {/*<Footer/>*/}
+                <Modal
+                    title="申报提示"
+                    visible={this.state.visible}
+                    onOk={this.handleOk}
+                    okText="删除"
+                    cancelText="关闭"
+                    onCancel={this.handleCancel}
+                    footer={[
+                        <Button key="submit" type="primary" onClick={this.handleOk}>
+                            关闭
+                        </Button>
+                    ]}
+                >
+                    <p>该项目网上申报后，需提交纸质材料。</p>
+                    <Row>
+                        <Col span={8}>1.点击进入网上申报：</Col>
+                        <Col span={16}>
+                            <span>http://web.js.policy.com</span>
+                            <Button className="model-button" key="submit" onClick={()=>{window.open('http://web.js.policy.com/declarationItem')}}>网上申报</Button>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8}>2.纸质材料提交至</Col>
+                        <Col span={16}>重庆市九龙坡区人民政府<br />王先生  18809870987
+                        </Col>
+                    </Row>
+                </Modal>
             </div>
         );
     };

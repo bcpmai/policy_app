@@ -346,7 +346,6 @@ class PolicyList extends Component {
                     </Row>
                 </div>
                 {/*<Footer/>*/}
-                {}
                 <Modal
                     title="温馨提示"
                     visible={this.state.visible}

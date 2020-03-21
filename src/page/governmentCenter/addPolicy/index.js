@@ -34,13 +34,17 @@ const validateMessages = {
     },
 };
 
+
+
 class AddPolicy extends Component {
     constructor(props){
         super(props);
         this.state = {
 
         }
+
     }
+
     componentDidMount(){
         console.log(this.refs);
         const elem = this.refs.editorElem; //获取editorElem盒子
@@ -62,6 +66,7 @@ class AddPolicy extends Component {
         //         content: editor.txt.html()  //获取富文本内容
         //     })
         // }, false)
+
     }
     async componentWillMount() {
         const labelThemeData = await request('/common/get-all-policy-theme-label', 'POST'); //政策主题
@@ -91,7 +96,11 @@ class AddPolicy extends Component {
         }
     }
     onFinish = async (values) => {
-        console.log(values);
+        console.log(values,this);
+    }
+    onSave = async () => {
+
+        console.log(Form,this);
     }
     belongChange = async (value) => {
         const labelProductData = await request('/common/get-all-organization-label', 'POST', {belong_id: value}); //发布机构
@@ -144,6 +153,8 @@ class AddPolicy extends Component {
             },
             accept:".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf,ppt,.pptx,.xls,.xlsx,.pdf,.zip,.rar"
         };
+
+
         return (
             <div className="addPolicy-template">
                 <Top />
@@ -160,17 +171,18 @@ class AddPolicy extends Component {
                         <Breadcrumb.Item href="">添加政策</Breadcrumb.Item>
                     </Breadcrumb>
                     <div className="label-box">
-                        <Form {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
-                            <Form.Item name="username" label="政策标题" rules={[{required: true}]}>
+                        <Form.Provider>
+                        <Form form={this.form} {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
+                            <Form.Item name="title" label="政策标题" rules={[{required: true}]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item name="company_name" label="发文字号" rules={[{required: true}]}>
+                            <Form.Item name="post_shop_name" label="发文字号" rules={[{required: true}]}>
                                 <Input/>
                             </Form.Item>
-                            <Form.Item name="date" label="发文日期" rules={[{required: true}]}>
+                            <Form.Item name="release_date" label="发文日期" rules={[{required: true}]}>
                                 <DatePicker onChange={this.onDateChange} />
                             </Form.Item>
-                            <Form.Item name="mobile" label="所属行业" rules={[{required: true}]}>
+                            <Form.Item name="industry_label_id_list" label="所属行业" rules={[{required: true}]}>
                                 <Select
                                     mode="multiple"
                                     style={{ width: '100%' }}
@@ -181,7 +193,7 @@ class AddPolicy extends Component {
 
                                 </Select>
                             </Form.Item>
-                            <Form.Item name="username" label="政策主题" rules={[{required: true}]}>
+                            <Form.Item name="policy_theme_label_list" label="政策主题" rules={[{required: true}]}>
                                 <Select
                                     mode="multiple"
                                     style={{ width: '100%' }}
@@ -192,7 +204,7 @@ class AddPolicy extends Component {
 
                                 </Select>
                             </Form.Item>
-                            <Form.Item name="username" label="应用类型" rules={[{required: true}]}>
+                            <Form.Item name="use_type_list" label="应用类型" rules={[{required: true}]}>
                                 <Select
                                     mode="multiple"
                                     style={{ width: '100%' }}
@@ -203,13 +215,13 @@ class AddPolicy extends Component {
 
                                 </Select>
                             </Form.Item>
-                            <Form.Item name="username" label="所属层级" rules={[{required: true}]}>
+                            <Form.Item name="belong" label="所属层级" rules={[{required: true}]}>
                                 <Select onChange={this.belongChange}>
                                     {belongData ? belongData.map((item, idx) => <Option value={item.id}
                                                                                             key={item.id}>{item.name}</Option>) : ''}
                                 </Select>
                             </Form.Item>
-                            <Form.Item name="username" label="发布机构" rules={[{required: true}]}>
+                            <Form.Item name="organization_label_list" label="发布机构" rules={[{required: true}]}>
                                 <Select
                                     mode="multiple"
                                     style={{ width: '100%' }}
@@ -219,11 +231,11 @@ class AddPolicy extends Component {
                                                                                         key={item.id}>{item.name}</Option>) : ''}
                                 </Select>
                             </Form.Item>
-                            <Form.Item name="username" label="政策正文" rules={[{required: true}]}>
+                            <Form.Item name="content" label="政策正文">
                                 <div ref="editorElem">
                                 </div>
                             </Form.Item>
-                            <Form.Item name="username" label="上传附件" rules={[{required: true}]}>
+                            <Form.Item name="username" label="上传附件">
                                 <Upload {...props} fileList={this.state.fileList}>
                                     <Button>
                                         <UploadOutlined /> Upload
@@ -231,13 +243,14 @@ class AddPolicy extends Component {
                                 </Upload>
                                 <span>支持扩展名为.doc/.docx/.ppt/.pptx/.xls/.xlsx/.pdf/.zip/.rar，大小不超过100M</span>
                             </Form.Item>
+                            <div className="addPolicy-button">
+                                <Button type="primary" htmlType="submit" ref="finish">发布</Button>
+                                <Button type="primary" className="ml15" ref="save" onClick={()=>this.onSave()}>保存</Button>
+                                <Button type="primary" className="ml15" onClick={()=>window.location.href="/policyPreview"}>预览</Button>
+                                <Button className="ml15">返回</Button>
+                            </div>
                         </Form>
-                        <div className="addPolicy-button">
-                            <Button type="primary" htmlType="submit">发布</Button>
-                            <Button type="primary" className="ml15">保存</Button>
-                            <Button type="primary" className="ml15" onClick={()=>window.location.href="/policyPreview"}>预览</Button>
-                            <Button className="ml15">返回</Button>
-                        </div>
+                        </Form.Provider>
                     </div>
                     </Col>
                 </Row>

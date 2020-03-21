@@ -11,6 +11,7 @@ import Top from '../../../component/top/index';
 // import Footer from "../../../component/footer/index";
 import './index.css';
 import EnterpriseMenu from '../../../component/enterpriseCenterMenu';
+import Title from "../../../component/title/index";
 
 const { Option } = Select;
 const { SubMenu } = Menu;
@@ -41,17 +42,17 @@ class AccountManagement extends Component {
     }
     render() {
         return (
-            <div className="information-template">
+            <div className="accountManagement-template">
                 <Top />
-                <div className="information-form-box max-weight-box">
+                <div className="accountManagement-form-box max-weight-box">
                     <Row>
                         <Col span={4}>
                             <EnterpriseMenu menuKey="accountManagement" />
                         </Col>
                         <Col span={20}>
-                    <div className="information-title">账户管理</div>
-                    <div className="information-form">
-                        <div className="information-title">账号密码修改</div>
+                            <Title name="账户管理" />
+                    <div className="accountManagement-form">
+                        <div className="accountManagement-title">账号密码修改</div>
                         <Form {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
                             <Form.Item name='oldPassword' label="原登录密码" rules={[{required: true}]}>
                                 <Input.Password placeholder="请输入内容" style={{width:300}}/>
@@ -87,7 +88,7 @@ class AccountManagement extends Component {
                                 </Button>
                             </Form.Item>
                         </Form>
-                        <div className="information-title">绑定手机修改</div>
+                        <div className="accountManagement-title">绑定手机修改</div>
                         <Form {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
                             <Form.Item name="mobile" label="原绑定手机号" rules={[{required: true}]}>
                                 <Input style={{width:300}}/>

@@ -2,15 +2,17 @@
 }
 .information-template .information-title{
     margin-top: 20px;
-    color: #333;
+    color: #000;
+    font-size: 16px;
 }
 .information-template .information-title:before{
     content: '';
     width: 5px;
-    height: 20px;
+    height: 18px;
     float:left;
-    background: #1890ff;
-    margin-right: 5px;
+    background: #aa2426;
+    margin-right: 10px;
+    margin-top: 3px;
 }
 .information-template .information-title-h1{
     font-size: 24px;
@@ -25,11 +27,27 @@
     vertical-align: 3px;
 }
 .information-template .information-form{
-    border:1px solid #efefef;
-    margin-top: 20px;
+    margin-top: 40px;
     padding: 0 20px;
     margin-bottom: 20px;
 }
 .information-template .information-form .information-title{
     margin-bottom: 10px;
+}
+.information-template .title-component-template{
+    margin-top: 80px;
+    margin-bottom: 60px;
+}
+.information-template .ant-btn{
+    background: #fff;
+    color: #ae242b;
+    border:1px solid #ae242b;
+    border-radius: 20px;
+    height: 40px;
+    padding: 0 40px;
+    font-size: 16px;
+}
+.information-template .ant-btn:hover{
+    background: #ae242b;
+    color: #fff;
 }

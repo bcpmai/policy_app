@@ -5,8 +5,9 @@ import { Button, Form, Input, InputNumber, Row, Col, Select,DatePicker,Menu} fro
 import axios from 'axios';
 import {
     MailOutlined,
-    AppstoreOutlined,
-    SettingOutlined,
+    ReadOutlined,
+    ProfileOutlined,
+    DesktopOutlined
 } from '@ant-design/icons';
 import './index.css';
 
@@ -18,7 +19,7 @@ class PolicyMenu extends Component {
         super(props);
         this.state = {
             isLogin:false,
-            current:"home"
+            current:props.current || "policyList"
         }
     }
 
@@ -27,12 +28,12 @@ class PolicyMenu extends Component {
     }
 
     render() {
-        const { isLogin } = this.state;
+        const { isLogin,current } = this.state;
         return (
             <div className="policy-menu-component-template">
                 <Menu
                     style={{ width: 200 }}
-                    defaultSelectedKeys={['1']}
+                    defaultSelectedKeys={[current]}
                     defaultOpenKeys={['sub1']}
                     mode="inline"
                 >
@@ -40,19 +41,19 @@ class PolicyMenu extends Component {
                         key="sub1"
                         title={
                             <span>
-                                          <MailOutlined />
+                                          <ReadOutlined />
                                           <span>政策管理</span>
                                         </span>
                         }
                     >
-                        <Menu.Item key="1"><a href="/information" >政策列表</a></Menu.Item>
-                        <Menu.Item key="2">采集列表</Menu.Item>
+                        <Menu.Item key="information"><a href="/policyList" >政策列表</a></Menu.Item>
+                        <Menu.Item key="collectionList"><a href="/collectionList">采集列表</a></Menu.Item>
                     </SubMenu>
                     <SubMenu
                         key="sub2"
                         title={
                             <span>
-                                          <MailOutlined />
+                                         <ProfileOutlined />
                                           <span>项目管理</span>
                                         </span>
                         }
@@ -62,7 +63,7 @@ class PolicyMenu extends Component {
                         key="sub3"
                         title={
                             <span>
-                                          <MailOutlined />
+                                          <DesktopOutlined />
                                           <span>系统管理</span>
                                         </span>
                         }

@@ -3,7 +3,7 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import { Button, Form, Input, InputNumber, Row, Col, Select,DatePicker,Menu,Table} from 'antd';
+import { Button, Form, Input, InputNumber, Row, Col, Select,DatePicker,Menu,Table, Modal} from 'antd';
 //import { EditOutlined } from '@ant-design/icons';
 import { EditOutlined,AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import axios from 'axios';
@@ -11,6 +11,7 @@ import Top from '../../../component/top/index';
 // import Footer from "../../../component/footer/index";
 import './index.css';
 import EnterpriseMenu from '../../../component/enterpriseCenterMenu';
+import Title from "../../../component/title/index";
 
 const { Option } = Select;
 const { SubMenu } = Menu;
@@ -43,7 +44,7 @@ class Matching extends Component {
                 dataIndex: 'title',
                 key: 'title',
                 width:350,
-                render: text => <a>{text}</a>,
+                render: text => <a href="/itemText">{text}</a>,
             },
             {
                 title: '应用类型',
@@ -69,7 +70,7 @@ class Matching extends Component {
             {
                 title: '操作',
                 key: 'action',
-                render: (text, record) => (<span><a>立即申报</a><a className="ml15">收藏</a></span>),
+                render: (text, record) => (<span><a onClick={this.showModal}>立即申报</a><a className="ml15">收藏</a></span>),
             },
         ];
 
@@ -121,6 +122,24 @@ class Matching extends Component {
     onChange = (date, dateString) =>{
         console.log(date, dateString);
     }
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+    handleOk = e => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    };
+
+    handleCancel = e => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    };
     render() {
         return (
             <div className="matching-template">
@@ -131,17 +150,43 @@ class Matching extends Component {
                             <EnterpriseMenu menuKey="matching"/>
                         </Col>
                         <Col span={20}>
-                    <div className="matching-title">精准匹配</div>
+                            <Title name="精准匹配" />
                     <div className="matching-title-h1">
                         <span>您可完善企业信息，精准匹配申报政策</span>
-                        <Button type="primary" className="button-matching">精准匹配</Button>
-                        <Button type="primary" icon={<EditOutlined />} className="button-edit">完善信息</Button>
+                        {/*<Button type="primary" className="button-matching">精准匹配</Button>*/}
+                        <Button onClick={()=>{window.location.href="/information"}} type="primary" icon={<EditOutlined />} className="button-edit">完善信息</Button>
                     </div>
                             <Table columns={this.columns} dataSource={this.data} pagination={this.pagination} />
                         </Col>
                     </Row>
                 </div>
-                {/*<Footer/>*/}
+                <Modal
+                    title="申报提示"
+                    visible={this.state.visible}
+                    onOk={this.handleOk}
+                    okText="删除"
+                    cancelText="关闭"
+                    onCancel={this.handleCancel}
+                    footer={[
+                        <Button key="submit" type="primary" onClick={this.handleOk}>
+                            关闭
+                        </Button>
+                    ]}
+                >
+                    <p>该项目网上申报后，需提交纸质材料。</p>
+                    <Row>
+                        <Col span={8}>1.点击进入网上申报：</Col>
+                        <Col span={16}>
+                            <span>http://web.js.policy.com</span>
+                            <Button className="model-button" key="submit" onClick={()=>{window.open('http://web.js.policy.com/declarationItem')}}>网上申报</Button>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8}>2.纸质材料提交至</Col>
+                        <Col span={16}>重庆市九龙坡区人民政府<br />王先生  18809870987
+                        </Col>
+                    </Row>
+                </Modal>
             </div>
         );
     };

@@ -19,17 +19,17 @@ class PolicyText extends Component {
             {
                 title: '国家企业技术中心认定管理办法',
                 time:'2016-02-26',
-                link:'www.baidu.com'
+                link:'/itemText'
             },
             {
                 title: '工业和信息化部关于申报2019年工业和信息化领域公共服务能力提升专项的通知',
                 time:'2016-02-26',
-                link:'www.baidu.com'
+                link:'/itemText'
             },
             {
                 title: '关于申报2019年科研机构绩效激励引导专项的通知',
                 time:'2016-02-26',
-                link:'www.baidu.com'
+                link:'/itemText'
             },
         ];
     }

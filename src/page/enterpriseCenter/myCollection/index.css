@@ -43,3 +43,37 @@
     width: 60%;
     margin: 0 auto 20px;
 }
+.myCollection-template .title-component-template{
+    margin-top: 80px;
+    margin-bottom: 60px;
+}
+.myCollection-template .ant-btn{
+    background: #fff;
+    color: #ae242b;
+    border:1px solid #ae242b;
+    border-radius: 20px;
+    height: 40px;
+    padding: 0 40px;
+    font-size: 16px;
+}
+.myCollection-template .ant-btn:hover{
+    background: #ae242b;
+    color: #fff;
+}
+.myCollection-template .myCollection-search .ant-input-group .ant-input{
+    border:1px solid #c8000a;
+    border-radius:15px 0 0 15px;
+    padding:5px 11px;
+}
+.myCollection-template .myCollection-search .ant-input-group .ant-btn{
+    border:1px solid #c8000a;
+    background: #a72329;
+    border-radius:0 15px 15px 0;
+    padding: 3px 18px;
+    height: 34px;
+    font-size: 18px;
+    color:#fff;
+}
+.myCollection-template .myCollection-search .ant-input-group .ant-input-group-addon{
+    background: none;
+}

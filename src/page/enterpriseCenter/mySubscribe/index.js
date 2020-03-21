@@ -11,6 +11,7 @@ import Top from '../../../component/top/index';
 // import Footer from "../../../component/footer/index";
 import './index.css';
 import EnterpriseMenu from '../../../component/enterpriseCenterMenu';
+import Title from "../../../component/title/index";
 
 const { Option } = Select;
 const { SubMenu } = Menu;
@@ -138,7 +139,7 @@ class MySubscribe extends Component {
                             <EnterpriseMenu menuKey="mySubscribe" />
                         </Col>
                         <Col span={20}>
-                    <div className="mySubscribe-title">我的订阅</div>
+                        <Title name="我的订阅" />
                     <div>
                         <Tabs defaultActiveKey="1" tabPosition={mode}>
                             {tabTitle.map((item,idx) => (

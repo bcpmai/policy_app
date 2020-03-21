@@ -32,9 +32,13 @@
     background: #fff;
     color: #ae242b;
 }
-.policy-menu-component-template .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected a{
+.policy-menu-component-template .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected a,
+.policy-menu-component-template .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-active a{
     color: #ae242b;
 }
 .policy-menu-component-template .ant-menu .ant-menu-inline .ant-menu-item-selected::after{
     display: none;
+}
+.policy-menu-component-template .ant-menu-submenu-title .anticon{
+    font-size: 20px;
 }
