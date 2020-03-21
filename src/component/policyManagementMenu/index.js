@@ -5,9 +5,11 @@ import { Button, Form, Input, InputNumber, Row, Col, Select,DatePicker,Menu} fro
 import axios from 'axios';
 import {
     MailOutlined,
-    ReadOutlined,
-    ProfileOutlined,
-    DesktopOutlined
+    AppstoreOutlined,
+    SettingOutlined,
+    DesktopOutlined,
+    ProfileOutlined
+
 } from '@ant-design/icons';
 import './index.css';
 
@@ -41,19 +43,19 @@ class PolicyMenu extends Component {
                         key="sub1"
                         title={
                             <span>
-                                          <ReadOutlined />
+                                          <MailOutlined />
                                           <span>政策管理</span>
                                         </span>
                         }
                     >
-                        <Menu.Item key="information"><a href="/policyList" >政策列表</a></Menu.Item>
+                        <Menu.Item key="policyList"><a href="/policyList" >政策列表</a></Menu.Item>
                         <Menu.Item key="collectionList"><a href="/collectionList">采集列表</a></Menu.Item>
                     </SubMenu>
                     <SubMenu
                         key="sub2"
                         title={
                             <span>
-                                         <ProfileOutlined />
+                                          <ProfileOutlined />
                                           <span>项目管理</span>
                                         </span>
                         }

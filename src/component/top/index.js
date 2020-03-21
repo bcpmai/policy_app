@@ -19,10 +19,37 @@ const { Search } = Input;
 class Top extends Component {
     constructor(props){
         super(props);
+        const pathName = window.location.pathname;
+        let current = "home";
+        if(pathName) {
+            switch (pathName.replace("/","")) {
+                case "policyList":
+                    current = "login";
+                case "addPolicy":
+                    current = "login";
+                case "collectionList":
+                    current = "login";
+                        break;
+                case "policyText":
+                    current = "latestPolicy";
+                case "latestPolicy":
+                    current = "latestPolicy";
+                    break
+
+            }
+        }
         this.state = {
             isLogin:cookie.load('userId'),
-            current:window.location.pathname ? window.location.pathname.replace("/","") : "home"
+            current
         }
+
+        // PolicyList
+        // AddPolicy
+        // CollectionList
+        // {
+        //     latestPolicy
+        //     information
+        // }
         console.log(window.location.pathname ? window.location.pathname.replace("/","") : "home")
     }
     componentWillMount() {}
@@ -64,14 +91,14 @@ class Top extends Component {
                             <Menu.Item key="home">
                                 <a href="/">首页</a>
                             </Menu.Item>
-                            <Menu.Item key="policyList">
-                                <a href="/policyList">最新政策</a>
+                            <Menu.Item key="latestPolicy">
+                                <a href="/latestPolicy">最新政策</a>
                             </Menu.Item>
-                            <Menu.Item key="policyList">
-                                <a href="/policyList">申报政策</a>
+                            <Menu.Item key="#">
+                                <a href="#">申报政策</a>
                             </Menu.Item>
-                            <Menu.Item key="information">
-                                <a href="/information">个人中心</a>
+                            <Menu.Item key="login">
+                                <a href={isLogin ? "/policyList" : "/login"}>个人中心</a>
                             </Menu.Item>
                         </Menu>
                     </div>

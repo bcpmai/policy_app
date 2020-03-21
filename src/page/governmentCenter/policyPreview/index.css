@@ -49,3 +49,13 @@
 .policyPreview-template .ant-descriptions-row > td{
     padding-bottom: 20px;
 }
+.policyPreview-template .labelAdd .ant-descriptions-item-label{
+    vertical-align: top;
+}
+.policyPreview-template .labelAdd .ant-descriptions-item-content{
+    display: inline-block;
+    width: 90%;
+}
+.policyPreview-template .labelAdd .ant-descriptions-item-content .ant-tag{
+    margin-bottom: 10px;
+}

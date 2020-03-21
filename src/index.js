@@ -48,8 +48,8 @@ ReactDOM.render(
             <Route exact path="/information" component={Information} />
             <Route exact path="/accountManagement" component={AccountManagement} />
             <Route exact path="/policyList" component={PolicyList} />
-            <Route exact path="/addPolicy" component={AddPolicy} />
-            <Route exact path="/policyPreview" component={PolicyPreview} />
+            <Route exact path="/addPolicy/:id?" component={AddPolicy} />
+            <Route exact path="/policyPreview/:id" component={PolicyPreview} />
             <Route exact path="/policyUser" component={PolicyUser} />
             <Route exact path="/declarationItem" component={DeclarationItem} />
             <Route exact path="/itemText" component={ItemText} />

@@ -9,9 +9,9 @@ class Label extends Component {
     constructor(props){
         super(props);
         this.state = {
-
+            isRadio:props.isRadio || false,
+            selectList:props.defalutValue
         }
-        console.log(this.props);
     }
 
     handleChange = (checked) => {
@@ -20,23 +20,42 @@ class Label extends Component {
     };
 
     onSelect = (selectId) =>{
+        let selectList = selectId;
+        if(!this.state.isRadio){
+            selectList = this.state.selectList || [];
+            const isSelectId = selectList.filter((id) => id == selectId);
+            if(isSelectId.length){
+                selectList = selectList.filter((id) => id !== selectId);
+            }else{
+                selectList.push(selectId);
+            }
+        }
         this.setState({
-            selectId
-        })
+            selectList
+        });
+        this.props.callback && this.props.callback(selectList);
     }
 
     render() {
-        const {title,item,className,span} = this.props;
-        const {selectId} = this.state;
+        const {title,item,className,span,defalutValue} = this.props;
+        const {selectList,isRadio} = this.state;
         return (
             <div className="Label-component-template">
                 <Row>
                     <Col span={span ? span.title : 2}>{title}</Col>
                     <Col span={span ? span.label : 22} className={`label-item-${className}`}>
-                        {item.map((titem,tidx)=>
-                            <Button shape="round" size="small" key={titem.id} onClick={()=>this.onSelect(titem.id)} className={selectId==titem.id ? "select-button":""}>{titem.name}</Button>
-                            //<CheckableTag checked={this.state.checked} onChange={this.handleChange} key={titem.id}>{titem.name}</CheckableTag>
-                        )}
+                        {item.map((titem,tidx)=>{
+                            let id;
+                            if(selectList && !isRadio){
+                                id = selectList.filter((sitem,sidx)=>sitem == titem.id).length;
+                            }else if(isRadio && selectList && selectList == titem.id){
+                                id = true;
+                            }
+                            if(defalutValue === null){
+                                id=null;
+                            }
+                            return <Button shape="round" size="small" key={titem.id} onClick={()=>this.onSelect(titem.id)} className={id ? "select-button":""}>{titem.name}</Button>
+                        })}
 
                     </Col>
                 </Row>

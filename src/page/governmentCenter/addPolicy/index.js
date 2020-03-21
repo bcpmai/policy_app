@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import { Input, Row, Col, Button, Select, DatePicker, Breadcrumb,Form,Upload, message} from 'antd';
+import moment from 'moment';
 import { UploadOutlined } from '@ant-design/icons';
 import {request} from './../../../utils/request';
 import Top from '../../../component/top/index';
@@ -23,6 +24,8 @@ const layout = {
     wrapperCol: {span: 18},
 };
 
+const uploadUrl = 'http://192.168.1.99:5000/api/common/upload-file';
+
 const validateMessages = {
     required: '必填项!',
     types: {
@@ -40,20 +43,27 @@ class AddPolicy extends Component {
     constructor(props){
         super(props);
         this.state = {
-
+            id:props.match.params ? props.match.params.id : null
         }
-
     }
 
     componentDidMount(){
-        console.log(this.refs);
+
+
+        console.log(this.state.data);
+
         const elem = this.refs.editorElem; //获取editorElem盒子
         //const submit = this.refs.submit; //获取提交按钮
         const editor = new E(elem)  //new 一个 editorElem富文本
-        // editor.customConfig.uploadFileName = 'upfile' //置上传接口的文本流字段
-        // editor.customConfig.uploadImgServer = 'https://dev.xiaomon.com/api/treeroot/v1/xxx/upload/uploadImage'//服务器接口地址
-        // editor.txt.html(this.state.content)  //设置富文本默认内容
-         editor.create() //创建
+        editor.customConfig.uploadFileName = 'file'; //置上传接口的文本流字段
+        editor.customConfig.uploadImgServer = uploadUrl;//服务器接口地址
+        editor.customConfig.onchange = html => {
+            this.setState({
+                editorContent: html
+            })
+        }
+        editor.create() //创建
+        this.getDefalutData(editor);
         // editor.customConfig.uploadImgHooks = {
         //     customInsert: function (insertImg, result, editor) {
         //         var url = result.url  //监听图片上传成功更新页面
@@ -66,9 +76,15 @@ class AddPolicy extends Component {
         //         content: editor.txt.html()  //获取富文本内容
         //     })
         // }, false)
+        // this.refs.save.addEventListener('click', function () {  //监听点击提交按钮
+        //     // 读取 html
+        //     this.setState({
+        //         content: editor.txt.html()  //获取富文本内容
+        //     })
+        // }, false)
 
     }
-    async componentWillMount() {
+    getDefalutData = async(editor) =>{
         const labelThemeData = await request('/common/get-all-policy-theme-label', 'POST'); //政策主题
         const labelTypeData = await request('/common/get-all-use-type-label', 'POST'); //应用类型
         const selectBelongData = await request('/common/get-all-belong-label', 'POST'); //所属层级
@@ -94,13 +110,61 @@ class AddPolicy extends Component {
 
             })
         }
+        //编辑时，获取默认值
+        if(this.state.id){
+            const {data} = await request(`/policy/get/${this.state.id}`, 'GET'); //请求默认数据
+            if(data){
+                const {policy} = data;
+                this.setState({
+                    data,
+                    release_date:policy.release_date,
+                    content:policy.content
+                });
+                policy.release_date = moment(policy.release_date, 'YYYY-MM-DD');
+                policy.life_date = moment(policy.life_date, 'YYYY-MM-DD');
+
+                this.refs.form.setFieldsValue(policy);
+                editor.txt.html(policy.content);
+                this.belongChange(policy.belong); //请求发布机构
+            }
+        }
+    }
+    onSubmit = async(values,url) => {
+        const {release_date,life_date,editorContent,id} = this.state;
+        values.release_date = release_date;
+        values.life_date = life_date;
+        values.content = editorContent;
+        values.member_id = cookie.load("userId");
+        values.username = cookie.load("userName");
+        if(id){
+            values.id = id;
+        }
+        const data = await request(this.state.id ? '/policy/update' : '/policy/add', 'POST',values);
+        if(data.data && data.data.success){
+            message.success(data.data.msg);
+            setTimeout(()=>{
+                this.props.history.push(url ? url+"/"+data.data.data.id : '/policyList');
+            },2000);
+        }else{
+            message.error(data.data.msg);
+        }
     }
     onFinish = async (values) => {
         console.log(values,this);
+        values.status = 2;
+        this.onSubmit(values);
+
     }
     onSave = async () => {
+        let values = this.refs.form.getFieldsValue();
+        values.status = 1;
+        this.onSubmit(values);
 
-        console.log(Form,this);
+    }
+    onView = () =>{
+        let values = this.refs.form.getFieldsValue();
+        values.status = 1;
+        this.onSubmit(values,"/policyPreview");
     }
     belongChange = async (value) => {
         const labelProductData = await request('/common/get-all-organization-label', 'POST', {belong_id: value}); //发布机构
@@ -111,12 +175,16 @@ class AddPolicy extends Component {
             })
         }
     }
-    onChange = (date, dateString)=> {
-        console.log(date, dateString);
-    }
     //发文日期
     onDateChange = (date,dateString) =>{
-        console.log(date, dateString);
+        this.setState({
+            release_date:dateString
+        })
+    }
+    onDateLifeChange = (date,dateString) =>{
+        this.setState({
+            life_date:dateString
+        })
     }
     handleChange = (value) =>{
         console.log(`selected ${value}`);
@@ -141,9 +209,10 @@ class AddPolicy extends Component {
         this.setState({ fileList });
     };
     render() {
-        const {industryData,belongData,themeData,typeData,productData} = this.state;
+        const {industryData,belongData,themeData,typeData,productData,id,data} = this.state;
         const props = {
-            action: 'http://web.js.policy.com/api/common/upload-file',
+            //action: 'http://web.js.policy.com/api/common/upload-file',
+            action:uploadUrl,
             onChange: this.handleUploadChange,
             multiple: true,
             data:{
@@ -154,6 +223,7 @@ class AddPolicy extends Component {
             accept:".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf,ppt,.pptx,.xls,.xlsx,.pdf,.zip,.rar"
         };
 
+        console.log(data && data.policy.release_date);
 
         return (
             <div className="addPolicy-template">
@@ -164,15 +234,15 @@ class AddPolicy extends Component {
                         <PolicyManagementMenu />
                     </Col>
                     <Col span={20}>
-                    <Title name="添加政策" />
+                    <Title name={id ? "编辑政策" : "添加政策"} />
                     <Breadcrumb separator=">">
                         <Breadcrumb.Item>政策管理</Breadcrumb.Item>
-                        <Breadcrumb.Item href="">政策列表</Breadcrumb.Item>
-                        <Breadcrumb.Item href="">添加政策</Breadcrumb.Item>
+                        <Breadcrumb.Item href="/policyList">政策列表</Breadcrumb.Item>
+                        <Breadcrumb.Item>{id ? "编辑政策" : "添加政策"} </Breadcrumb.Item>
                     </Breadcrumb>
                     <div className="label-box">
                         <Form.Provider>
-                        <Form form={this.form} {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
+                        <Form ref="form" {...layout} name="dynamic_rule" onFinish={this.onFinish} validateMessages={validateMessages}>
                             <Form.Item name="title" label="政策标题" rules={[{required: true}]}>
                                 <Input />
                             </Form.Item>
@@ -181,6 +251,9 @@ class AddPolicy extends Component {
                             </Form.Item>
                             <Form.Item name="release_date" label="发文日期" rules={[{required: true}]}>
                                 <DatePicker onChange={this.onDateChange} />
+                            </Form.Item>
+                            <Form.Item name="life_date" label="政策有效期" rules={[{required: true}]}>
+                                <DatePicker onChange={this.onDateLifeChange} />
                             </Form.Item>
                             <Form.Item name="industry_label_id_list" label="所属行业" rules={[{required: true}]}>
                                 <Select
@@ -246,8 +319,8 @@ class AddPolicy extends Component {
                             <div className="addPolicy-button">
                                 <Button type="primary" htmlType="submit" ref="finish">发布</Button>
                                 <Button type="primary" className="ml15" ref="save" onClick={()=>this.onSave()}>保存</Button>
-                                <Button type="primary" className="ml15" onClick={()=>window.location.href="/policyPreview"}>预览</Button>
-                                <Button className="ml15">返回</Button>
+                                <Button type="primary" className="ml15" onClick={()=>this.onView()}>预览</Button>
+                                <Button className="ml15" onClick={()=>window.history.back()}>返回</Button>
                             </div>
                         </Form>
                         </Form.Provider>
