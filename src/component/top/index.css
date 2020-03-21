@@ -116,7 +116,7 @@
 }
 .top-component-template .min-logo-box .max-weight-box{
     background: url('./img/logo.png') left 20px no-repeat;
-    height: 118px;
+    height: 123px;
     padding-top: 30px;
 }
 .top-component-template .min-logo-box .logo{
@@ -131,7 +131,7 @@
 }
 .top-component-template .min-menu-box{
     height: 50px;
-    margin-top: 35px;
+    margin-top: 30px;
 }
 .top-component-template .min-menu-box .menu-bg{
     height: 50px;
