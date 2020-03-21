@@ -1,16 +1,18 @@
 .index-template .carousel-box{
-    height: 735px;
+    /*height: 735px;*/
     overflow: hidden;
 }
 .index-template .carousel-box .ant-carousel .slick-slide{
     text-align: center;
 }
 .index-template .carousel-box .ant-carousel .slick-slide img{
-    height: 735px;
+    /*height: 730px;*/
+    width: 100%;
     margin: 0 auto;
 }
 .index-template .item-box{
     border-radius: 10px;
+    margin-top: -10px;
 }
 .index-template .item-box .ant-col-12{
     text-align: center;
@@ -205,4 +207,16 @@
 }
 .index-template .ant-carousel .slick-initialized .slick-slide{
     overflow: hidden;
+}
+.index-template .ant-carousel .slick-dots li{
+    border:1px solid #a72329;
+    height: 13px;
+    width: 13px;
+    border-radius: 15px;
+}
+.index-template .ant-carousel .slick-dots .slick-active{
+    background: #a72329;
+}
+.index-template .ant-carousel .slick-dots li button{
+    background: none;
 }

@@ -12,7 +12,8 @@ import Top from './../../component/top';
 import Label from "../../component/label";
 import policyIcon from "./img/policy-icon.jpg";
 import projectIcon from "./img/project-icon.jpg";
-import bannerImg from "./img/img.jpg";
+import bannerImg from "./img/WechatIMG9515.jpeg";
+import bannerImg1 from "./img/WechatIMG9515.jpeg";
 
 import './index.css';
 
@@ -122,7 +123,7 @@ class Register extends Component {
                                 <img src={bannerImg} />
                             </div>
                             <div>
-                                <img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3881320410,3466024303&fm=26&gp=0.jpg" />
+                                <img src={bannerImg1} />
                             </div>
                         </Carousel>
                     </div>

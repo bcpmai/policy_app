@@ -24,7 +24,7 @@ const layout = {
     wrapperCol: {span: 18},
 };
 
-const uploadUrl = 'http://192.168.1.99:5000/api/common/upload-file';
+const uploadUrl = 'http://web.js.policy.com/api/common/upload-file';
 
 const validateMessages = {
     required: '必填项!',
