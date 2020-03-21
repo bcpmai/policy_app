@@ -13,7 +13,7 @@ import Label from "../../component/label";
 import policyIcon from "./img/policy-icon.jpg";
 import projectIcon from "./img/project-icon.jpg";
 import bannerImg from "./img/WechatIMG9515.jpeg";
-import bannerImg1 from "./img/WechatIMG9515.jpeg";
+import bannerImg1 from "./img/WechatIMG9516.jpeg";
 
 import './index.css';
 

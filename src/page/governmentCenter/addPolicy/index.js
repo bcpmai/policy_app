@@ -311,7 +311,7 @@ class AddPolicy extends Component {
                             <Form.Item name="username" label="上传附件">
                                 <Upload {...props} fileList={this.state.fileList}>
                                     <Button>
-                                        <UploadOutlined /> Upload
+                                        <UploadOutlined /> 上传文件
                                     </Button>
                                 </Upload>
                                 <span>支持扩展名为.doc/.docx/.ppt/.pptx/.xls/.xlsx/.pdf/.zip/.rar，大小不超过100M</span>

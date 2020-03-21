@@ -111,13 +111,18 @@
 /*二级顶部加了min样式*/
 .top-component-template .min-logo-box{
     height: 200px;
+    padding-top: 0px;
+    background: url('./img/bg.jpg') left bottom no-repeat;
+}
+.top-component-template .min-logo-box .max-weight-box{
+    background: url('./img/logo.png') left 20px no-repeat;
+    height: 118px;
     padding-top: 30px;
-    background: url('./img/min_banner_bg.jpg') left bottom no-repeat;
 }
 .top-component-template .min-logo-box .logo{
     font-size: 38px;
     display: inline-block;
-    margin-left: 295px;
+    margin-left: 200px;
     font-weight: bold;
 }
 .top-component-template .min-logo-box .serach{
@@ -126,7 +131,7 @@
 }
 .top-component-template .min-menu-box{
     height: 50px;
-    margin-top: 61px;
+    margin-top: 35px;
 }
 .top-component-template .min-menu-box .menu-bg{
     height: 50px;
