@@ -24,7 +24,51 @@ class DeclarationItem extends Component {
             arrProduct:false,
             labelDate:{
                 title:"发文日期",
-                item:["全部","2020年","2019年","2018年","2017年","2016年","2015年","2014年","2013年","2012年","2011年"]
+                item:[
+                    {
+                        id:0,
+                        name:"全部",
+                    },
+                    {
+                        id:2020,
+                        name:"2020年",
+                    },
+                    {
+                        id:2019,
+                        name:"2019年",
+                    },
+                    {
+                        id:2018,
+                        name:"2018年",
+                    },
+                    {
+                        id:2017,
+                        name:"2017年",
+                    },
+                    {
+                        id:2016,
+                        name:"2016年",
+                    },
+                    {
+                        id:2015,
+                        name:"2015年",
+                    },
+                    {
+                        id:2014,
+                        name:"2014年",
+                    },
+                    {
+                        id:2013,
+                        name:"2013年",
+                    },
+                    {
+                        id:2012,
+                        name:"2012年",
+                    },
+                    {
+                        id:2011,
+                        name:"2011年",
+                    }]
             }
         }
         this.columns = [
@@ -229,7 +273,7 @@ class DeclarationItem extends Component {
                                 </Select>
                             </Col>
                         </Row>
-                        <Label title={labelDate.title} item={labelDate.item} key="labelDate" />
+                        <Label span={{title:4,label:20}} title={labelDate.title} item={labelDate.item} key="labelDate" />
                         {/*<Row className="mt10">*/}
                             {/*<Col span={2}>发文日期：</Col>*/}
                             {/*<Col span={22}>*/}

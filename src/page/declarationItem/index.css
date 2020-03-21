@@ -13,7 +13,7 @@
     font-size: 14px;
 }
 .declarationItem-template .label-box{
-    padding: 60px 100px;
+    padding: 0px 100px;
     margin-bottom: 20px;
 }
 .declarationItem-template .label-product-box{
@@ -41,7 +41,7 @@
 }
 .declarationItem-template .declarationItem-button{
     text-align: center;
-    margin-top: 80px;
+    margin-top: 40px;
 }
 .declarationItem-template .declarationItem-button .ant-btn{
     background: #fff;
@@ -57,7 +57,7 @@
     color: #fff;
 }
 .declarationItem-template .ant-row{
-    margin-bottom: 60px;
+    margin-bottom: 20px;
 }
 .declarationItem-template .declarationItem-serach .serach{
     width: 370px;

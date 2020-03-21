@@ -33,6 +33,7 @@ class Top extends Component {
                         break;
                 case "policyText":
                 case "latestPolicy":
+                case "declarationItem":
                     current = "latestPolicy";
                     break
 
