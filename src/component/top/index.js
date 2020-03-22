@@ -90,12 +90,13 @@ class Top extends Component {
 
                 </Row>
                 </div>
-                <div className={`logo-box ${current!="home" ? 'min-logo-box' : ''}`}>
+                {/*<div className={`logo-box ${current!="home" ? 'min-logo-box' : ''}`}>*/}
+                <div className='logo-box min-logo-box'>
                     <div className="max-weight-box">
                         <div className="logo">政策与企业匹配服务平台</div>
                         <div className="serach"><Search placeholder="请输入关键字查找申报政策" onSearch={this.serachLatestPolicy} enterButton /></div>
                     </div>
-                    <div className={`menu-box ${current!="home" ? 'min-menu-box' : ''}`}>
+                    <div className='menu-box min-menu-box'>
                         <div className="menu-bg"></div>
                         <Menu onClick={this.handleClick} selectedKeys={[current || "home"]} mode="horizontal" theme="dark">
                             <Menu.Item key="home">

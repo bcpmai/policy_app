@@ -375,7 +375,7 @@ class PolicyList extends Component {
     };
 
     render() {
-        const {labelTheme, labelType, labelProduct, arrProduct, labelStatus, labelSource, belongData, industryData, source,policy_theme_label_list,organization_label_list,use_type_list,status,tableData,formValues} = this.state;
+        const {labelTheme, labelType, labelProduct, arrProduct, labelStatus, labelSource, belongData, industryData, source,policy_theme_label_list,organization_label_list,use_type_list,status,tableData,formValues,arrdown} = this.state;
         const pagination = {
             current:formValues && formValues.page ? formValues.page : 1,
             showSizeChanger: true,
@@ -405,15 +405,19 @@ class PolicyList extends Component {
                                 <Form ref="form" {...layout} name="dynamic_rule" onFinish={this.onFinish} validateMessages={validateMessages}>
                                 <Row className="mt10">
                                     <Col span={4}>政策标题</Col>
-                                    <Col span={20}>
+                                    <Col span={18}>
                                         <Form.Item name="title">
                                             <Input />
                                         </Form.Item>
+
                                     </Col>
+                                    <Col span={2}><span onClick={this.setArrdown}
+                                                        className="more-label">{arrdown ? <PlusOutlined/> : <MinusOutlined/>} {arrdown ? "展开筛选" : "收起筛选"}</span></Col>
                                 </Row>
+                                    <div style={{display:!arrdown ? '' : "none"}}>
                                 {labelTheme ?
                                     <Label callback={this.onSelectTheme} defalutValue={policy_theme_label_list} span={{title:4,label:20}} title={labelTheme.title} item={labelTheme.item} key="labelTheme"/> : ''}
-                                <Row className="mt10">
+                                <Row>
                                     <Col span={4}>所属层级</Col>
                                     <Col span={20}>
                                         <Form.Item name="belong">
@@ -435,7 +439,7 @@ class PolicyList extends Component {
                                 </div>
                                 {labelType ?
                                     <Label callback={this.onSelectType} defalutValue={use_type_list} span={{title:4,label:20}} title={labelType.title} item={labelType.item} key="labelType"/> : ''}
-                                <Row className="mt10">
+                                <Row>
                                     <Col span={4}>所属行业</Col>
                                     <Col span={20}>
                                         <Form.Item name="industry_label_id_list">
@@ -446,7 +450,7 @@ class PolicyList extends Component {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                <Row className="mt10">
+                                <Row>
                                     <Col span={4}>发文日期</Col>
                                     <Col span={20}>
                                         <Form.Item name="release_date">
@@ -456,7 +460,8 @@ class PolicyList extends Component {
                                 </Row>
                                 <Label callback={this.onSelectStatus} defalutValue={status} isRadio={true} span={{title:4,label:20}} title={labelStatus.title} item={labelStatus.item} key="labelStatus"/>
                                 <Label callback={this.onSelectSource} defalutValue={source} isRadio={true} span={{title:4,label:20}} title={labelSource.title} item={labelSource.item} key="labelSource"/>
-                                <div className="policyList-button">
+                                    </div>
+                                        <div className="policyList-button">
                                     <Button type="primary" htmlType="submit">检索</Button>
                                     <Button className="ml15" onClick={this.onReset}>重置</Button>
                                 </div>

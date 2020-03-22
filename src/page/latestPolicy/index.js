@@ -3,7 +3,7 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import { Table, Tag, Input, Row, Col, Button, Select, DatePicker, Form } from 'antd';
+import { Table, Tag, Input, Row, Col, Button, Select, DatePicker, Form, Tooltip } from 'antd';
 import { ArrowUpOutlined,ArrowDownOutlined,PlusOutlined,MinusOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import Top from './../../component/top';
@@ -44,8 +44,9 @@ class LatestPolicy extends Component {
                 title: '政策标题',
                 dataIndex: 'title',
                 key: 'title',
+                width:500,
                 render: (text, record) => {
-                    return <a  onClick={()=>this.props.history.push(`/policyText/${record.id}`)}>{text}</a>
+                    return <Tooltip placement="topLeft" title={text}><a onClick={()=>this.props.history.push(`/policyText/${record.id}`)}>{text.length < 65 ? text : text.substr(0,65)+"..."}</a></Tooltip>
                 }
             },
             {
@@ -56,16 +57,19 @@ class LatestPolicy extends Component {
             {
                 title: '发文字号',
                 key: 'post_shop_name',
+                width:150,
                 dataIndex: 'post_shop_name'
             },
             {
                 title: '发文日期',
                 key: 'release_date',
+                width:150,
                 dataIndex: 'release_date'
             },
             {
                 title: '操作',
                 key: 'action',
+                width:100,
                 render: (text, record) => (<span><a>收藏</a></span>),
             },
         ];
@@ -309,7 +313,8 @@ class LatestPolicy extends Component {
                             <Col span={4}>发文日期</Col>
                             <Col span={20}>
                                 <Form.Item name="release_date">
-                                    <DatePicker onChange={this.onDateChange} />
+                                    <RangePicker onChange={this.onDateChange} />
+                                    {/*<DatePicker onChange={this.onDateChange} />*/}
                                 </Form.Item>
                             </Col>
                         </Row>

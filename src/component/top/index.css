@@ -4,8 +4,8 @@
 .top-component-template .welcome-box{
     background: #a72329;
     padding:0 5px;
-    height: 60px;
-    line-height: 60px;
+    height: 40px;
+    line-height: 40px;
     font-size: 14px;
     color:#fff;
     box-shadow: 1px 3px 3px #d8d3d5;
@@ -39,14 +39,14 @@
 .top-component-template .logo-box .ant-input-group .ant-input{
     border:1px solid #c8000a;
     border-radius:15px 0 0 15px;
-    padding:6px 11px;
+    padding:4px 11px;
 }
 .top-component-template .logo-box .ant-input-group .ant-btn{
     border:1px solid #c8000a;
     background: #a72329;
     border-radius:0 15px 15px 0;
-    padding: 3px 18px;
-    height: 36px;
+    padding: 0px 10px;
+    height: 32px;
     font-size: 20px;
 }
 .top-component-template .logo-box .ant-input-group .ant-input-group-addon{
@@ -82,9 +82,9 @@
     margin-top: 15px;
 }
 .top-component-template .ant-menu-dark .ant-menu-item a{
-    font-size: 18px;
+    font-size: 16px;
     color: #333;
-    line-height: 26px;
+    line-height: 17px;
 }
 .top-component-template .ant-menu-dark .ant-menu-item-selected{
     background: none;
@@ -110,36 +110,38 @@
 }
 /*二级顶部加了min样式*/
 .top-component-template .min-logo-box{
-    height: 200px;
+    height: 150px;
     padding-top: 0px;
     background: url('./img/bg.jpg') left bottom no-repeat;
 }
 .top-component-template .min-logo-box .max-weight-box{
-    background: url('./img/logo.png') left 20px no-repeat;
-    height: 123px;
-    padding-top: 30px;
+    background: url('./img/logo.png') left 10px no-repeat;
+    height: 90px;
+    padding-top: 20px;
 }
 .top-component-template .min-logo-box .logo{
-    font-size: 38px;
+    font-size: 25px;
     display: inline-block;
-    margin-left: 200px;
+    margin-left: 120px;
     font-weight: bold;
+    margin-top: 10px;
 }
 .top-component-template .min-logo-box .serach{
-    margin: 12px 40px 0 0;
+    margin: 20px 40px 0 0;
     float:right
 }
 .top-component-template .min-menu-box{
-    height: 50px;
-    margin-top: 30px;
+    height: 40px;
+    margin-top: 20px;
 }
 .top-component-template .min-menu-box .menu-bg{
-    height: 50px;
+    height: 40px;
 }
 .top-component-template .min-menu-box .ant-menu{
     padding-top: 0;
-    line-height: 40px;
+    line-height: 28px;
 }
 .top-component-template .min-menu-box .ant-menu-dark .ant-menu-item{
     margin-top: 0;
+    height: 15px;
 }

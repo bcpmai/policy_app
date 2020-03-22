@@ -19,36 +19,43 @@
 }
 .index-template .item-box .item-policy{
     background: #f4d8b3;
-    height: 250px;
+    height: 130px;
     text-align: right;
 }
 .index-template .item-box .item-policy .item-policy-box{
     display: inline-block;
     width: 260px;
     text-align: left;
-    padding-top: 50px;
+    padding-top: 20px;
 }
 .index-template .item-box .item-project .item-project-box{
     display: inline-block;
-    padding-left: 260px;
+    padding-left: 185px;
     text-align: left;
-    padding-top: 50px;
+    padding-top: 20px;
 }
 .index-template .item-box .item-policy .item-policy-box span{
     display: block;
     font-size: 18px;
     color: #ac242a;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .index-template .item-box .item-project .item-project-box span{
     display: block;
     font-size: 18px;
     color: #333;
-    margin-top: 20px;
+    margin-top: 10px;
+}
+.index-template .item-box .item-policy .item-policy-box img{
+    width: 60px;
+    margin-left: 2px;
+}
+.index-template .item-box .item-project .item-project-box img{
+    width: 45px;
 }
 .index-template .item-box .item-project{
     background: #e5bb88;
-    height: 250px;
+    height: 130px;
     text-align: left;
 }
 .index-template .matching-box{
@@ -59,25 +66,25 @@
 }
 .index-template .matching-box .matching-button{
     text-align: center;
-    padding-top: 40px;
+    padding-top: 20px;
 }
 .index-template .matching-box .matching-button .ant-btn,
 .index-template .application-more a{
-    height: 56px;
+    height: 40px;
     background: #ae242b;
     color: #fff;
-    font-size: 24px;
+    font-size: 18px;
     border:0px;
     padding: 0 85px;
-    margin-bottom: 90px;
+    margin-bottom: 40px;
 }
 .index-template .application-more a{
     display: inline-block;
-    margin-top: 30px;
-    font-size: 14px;
+    margin-top: 50px;
+    font-size: 16px;
     border-radius: 20px;
-    height: 30px;
-    padding: 0 50px;
+    height: 35px;
+    padding: 3px 50px;
     line-height: 30px;
     margin-bottom: 0px;
 }
@@ -150,18 +157,21 @@
 }
 .index-template .matching-divider{
     background: #ae242b;
-    height: 150px;
+    /*height: 80px;*/
     padding-left: 55px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 .index-template .matching-divider .title{
     color: #fff;
-    font-size: 32px;
-    padding-top: 35px;
+    font-size: 20px;
+    /*padding-top: 15px;*/
     display: inline-block;
 }
 .index-template .matching-divider .desc{
     font-size: 14px;
     color: #fff;
+    margin-bottom: 0px;
 }
 .index-template .matching-divider-arr{
     text-align: center;
@@ -169,16 +179,16 @@
 .index-template .matching-divider-arr .arr{
     display: inline-block;
     width: 64px;
-    height: 64px;
+    height: 35px;
     background: url("./img/arr.jpg") no-repeat;
+    background-size: 35px auto;
 }
-.index-template .Label-component-template{
-    margin-top: 70px;
-}
+/*.index-template .Label-component-template{*/
+    /*margin-top: 70px;*/
+/*}*/
 .index-template .Label-component-template .ant-col-3{
     font-size: 18px;
     color: #101746;
-    padding-top: 5px;
     font-weight: bold;
 }
 .index-template .Label-component-template .ant-col-3:before{
@@ -190,33 +200,41 @@
     margin-right: 10px;
     vertical-align: -3px;
 }
+.index-template .Label-component-template .ant-row{
+    padding-bottom: 30px;
+}
 .index-template .Label-component-template .ant-btn{
-    height: 40px;
+    height: 30px;
     font-size: 16px;
     color: #515157;
     padding: 0 20px;
-    margin:0 17px 34px;
+    margin:0 17px 20px;
     background: #e6e5e5;
     border:1px solid #e6e5e5;
 }
 .index-template .Label-component-template .ant-btn:hover{
     border:1px solid #cc0000;
+    color:#515157;
+    background: #fff;
 }
 .index-template .Label-component-template .select-button{
     color: #cc0000;
 }
 .index-template .ant-carousel .slick-initialized .slick-slide{
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 .index-template .ant-carousel .slick-dots li{
     border:1px solid #a72329;
     height: 13px;
     width: 13px;
     border-radius: 15px;
+    margin: 0 8px;
 }
 .index-template .ant-carousel .slick-dots .slick-active{
     background: #a72329;
 }
 .index-template .ant-carousel .slick-dots li button{
     background: none;
+    height: 13px;
+    width: 13px;
 }
