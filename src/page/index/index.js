@@ -120,10 +120,10 @@ class Register extends Component {
                     <div className="carousel-box">
                         <Carousel autoplay>
                             <div>
-                                <img src={bannerImg} />
+                                <img src={bannerImg1} />
                             </div>
                             <div>
-                                <img src={bannerImg1} />
+                                <img src={bannerImg} />
                             </div>
                         </Carousel>
                     </div>

@@ -39,14 +39,14 @@
 .top-component-template .logo-box .ant-input-group .ant-input{
     border:1px solid #c8000a;
     border-radius:15px 0 0 15px;
-    padding:4px 11px;
+    padding:3px 11px;
 }
 .top-component-template .logo-box .ant-input-group .ant-btn{
     border:1px solid #c8000a;
     background: #a72329;
     border-radius:0 15px 15px 0;
     padding: 0px 10px;
-    height: 32px;
+    height: 30px;
     font-size: 20px;
 }
 .top-component-template .logo-box .ant-input-group .ant-input-group-addon{
@@ -110,7 +110,7 @@
 }
 /*二级顶部加了min样式*/
 .top-component-template .min-logo-box{
-    height: 150px;
+    height: 130px;
     padding-top: 0px;
     background: url('./img/bg.jpg') left bottom no-repeat;
 }
@@ -120,19 +120,19 @@
     padding-top: 20px;
 }
 .top-component-template .min-logo-box .logo{
-    font-size: 25px;
+    font-size: 22px;
     display: inline-block;
     margin-left: 120px;
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 6px;
 }
 .top-component-template .min-logo-box .serach{
-    margin: 20px 40px 0 0;
+    margin: 5px 40px 0 0;
     float:right
 }
 .top-component-template .min-menu-box{
     height: 40px;
-    margin-top: 20px;
+    margin-top: 0px;
 }
 .top-component-template .min-menu-box .menu-bg{
     height: 40px;
