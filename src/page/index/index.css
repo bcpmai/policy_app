@@ -11,52 +11,44 @@
     margin: 0 auto;
 }
 .index-template .item-box{
-    border-radius: 10px;
-    margin-top: -10px;
+    margin-top: 20px;
 }
 .index-template .item-box .ant-col-12{
     text-align: center;
 }
 .index-template .item-box .item-policy{
-    background: #f4d8b3;
     height: 130px;
     text-align: right;
+    /*border:1px solid #ac242a;*/
 }
 .index-template .item-box .item-policy .item-policy-box{
-    display: inline-block;
-    width: 260px;
-    text-align: left;
+    text-align: center;
     padding-top: 20px;
 }
 .index-template .item-box .item-project .item-project-box{
-    display: inline-block;
-    padding-left: 185px;
-    text-align: left;
+    text-align: center;
     padding-top: 20px;
 }
-.index-template .item-box .item-policy .item-policy-box span{
-    display: block;
-    font-size: 18px;
-    color: #ac242a;
-    margin-top: 10px;
-}
+.index-template .item-box .item-policy .item-policy-box span,
 .index-template .item-box .item-project .item-project-box span{
-    display: block;
-    font-size: 18px;
-    color: #333;
-    margin-top: 10px;
+    font-size: 32px;
+    color: #ac242a;
+    margin-top: 15px;
+    margin-left: 25px;
+    display: inline-block;
+    vertical-align: -8px;
 }
 .index-template .item-box .item-policy .item-policy-box img{
-    width: 60px;
+    /*width: 60px;*/
     margin-left: 2px;
 }
 .index-template .item-box .item-project .item-project-box img{
-    width: 45px;
+    /*width: 45px;*/
 }
 .index-template .item-box .item-project{
-    background: #e5bb88;
     height: 130px;
     text-align: left;
+    /*border:1px solid #ac242a;*/
 }
 .index-template .matching-box{
 
@@ -118,6 +110,7 @@
 .index-template .application-box .application-item-box .title a{
     font-size: 16px;
     color: #333;
+    font-weight: bold;
 }
 .index-template .application-box .application-item-box .line{
     display: block;
@@ -129,6 +122,7 @@
 .index-template .application-box .application-item-box .time{
     color: #333;
     font-size: 14px;
+    /*font-weight: bold;*/
 }
 .index-template .application-box .application-item-box .desc{
     font-size: 10px;
@@ -156,14 +150,14 @@
     padding-top: 5px;
 }
 .index-template .matching-divider{
-    background: #ae242b;
+    /*background: #ae242b;*/
     /*height: 80px;*/
     padding-left: 55px;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 .index-template .matching-divider .title{
-    color: #fff;
+    color: #000;
     font-size: 20px;
     /*padding-top: 15px;*/
     display: inline-block;
@@ -209,7 +203,7 @@
     color: #515157;
     padding: 0 20px;
     margin:0 17px 20px;
-    background: #e6e5e5;
+    background: #f5f5f5;
     border:1px solid #e6e5e5;
 }
 .index-template .Label-component-template .ant-btn:hover{
@@ -237,4 +231,24 @@
     background: none;
     height: 13px;
     width: 13px;
+}
+.index-template .ant-divider-horizontal.ant-divider-with-text-center{
+    margin: 50px 0px 30px;
+}
+.index-template .ant-divider-inner-text{
+    font-size: 28px;
+    color: #ac242a;
+}
+.index-template .ant-divider-horizontal.ant-divider-with-text-center::before,
+.index-template .ant-divider-horizontal.ant-divider-with-text-center::after{
+    border-top:1px solid #a72329;
+}
+.index-template .width-min-title{
+    width: 500px;
+    margin: 0 auto;
+}
+.index-template .matching-label-box .desc{
+    margin-bottom: 30px;
+    color: #000;
+    font-size: 16px;
 }

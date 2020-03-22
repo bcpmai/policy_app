@@ -122,38 +122,46 @@ class Register extends Component {
                             <div>
                                 <img src={bannerImg1} />
                             </div>
-                            <div>
-                                <img src={bannerImg} />
-                            </div>
+                            {/*<div>*/}
+                                {/*<img src={bannerImg} />*/}
+                            {/*</div>*/}
                         </Carousel>
                     </div>
-                    <Row className="item-box" >
-                        <Col span={12} className="item-policy">
-                            <div className="item-policy-box">
-                                <Link to="/latestPolicy">
-                                    <img src={policyIcon}></img>
-                                    <span>找政策</span>
-                                </Link>
-                            </div>
-                        </Col>
-                        <Col span={12} className="item-project">
-                            <div className="item-project-box">
-                                <Link to="/declarationItem">
-                                    <img src={projectIcon}></img>
-                                    <span>报项目</span>
-                                </Link>
-                            </div>
-                        </Col>
-                    </Row>
+                    {/*<div className="max-weight-box">*/}
+                    {/*<Row className="item-box" gutter={16}>*/}
+                        {/*<Col span={11} className="item-policy">*/}
+                            {/*<div className="item-policy-box">*/}
+                                {/*<Link to="/latestPolicy">*/}
+                                    {/*<img src={policyIcon}></img>*/}
+                                    {/*<span>找政策</span>*/}
+                                {/*</Link>*/}
+                            {/*</div>*/}
+                        {/*</Col>*/}
+                        {/*<Col span={1}></Col>*/}
+                        {/*<Col span={11} className="item-project">*/}
+                            {/*<div className="item-project-box">*/}
+                                {/*<Link to="/declarationItem">*/}
+                                    {/*<img src={projectIcon}></img>*/}
+                                    {/*<span>报项目</span>*/}
+                                {/*</Link>*/}
+                            {/*</div>*/}
+                        {/*</Col>*/}
+                    {/*</Row>*/}
+                    {/*</div>*/}
                     <div className="matching-box">
-                        <div className="matching-divider">
-                            <div className="max-weight-box">
-                                <span className="title">快速匹配</span>
-                                <p className="desc">请选择您感兴趣的标签，智能匹配相关申报政策。</p>
-                            </div>
+                        {/*<Divider>快速匹配</Divider>*/}
+                        {/*<div className="matching-divider">*/}
+                            {/*<div className="max-weight-box">*/}
+                                {/*<span className="title">快速匹配</span>*/}
+                                {/*<p className="desc">请选择您感兴趣的标签，智能匹配相关申报政策。</p>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                        {/*<div className="matching-divider-arr"><span className="arr"></span></div>*/}
+                        <div className="width-min-title">
+                            <Divider>快速匹配</Divider>
                         </div>
-                        <div className="matching-divider-arr"><span className="arr"></span></div>
                         <div className="matching-label-box max-weight-box">
+                            <p className="desc">请选择您感兴趣的标签，智能匹配相关申报政策。</p>
                             <div>
                                 {label.map((labelItem,labelIdx)=>{
                                     return <Label span={{title:3,label:21}} onClick={()=>this.labelChange()} title={labelItem.title} item={labelItem.item} key={labelIdx} />
@@ -166,12 +174,13 @@ class Register extends Component {
                             </div>
                         </div>
                         <div className="application-box">
-                            <div className="matching-divider">
-                                <div className="max-weight-box">
-                                    <span className="title">申报政策</span>
-                                </div>
-                            </div>
-                            <div className="matching-divider-arr"><span className="arr"></span></div>
+                            {/*<div className="matching-divider">*/}
+                                {/*<div className="max-weight-box">*/}
+                                    {/*<span className="title">申报政策</span>*/}
+                                {/*</div>*/}
+                            {/*</div>*/}
+                            {/*<div className="matching-divider-arr"><span className="arr"></span></div>*/}
+                            <div className="width-min-title"><Divider>申报政策</Divider></div>
                             <div className="max-weight-box">
                             <Row className="application-item-box">
                                 <Col span={8}>
