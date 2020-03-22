@@ -62,22 +62,22 @@ class Information extends Component {
                             <Row>
                                 <Col span={10}>
                                     <Form.Item name="username" label="企业名称">
-                                        <Input disabled placeholder="请输入用户名" defaultValue="云南数联铭品科技有限公司"/>
+                                        <Input disabled placeholder="请输入用户名" defaultValue="xxxx有限公司"/>
                                     </Form.Item>
                                 </Col>
                                 <Col span={14}>
                                     <Form.Item name="username" label="注册地址">
-                                        <Select placeholder="请选择省份" style={{width:142}}>
+                                        <Select placeholder="请选择省份" style={{width:127}}>
                                             <Option value="jack">1</Option>
                                             <Option value="lucy">2</Option>
                                             <Option value="Yiminghe">3</Option>
                                         </Select>
-                                        <Select placeholder="请选择市" style={{width:142,marginLeft:5}}>
+                                        <Select placeholder="请选择市" style={{width:127,marginLeft:5}}>
                                             <Option value="jack">1</Option>
                                             <Option value="lucy">2</Option>
                                             <Option value="Yiminghe">3</Option>
                                         </Select>
-                                        <Select placeholder="请选择区县" style={{width:142,marginLeft:5}}>
+                                        <Select placeholder="请选择区县" style={{width:132,marginLeft:5}}>
                                             <Option value="jack">1</Option>
                                             <Option value="lucy">2</Option>
                                             <Option value="Yiminghe">3</Option>
