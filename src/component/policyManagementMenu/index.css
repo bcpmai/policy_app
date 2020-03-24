@@ -46,6 +46,7 @@
     background: #fff;
     color: #ae242b;
 }
+.policy-menu-component-template .ant-menu .project-management,
 .policy-menu-component-template .project-management.ant-menu-item-selected{
     text-indent: 5px;
 }

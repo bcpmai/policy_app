@@ -3,9 +3,9 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import { Input, Row, Col, Button, Select, DatePicker, Breadcrumb,Form,Upload, message, Modal, Table, Tooltip, Checkbox, Switch} from 'antd';
+import { Input, Row, Col, Button, Select, DatePicker, Breadcrumb,Form,Upload, message, Modal, Table, Tooltip, Checkbox, Switch,Tag} from 'antd';
 import moment from 'moment';
-import { UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined,PlusOutlined} from '@ant-design/icons';
 import {request} from '../../../../utils/request';
 import Top from '../../../../component/top/index';
 import cookie from 'react-cookies';
@@ -44,18 +44,22 @@ class AddProject extends Component {
         super(props);
         this.state = {
             id:props.match.params ? props.match.params.id : null,
-            policyVisible:false
+            policyVisible:false,
+            tableData:[],
+            addressNum:1
         }
     }
 
     componentDidMount(){
-        this.createEditor("editorElem1","editorElemContent");
-        this.createEditor("editorElem2","editorElem2Content");
-        this.createEditor("editorElem3","editorElem3Content");
-        this.createEditor("editorElem4","editorElem4Content");
-        this.createEditor("editorElem5","editorElem5Content");
-        this.createEditor("editorElem6","editorElem6Content");
+        this.createEditor("editorElem1","support_direction");//扶持方向
+        this.createEditor("editorElem2","declare_condition");//申报条件
+        this.createEditor("editorElem3","support_content");//扶持内容
+        this.createEditor("editorElem4","declare_material");//申报材料
+        this.createEditor("editorElem5","declare_process");//申报流程
+        this.createEditor("editorElem6","review_process");//评审流程
         this.getDefalutData();
+        this.getTableData();
+        this.getProvinceData();//获取省
         this.columns = [
             {
                 title: '政策标题',
@@ -78,7 +82,7 @@ class AddProject extends Component {
                 title: '发文日期',
                 key: 'updated_date',
                 dataIndex: 'updated_date',
-                width: 130
+                width: 200
             },
             {
                 title: '操作',
@@ -88,6 +92,32 @@ class AddProject extends Component {
             },
         ];
 
+    }
+    getTableData = async (values={}) =>{
+        if(!values.max_line){
+            values.max_line = 5;
+        }
+        const tableData = await request('/policy/list', 'POST',values); //获取table
+        if(tableData.status == 200){
+            this.setState({
+                tableData: tableData.data,
+                formValues:values
+            });
+        }
+    }
+    onShowSizeChange = (current, pageSize) =>{
+        console.log(current, pageSize);
+        let {formValues={}} = this.state;
+        formValues.page = current;
+        formValues.max_line = pageSize;
+        this.getTableData(formValues);
+    }
+    onPaginChange = (page, pageSize) =>{
+        console.log(page, pageSize);
+        let {formValues={}} = this.state;
+        formValues.page = page;
+        formValues.max_line = pageSize;
+        this.getTableData(formValues);
     }
     createEditor = (editorElem,editorContent) =>{
         const elem = this.refs[editorElem]; //获取editorElem盒子
@@ -101,25 +131,6 @@ class AddProject extends Component {
             })
         };
         editor.customConfig.uploadImgHooks = {
-            before: function (xhr, editor, files) {
-                console.log(xhr, editor, files,"before")
-            },
-            success: function (xhr, editor, result) {
-                console.log("上传成功");
-                console.log(xhr, editor, result,"success")
-            },
-            fail: function (xhr, editor, result) {
-                console.log("上传失败,原因是" + result);
-                console.log(xhr, editor, result,"fail")
-            },
-            error: function (xhr, editor) {
-                console.log("上传出错");
-                console.log(xhr, editor,"error")
-            },
-            timeout: function (xhr, editor) {
-                console.log("上传超时");
-                console.log(xhr, editor,"timeout")
-            },
             customInsert: function (insertImg, result, editor) {
                 console.log(insertImg, result, editor, "file")
                 if(result.success) {
@@ -175,6 +186,15 @@ class AddProject extends Component {
             }
         }
     }
+    getProvinceData = async () =>{
+        const provinceData = await request('/common/get-province', 'POST'); //获取省
+        if(provinceData.status == 200){
+            this.setState({
+                provinceSelect: provinceData.data.data
+            });
+        }
+
+    }
     onSubmit = async(values,url) => {
         const {release_date,life_date,editorContent,id,fileList} = this.state;
         values.release_date = release_date;
@@ -204,8 +224,9 @@ class AddProject extends Component {
     }
     onSave = async () => {
         let values = this.refs.form.getFieldsValue();
+        console.log(values);
         values.status = 1;
-        this.onSubmit(values);
+        //this.onSubmit(values);
 
     }
     onView = () =>{
@@ -224,8 +245,10 @@ class AddProject extends Component {
     }
     //发文日期
     onDateChange = (date,dateString) =>{
+        console.log(date,dateString)
         this.setState({
-            release_date:dateString
+            declare_start_date:dateString[0],
+            declare_end_date:dateString[1]
         })
     }
     onDateLifeChange = (date,dateString) =>{
@@ -282,17 +305,62 @@ class AddProject extends Component {
             policyVisible: false,
         });
     };
-    switchChange = (checked) =>{
-        console.log(`switch to ${checked}`);
-    }
 
-    onSelectChange = selectedRowKeys => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
-        this.setState({ selectedRowKeys });
+    onSelectChange = (selectedRowKeys, selectedRows) => {
+        // console.log('selectedRowKeys changed: ', selectedRowKeys,selectedRows);
+        this.setState({ selectedRowKeys,policyTitle:selectedRows.title });
     };
+    //复选框选中取消
+    setCheckBox = (e) =>{
+        const {checked,value} = e.target;
+        this.setState({
+            [value]:checked
+        });
+        if(!checked){
+            this.refs.form.setFieldsValue({
+                [value]:undefined
+            });
+        }
+    }
+    //开关关闭开启
+    switchChange = (checked,string) =>{
+        this.setState({
+            [string]:checked
+        })
 
+        if(!checked){
+            if(string === "declare"){
+                this.refs.form.setFieldsValue({
+                    ["develop_assets_value"]: undefined,
+                    ["develop_assets_sign"]: undefined,
+                    ["declare_value"]: undefined,
+                    ["declare_sign"]: undefined,
+                    ["develop_sign"]: undefined,
+                    ["develop_value"]: undefined
+                });
+            }else if(string === "social"){
+                this.refs.form.setFieldsValue({
+                    ["develop_people_value"]: undefined,
+                    ["develop_people_sign"]: undefined,
+                    ["develop_people_value"]: undefined,
+                    ["develop_people_sign"]: undefined,
+                });
+            }else {
+                this.refs.form.setFieldsValue({
+                    [string+"_value"]: undefined,
+                    [string+"_sign"]: undefined
+                });
+            }
+        }
+    }
+    //地址添加一项
+    addAddress = () =>{
+        this.setState({
+            addressNum:++this.state.addressNum
+        })
+    }
     render() {
-        const {industryData,belongData,typeData,productData,id,tableData,selectedRowKeys} = this.state;
+        const {industryData,belongData,typeData,productData,id,tableData,selectedRowKeys,formValues,post_material,declare_net,set_up=true,knowledge=true,invention=true,declare=true,industry_label=true,social=true,provinceSelect=[],citySelect,areaSelect,addressNum} = this.state;
         const props = {
             //action: 'http://web.js.policy.com/api/common/upload-file',
             action:uploadUrl,
@@ -308,9 +376,19 @@ class AddProject extends Component {
         const rowSelection = {
             selectedRowKeys,
             type:"radio",
-            onChange: this.onSelectChange,
+            onChange: this.onSelectChange
         };
-
+        const pagination = {
+            current:formValues && formValues.page ? formValues.page : 1,
+            showSizeChanger: true,
+            defaultCurrent: 1,
+            defaultPageSize:5,
+            total:tableData.sum || 0,
+            showTotal:(total, range) => `共 ${tableData.page_num} 页 总计 ${tableData.sum} 条政策`,
+            pageSizeOptions: ['10', '20', '30', '50', '100', '150'],
+            onShowSizeChange: this.onShowSizeChange,
+            onChange:this.onPaginChange
+        }
         return (
             <div className="addProject-template">
                 <Top />
@@ -332,8 +410,8 @@ class AddProject extends Component {
                             <Form.Item name="title" label="项目标题" rules={[{required: true}]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item name="belong1" label="关联政策" rules={[{required: true}]}>
-                                <span></span>
+                            <Form.Item name="policy_id" label="关联政策" rules={[{required: true}]}>
+                                <span>{this.state.policyTitle}</span>
                                 <Button onClick={this.showPolicy}>选择政策</Button>
                             </Form.Item>
                             <Form.Item name="belong" label="所属层级" rules={[{required: true}]}>
@@ -342,7 +420,7 @@ class AddProject extends Component {
                                                                                         key={item.id}>{item.name}</Option>) : ''}
                                 </Select>
                             </Form.Item>
-                            <Form.Item name="organization_label_list" label="发布机构" rules={[{required: true}]}>
+                            <Form.Item name="organization_label_ids" label="发布机构" rules={[{required: true}]}>
                                 <Select
                                     mode="multiple"
                                     style={{ width: '100%' }}
@@ -352,13 +430,13 @@ class AddProject extends Component {
                                                                                           key={item.id}>{item.name}</Option>) : ''}
                                 </Select>
                             </Form.Item>
-                            <Form.Item name="organization_label_list" label="官文网址" rules={[{required: true}]}>
+                            <Form.Item name="web_url" label="官文网址" rules={[{required: true}]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item name="release_date" label="申报时间">
+                            <Form.Item name="declare_date" label="申报时间">
                                 <RangePicker onChange={this.onDateChange} />
                             </Form.Item>
-                            <Form.Item name="use_type_list" label="应用类型" rules={[{required: true}]}>
+                            <Form.Item name="use_type" label="应用类型" rules={[{required: true}]}>
                                 <Select
                                     mode="multiple"
                                     style={{ width: '100%' }}
@@ -369,7 +447,7 @@ class AddProject extends Component {
 
                                 </Select>
                             </Form.Item>
-                            <Form.Item name="industry_label_id_list" label="所属行业" rules={[{required: true}]}>
+                            <Form.Item name="industry_label_ids" label="所属行业" rules={[{required: true}]}>
                                 <Select
                                     mode="multiple"
                                     style={{ width: '100%' }}
@@ -392,7 +470,7 @@ class AddProject extends Component {
                                 <div ref="editorElem3">
                                 </div>
                             </Form.Item>
-                            <Form.Item name="organization_label_list" label="联系方式">
+                            <Form.Item name="contact" label="联系方式">
                                 <Input />
                             </Form.Item>
                             <Form.Item name="content" label="申报材料" required>
@@ -417,120 +495,153 @@ class AddProject extends Component {
                             </Form.Item>
                             <p style={{fontWight:"bold",color:"#000",fontSize:"16px"}}><span style={{color: "#ff4d4f"}}>*</span>请选择申报方式（可多选）</p>
                             <Row>
-                                <Col span={4}><Checkbox>网上申报</Checkbox></Col>
-                                <Col span={10}><Form.Item name="username">
-                                    <Input/>
+                                <Col span={4}><Checkbox value="declare_net" onChange={this.setCheckBox}>网上申报</Checkbox></Col>
+                                <Col span={10}><Form.Item name="declare_net">
+                                    <Input disabled={!declare_net}/>
                                 </Form.Item></Col>
                             </Row>
                             <Row>
-                                <Col span={4}><Checkbox>纸质材料提交至</Checkbox></Col>
-                                <Col span={20}><Form.Item name="username">
-                                    <TextArea rows={4}/>
+                                <Col span={4}><Checkbox value="post_material" onChange={this.setCheckBox}>纸质材料提交至</Checkbox></Col>
+                                <Col span={20}><Form.Item name="post_material">
+                                    <TextArea disabled={!post_material} rows={4}/>
                                 </Form.Item></Col>
                             </Row>
                             <Row>
                                 <Col span={4}>申报条件标签：</Col>
                                 <Col span={20}>
                                 <table style={{width:"100%"}} className="label-table">
+                                    <thead>
                                     <tr>
                                         <th>标签</th>
                                         <th>规则设置</th>
                                         <th>操作</th>
                                     </tr>
+                                    </thead>
+                                    <tbody>
                                     <tr>
                                         <td>成立年限</td>
                                         <td>
                                             <Row>
                                                 <Col span={4}>
+                                                    <Form.Item name="set_up_sign">
                                                     <Select
                                                         style={{ width: '90%' }}
+                                                        disabled={!set_up}
                                                     >
-                                                        <Option value="≥" key="≥">≥</Option>
-                                                        <Option value="=" key="=">=</Option>
-                                                        <Option value="≤" key="≤">≤</Option>
+                                                        <Option value="-1,0" key="≥">≥</Option>
+                                                        <Option value="0" key="=">=</Option>
+                                                        <Option value="0,1" key="≤">≤</Option>
                                                     </Select>
+                                                    </Form.Item>
                                                 </Col>
                                                 <Col span={19}>
-                                                    <Input/>
+                                                    <Form.Item name="set_up_value">
+                                                        <Input disabled={!set_up}/>
+                                                    </Form.Item>
                                                 </Col>
                                             </Row>
                                         </td>
-                                        <td><Switch defaultChecked onChange={this.switchChange}/></td>
+                                        <td><Switch defaultChecked onChange={(checked)=>this.switchChange(checked,"set_up")}/></td>
                                     </tr>
                                     <tr>
                                         <td>注册地址</td>
                                         <td>
-                                            <Select
-                                                style={{ width: '50px',marginRight:"5px" }}
-                                            >
-                                                <Option value="≥" key="≥">≥</Option>
-                                                <Option value="=" key="=">=</Option>
-                                                <Option value="≤" key="≤">≤</Option>
-                                            </Select>
-                                            省
-                                            <Select
-                                                style={{ width: '50px',marginLeft:"20px",marginRight:"5px" }}
-                                            >
-                                                <Option value="≥" key="≥">≥</Option>
-                                                <Option value="=" key="=">=</Option>
-                                                <Option value="≤" key="≤">≤</Option>
-                                            </Select>
-                                            市
-                                            <Select
-                                                style={{ width: '50px',marginLeft:"20px",marginRight:"5px" }}
-                                            >
-                                                <Option value="≥" key="≥">≥</Option>
-                                                <Option value="=" key="=">=</Option>
-                                                <Option value="≤" key="≤">≤</Option>
-                                            </Select>
-                                            区县
+                                              <Row>
+                                                {provinceSelect ? <Col span={6}>
+                                                    <Form.Item>
+                                                        <Select
+                                                            style={{ width: '100%'}}
+                                                        >
+                                                            {provinceSelect.map((item,idx)=><Option value={item.id} key={idx}>{item.value}</Option>)}
+                                                        </Select>
+                                                    </Form.Item>
+                                                </Col> : null}
+                                                {provinceSelect ? <Col span={1}>省</Col> : null}
+                                                {citySelect ? <Col span={5}>
+                                                    <Form.Item name="set_up_sign">
+                                                        <Select
+                                                            style={{ width: '100%',marginLeft:"20px"}}
+                                                        >
+                                                            {citySelect.map((item,idx)=><Option value={item.id} key={idx}>{item.name}</Option>)}
+                                                        </Select>
+                                                    </Form.Item>
+                                                </Col> : null}
+                                                {citySelect ? <Col span={1}>市</Col> : null}
+                                                {areaSelect ? <Col span={5}>
+                                                    <Form.Item name="set_up_sign">
+                                                        <Select
+                                                            style={{ width: '100%',marginLeft:"20px"}}
+                                                        >
+                                                            {areaSelect.map((item,idx)=><Option value={item.id} key={idx}>{item.name}</Option>)}
+                                                        </Select>
+                                                    </Form.Item>
+                                                </Col> : null}
+                                                {areaSelect ? <Col span={2}>区县</Col> : null}
+                                                <Col span={4}>
+                                                <Tag className="site-tag-plus" onClick={this.addAddress}>
+                                                <PlusOutlined />可多选
+                                                </Tag>
+                                                </Col>
+                                            </Row>
                                         </td>
-                                        <td><Switch defaultChecked onChange={this.switchChange}/></td>
+                                        <td><Switch defaultChecked onChange={(checked)=>this.switchChange(checked,"set_up")}/></td>
                                     </tr>
                                     <tr>
                                         <td>知识产权</td>
                                         <td>
                                             <Row>
                                                 <Col span={4}>
+                                                    <Form.Item name="knowledge_sign">
                                                     <Select
+                                                        disabled={!knowledge}
                                                         style={{ width: '90%' }}
                                                     >
-                                                        <Option value="≥" key="≥">≥</Option>
-                                                        <Option value="=" key="=">=</Option>
-                                                        <Option value="≤" key="≤">≤</Option>
+                                                        <Option value="-1,0" key="≥">≥</Option>
+                                                        <Option value="0" key="=">=</Option>
+                                                        <Option value="0,1" key="≤">≤</Option>
                                                     </Select>
+                                                    </Form.Item>
                                                 </Col>
                                                 <Col span={19}>
-                                                    <Input suffix="个"/>
+                                                    <Form.Item name="knowledge_value">
+                                                    <Input disabled={!knowledge} suffix="个"/>
+                                                    </Form.Item>
                                                 </Col>
                                             </Row>
                                         </td>
-                                        <td><Switch defaultChecked onChange={this.switchChange}/></td>
+                                        <td><Switch defaultChecked onChange={(checked)=>this.switchChange(checked,"knowledge")}/></td>
                                     </tr>
                                     <tr>
                                         <td>发明专利</td>
                                         <td>
                                             <Row>
                                                 <Col span={4}>
+                                                    <Form.Item name="invention_sign">
                                                     <Select
+                                                        disabled={!invention}
                                                         style={{ width: '90%' }}
                                                     >
-                                                        <Option value="≥" key="≥">≥</Option>
-                                                        <Option value="=" key="=">=</Option>
-                                                        <Option value="≤" key="≤">≤</Option>
+                                                        <Option value="-1,0" key="≥">≥</Option>
+                                                        <Option value="0" key="=">=</Option>
+                                                        <Option value="0,1" key="≤">≤</Option>
                                                     </Select>
+                                                    </Form.Item>
                                                 </Col>
                                                 <Col span={19}>
-                                                    <Input suffix="个"/>
+                                                    <Form.Item name="invention_value">
+                                                    <Input  disabled={!invention} suffix="个"/>
+                                                    </Form.Item>
                                                 </Col>
                                             </Row>
                                         </td>
-                                        <td><Switch defaultChecked onChange={this.switchChange}/></td>
+                                        <td><Switch defaultChecked onChange={(checked)=>this.switchChange(checked,"invention")}/></td>
                                     </tr>
                                     <tr>
                                         <td>所属行业</td>
                                         <td>
+                                            <Form.Item name="industry_label_ids">
                                             <Select
+                                                disabled={!industry_label}
                                                 mode="multiple"
                                                 style={{ width: '100%' }}
                                                 onChange={this.handleChange}
@@ -539,8 +650,9 @@ class AddProject extends Component {
                                                                                                         key={item.id}>{item.name}</Option>) : ''}
 
                                             </Select>
+                                            </Form.Item>
                                         </td>
-                                        <td><Switch defaultChecked onChange={this.switchChange}/></td>
+                                        <td><Switch defaultChecked onChange={(checked)=>this.switchChange(checked,"industry_label")}/></td>
                                     </tr>
                                     <tr>
                                         <td>财务数据</td>
@@ -548,50 +660,65 @@ class AddProject extends Component {
                                             <Row>
                                                 <Col span={7}>研发投入</Col>
                                                 <Col span={4}>
+                                                    <Form.Item name="develop_sign">
                                                     <Select
+                                                        disabled={!declare}
                                                         style={{ width: '90%' }}
                                                     >
-                                                        <Option value="≥" key="≥">≥</Option>
-                                                        <Option value="=" key="=">=</Option>
-                                                        <Option value="≤" key="≤">≤</Option>
+                                                        <Option value="-1,0" key="≥">≥</Option>
+                                                        <Option value="0" key="=">=</Option>
+                                                        <Option value="0,1" key="≤">≤</Option>
                                                     </Select>
+                                                    </Form.Item>
                                                 </Col>
                                                 <Col span={10}>
-                                                    <Input suffix="万元"/>
+                                                    <Form.Item name="develop_value">
+                                                    <Input disabled={!declare} suffix="万元"/>
+                                                    </Form.Item>
                                                 </Col>
                                             </Row>
                                             <Row className="mt10">
                                                 <Col span={7}>企业报税收入</Col>
                                                 <Col span={4}>
+                                                    <Form.Item name="declare_value">
                                                     <Select
+                                                        disabled={!declare}
                                                         style={{ width: '90%' }}
                                                     >
-                                                        <Option value="≥" key="≥">≥</Option>
-                                                        <Option value="=" key="=">=</Option>
-                                                        <Option value="≤" key="≤">≤</Option>
+                                                        <Option value="-1,0" key="≥">≥</Option>
+                                                        <Option value="0" key="=">=</Option>
+                                                        <Option value="0,1" key="≤">≤</Option>
                                                     </Select>
+                                                    </Form.Item>
                                                 </Col>
                                                 <Col span={10}>
-                                                    <Input suffix="万元"/>
+                                                    <Form.Item name="declare_value">
+                                                    <Input disabled={!declare} suffix="万元"/>
+                                                    </Form.Item>
                                                 </Col>
                                             </Row>
                                             <Row className="mt10">
                                                 <Col span={7}>研发资产总额</Col>
                                                 <Col span={4}>
+                                                    <Form.Item name="develop_assets_sign">
                                                     <Select
+                                                        disabled={!declare}
                                                         style={{ width: '90%' }}
                                                     >
-                                                        <Option value="≥" key="≥">≥</Option>
-                                                        <Option value="=" key="=">=</Option>
-                                                        <Option value="≤" key="≤">≤</Option>
+                                                        <Option value="-1,0" key="≥">≥</Option>
+                                                        <Option value="0" key="=">=</Option>
+                                                        <Option value="0,1" key="≤">≤</Option>
                                                     </Select>
+                                                    </Form.Item>
                                                 </Col>
                                                 <Col span={10}>
-                                                    <Input suffix="万元"/>
+                                                    <Form.Item name="develop_assets_value">
+                                                    <Input disabled={!declare} suffix="万元"/>
+                                                    </Form.Item>
                                                 </Col>
                                             </Row>
                                         </td>
-                                        <td><Switch defaultChecked onChange={this.switchChange}/></td>
+                                        <td><Switch defaultChecked onChange={(checked)=>this.switchChange(checked,"declare")}/></td>
                                     </tr>
                                     <tr>
                                         <td>人员数量</td>
@@ -599,36 +726,47 @@ class AddProject extends Component {
                                             <Row className="mt10">
                                                 <Col span={7}>最近一年缴纳社保人数</Col>
                                                 <Col span={4}>
+                                                    <Form.Item name="social_people_sign">
                                                     <Select
+                                                        disabled={!social}
                                                         style={{ width: '90%' }}
                                                     >
-                                                        <Option value="≥" key="≥">≥</Option>
-                                                        <Option value="=" key="=">=</Option>
-                                                        <Option value="≤" key="≤">≤</Option>
+                                                        <Option value="-1,0" key="≥">≥</Option>
+                                                        <Option value="0" key="=">=</Option>
+                                                        <Option value="0,1" key="≤">≤</Option>
                                                     </Select>
+                                                    </Form.Item>
                                                 </Col>
                                                 <Col span={10}>
-                                                    <Input suffix="人"/>
+                                                    <Form.Item name="social_people_value">
+                                                    <Input disabled={!social} suffix="人"/>
+                                                    </Form.Item>
                                                 </Col>
                                             </Row>
                                             <Row className="mt10">
                                                 <Col span={7}>研发人员</Col>
                                                 <Col span={4}>
+                                                    <Form.Item name="develop_people_sign">
                                                     <Select
+                                                        disabled={!social}
                                                         style={{ width: '90%' }}
                                                     >
-                                                        <Option value="≥" key="≥">≥</Option>
-                                                        <Option value="=" key="=">=</Option>
-                                                        <Option value="≤" key="≤">≤</Option>
+                                                        <Option value="-1,0" key="≥">≥</Option>
+                                                        <Option value="0" key="=">=</Option>
+                                                        <Option value="0,1" key="≤">≤</Option>
                                                     </Select>
+                                                    </Form.Item>
                                                 </Col>
                                                 <Col span={10}>
-                                                    <Input suffix="人"/>
+                                                    <Form.Item name="develop_people_value">
+                                                    <Input disabled={!social} suffix="人"/>
+                                                    </Form.Item>
                                                 </Col>
                                             </Row>
                                         </td>
-                                        <td><Switch defaultChecked onChange={this.switchChange}/></td>
+                                        <td><Switch defaultChecked onChange={(checked)=>this.switchChange(checked,"social")}/></td>
                                     </tr>
+                                    </tbody>
                                 </table>
                                 </Col>
                             </Row>
@@ -657,7 +795,7 @@ class AddProject extends Component {
                         style={{ width: 300 }}
                         enterButton
                     />
-                    <Table rowSelection={rowSelection} columns={this.columns} dataSource={tableData ? tableData.result : []} pagination={false} rowKey="id" />
+                    <Table rowSelection={rowSelection} columns={this.columns} dataSource={tableData ? tableData.result : []} pagination={pagination} rowKey="id"  />
                 </Modal>
             </div>
         );

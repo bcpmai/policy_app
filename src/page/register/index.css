@@ -44,3 +44,6 @@
     border:1px solid #ae242b;
     color:#ae242b;
 }
+.register-template .top-component-template .ant-col-8{
+    text-indent: 0;
+}
