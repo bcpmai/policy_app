@@ -65,12 +65,34 @@ class AddPolicy extends Component {
         editor.create() //创建
         this.getDefalutData(editor);
         editor.customConfig.uploadImgHooks = {
+            before: function (xhr, editor, files) {
+                console.log(xhr, editor, files,"before")
+            },
+            success: function (xhr, editor, result) {
+                console.log("上传成功");
+                console.log(xhr, editor, result,"success")
+            },
+            fail: function (xhr, editor, result) {
+                console.log("上传失败,原因是" + result);
+                console.log(xhr, editor, result,"fail")
+            },
+            error: function (xhr, editor) {
+                console.log("上传出错");
+                console.log(xhr, editor,"error")
+            },
+            timeout: function (xhr, editor) {
+                console.log("上传超时");
+                console.log(xhr, editor,"timeout")
+            },
             customInsert: function (insertImg, result, editor) {
-                console.log(insertImg, result, editor,"file")
+                console.log(insertImg, result, editor, "file")
                 var url = result.url  //监听图片上传成功更新页面
                 insertImg(url)
             }
         }
+        // editor.customConfig.uploadImgHooks = {
+        //
+        // }
         // submit.addEventListener('click', function () {  //监听点击提交按钮
         //     // 读取 html
         //     this.setState({
