@@ -61,9 +61,7 @@ class AddPolicy extends Component {
             this.setState({
                 editorContent: html
             })
-        }
-        editor.create() //创建
-        this.getDefalutData(editor);
+        };
         editor.customConfig.uploadImgHooks = {
             before: function (xhr, editor, files) {
                 console.log(xhr, editor, files,"before")
@@ -89,7 +87,10 @@ class AddPolicy extends Component {
                 var url = result.url  //监听图片上传成功更新页面
                 insertImg(url)
             }
-        }
+        };
+        editor.create() //创建
+        this.getDefalutData(editor);
+
         // editor.customConfig.uploadImgHooks = {
         //
         // }
