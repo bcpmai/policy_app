@@ -6,11 +6,11 @@ import {render} from 'react-dom';
 import { Breadcrumb,Descriptions,Tag,Button,Row,Col,Card,List} from 'antd';
 import { StarOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import Top from './../../../component/top';
-import Title from './../../../component/title';
+import Top from '../../../../component/top/index';
+import Title from '../../../../component/title/index';
 // import Footer from "../../component/footer";
 import './index.css';
-import {request} from "../../../utils/request";
+import {request} from "../../../../utils/request";
 
 
 class policyPreview extends Component {

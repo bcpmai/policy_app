@@ -6,11 +6,11 @@ import {render} from 'react-dom';
 import { Input, Row, Col, Button, Select, DatePicker, Breadcrumb,Form,Upload, message} from 'antd';
 import moment from 'moment';
 import { UploadOutlined } from '@ant-design/icons';
-import {request} from './../../../utils/request';
-import Top from '../../../component/top/index';
+import {request} from '../../../../utils/request';
+import Top from '../../../../component/top/index';
 import cookie from 'react-cookies';
-import PolicyManagementMenu from "../../../component/policyManagementMenu/index";
-import Title from "../../../component/title/index";
+import PolicyManagementMenu from "../../../../component/policyManagementMenu/index";
+import Title from "../../../../component/title/index";
 import './index.css';
 
 import E from 'wangeditor'

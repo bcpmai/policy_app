@@ -1,48 +1,38 @@
 /**
- *  政府用户
+ *  角色管理
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import { Table, Input, Row, Col, Button, Breadcrumb } from 'antd';
 import { Link } from "react-router-dom";
 import axios from 'axios';
-import Top from '../../../component/top/index';
+import Top from '../../../../component/top/index';
 // import Footer from "../../../component/footer/index";
-import PolicyManagementMenu from "../../../component/policyManagementMenu/index";
+import PolicyManagementMenu from "../../../../component/policyManagementMenu/index";
 import './index.css';
 
 const { Search } = Input;
 
-class policyUser extends Component {
+class RoleManagement extends Component {
     constructor(props){
         super(props);
         this.state = {
         }
         this.columns = [
             {
-                title: '用户名',
+                title: '序号',
                 dataIndex: 'title',
                 key: 'title'
             },
             {
-                title: '姓名',
+                title: '角色名称',
                 dataIndex: 'hierarchy',
                 key: 'hierarchy'
             },
             {
-                title: '手机号',
-                dataIndex: 'address',
-                key: 'address',
-            },
-            {
-                title: '注册时间',
+                title: '添加时间',
                 dataIndex: 'theme',
                 key: 'theme'
-            },
-            {
-                title: '状态',
-                dataIndex: 'status',
-                key: 'status'
             },
             {
                 title: '操作',
@@ -51,7 +41,6 @@ class policyUser extends Component {
                     <span>
                         <a>修改</a>
                         <a className="ml15">禁用</a>
-                        <a className="ml15">重置密码</a>
                     </span>),
             },
         ];
@@ -132,15 +121,8 @@ class policyUser extends Component {
                         <PolicyManagementMenu />
                     </Col>
                     <Col span={20}>
-                    <div className="information-title">政策用户</div>
-                    <Breadcrumb separator=">">
-                        <Breadcrumb.Item>政策管理</Breadcrumb.Item>
-                        <Breadcrumb.Item href="">政策用户</Breadcrumb.Item>
-                    </Breadcrumb>
-                        <div className="policyUser-search">
-                            <Search placeholder="input search text" onSearch={value => console.log(value)} enterButton />
-                        </div>
-                        <p><Link to="/addPolicy"><Button type="primary">添加用户</Button></Link></p>
+                    <div className="information-title">角色管理</div>
+                        <p><Link to="/addPolicy"><Button type="primary">添加角色</Button></Link></p>
                     <Table columns={this.columns} dataSource={this.data} pagination={this.pagination} />
                     </Col>
                 </Row>
@@ -151,4 +133,4 @@ class policyUser extends Component {
     };
 }
 
-export default policyUser;
+export default RoleManagement;

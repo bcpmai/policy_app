@@ -1,16 +1,16 @@
 /**
- *  政策列表
+ *  项目列表
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {Table, Tag, Input, Row, Col, Button, Select, DatePicker, Breadcrumb, Modal, Form, message, Tooltip} from 'antd';
 import {ArrowUpOutlined, ArrowDownOutlined, PlusOutlined, MinusOutlined} from '@ant-design/icons';
 import {Link} from "react-router-dom";
-import {request} from './../../../utils/request';
-import Top from '../../../component/top/index';
-import Label from "../../../component/label/index";
-import Title from "../../../component/title/index";
-import PolicyManagementMenu from "../../../component/policyManagementMenu/index";
+import {request} from '../../../../utils/request';
+import Top from '../../../../component/top/index';
+import Label from "../../../../component/label/index";
+import Title from "../../../../component/title/index";
+import PolicyManagementMenu from "../../../../component/policyManagementMenu/index";
 import './index.css';
 
 const {Search} = Input;
@@ -33,7 +33,7 @@ const validateMessages = {
     },
 };
 
-class PolicyList extends Component {
+class ProjectList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -88,12 +88,20 @@ class PolicyList extends Component {
         }
         this.columns = [
             {
-                title: '政策标题',
+                title: '项目标题',
                 dataIndex: 'title',
                 key: 'title',
                 width: 180,
                 render: (text, record) => {
                     return <Tooltip placement="topLeft" title={text}><a onClick={()=>this.props.history.push(`/policyPreview/${record.id}`)}>{text.length < 15 ? text : text.substr(0,15)+"..."}</a></Tooltip>
+                }
+            },
+            {
+                title: '发布机构',
+                dataIndex: 'organization_label_str',
+                key: 'organization_label_str',
+                render: (text, record) => {
+                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 6 ? text : text.substr(0,6)+"..."}</span></Tooltip>
                 }
             },
             {
@@ -109,14 +117,6 @@ class PolicyList extends Component {
                     }else{
                         return "区县级"
                     }
-                }
-            },
-            {
-                title: '发布机构',
-                dataIndex: 'organization_label_str',
-                key: 'organization_label_str',
-                render: (text, record) => {
-                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 6 ? text : text.substr(0,6)+"..."}</span></Tooltip>
                 }
             },
             {
@@ -396,15 +396,15 @@ class PolicyList extends Component {
                             <PolicyManagementMenu key="menu"/>
                         </Col>
                         <Col span={20}>
-                            <Title name="政策列表" />
+                            <Title name="项目列表" />
                             <Breadcrumb separator=">">
-                                <Breadcrumb.Item>政策管理</Breadcrumb.Item>
-                                <Breadcrumb.Item href="">政策列表</Breadcrumb.Item>
+                                <Breadcrumb.Item>项目管理</Breadcrumb.Item>
+                                <Breadcrumb.Item href="">项目列表</Breadcrumb.Item>
                             </Breadcrumb>
                             <div className="label-box">
                                 <Form ref="form" {...layout} name="dynamic_rule" onFinish={this.onFinish} validateMessages={validateMessages}>
                                 <Row className="mt10">
-                                    <Col span={4}>政策标题</Col>
+                                    <Col span={4}>项目标题</Col>
                                     <Col span={18}>
                                         <Form.Item name="title">
                                             <Input />
@@ -459,7 +459,7 @@ class PolicyList extends Component {
                                     </Col>
                                 </Row>
                                 <Label callback={this.onSelectStatus} defalutValue={status} isRadio={true} span={{title:4,label:20}} title={labelStatus.title} item={labelStatus.item} key="labelStatus"/>
-                                <Label callback={this.onSelectSource} defalutValue={source} isRadio={true} span={{title:4,label:20}} title={labelSource.title} item={labelSource.item} key="labelSource"/>
+                                {/*<Label callback={this.onSelectSource} defalutValue={source} isRadio={true} span={{title:4,label:20}} title={labelSource.title} item={labelSource.item} key="labelSource"/>*/}
                                     </div>
                                         <div className="policyList-button">
                                     <Button type="primary" htmlType="submit">检索</Button>
@@ -467,7 +467,7 @@ class PolicyList extends Component {
                                 </div>
                                 </Form>
                             </div>
-                            <p align="right" className="add-button"><Link to="/addPolicy"><Button type="primary">添加政策</Button></Link></p>
+                            <p align="right" className="add-button"><Link to="/addProject"><Button type="primary">添加项目</Button></Link></p>
                             {tableData ? <Table columns={this.columns} dataSource={tableData.result} pagination={pagination} rowKey="id" /> : null}
                         </Col>
                     </Row>
@@ -496,4 +496,4 @@ class PolicyList extends Component {
     };
 }
 
-export default PolicyList;
+export default ProjectList;

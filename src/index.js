@@ -15,17 +15,25 @@ import LatestPolicy from "./page/latestPolicy/index.js"; //最新政策
 import PolicyText from "./page/policyText/index.js"; //政策正文
 import Information from "./page/enterpriseCenter/information/index.js"; //企业信息
 import AccountManagement from "./page/enterpriseCenter/accountManagement/index.js"; //账户管理
-import PolicyList from "./page/governmentCenter/policyList/index.js"; //政策列表
-import AddPolicy from "./page/governmentCenter/addPolicy/index.js"; //添加政策
-import PolicyPreview from "./page/governmentCenter/policyPreview/index.js"; //政策预览
-import PolicyUser from "./page/governmentCenter/policyUser/index.js"; //政府用户
+import PolicyList from "./page/governmentCenter/policyManagement/policyList/index.js"; //政策列表
+import AddPolicy from "./page/governmentCenter/policyManagement/addPolicy/index.js"; //添加政策
+import PolicyPreview from "./page/governmentCenter/policyManagement/policyPreview/index.js"; //政策预览
+import PolicyUser from "./page/governmentCenter/systemManagement/policyUser/index.js"; //政府用户
 
 import DeclarationItem from "./page/declarationItem/index.js"; //申报项目
 import ItemText from "./page/itemText/index.js"; //项目正文
 import Matching from "./page/enterpriseCenter/matching/index.js"; //精准匹配
 import MySubscribe from "./page/enterpriseCenter/mySubscribe/index.js"; //我的订阅
 import MyCollection from "./page/enterpriseCenter/myCollection/index.js"; //我的收藏
-import CollectionList from "./page/governmentCenter/collectionList/index.js"; //采集列表
+import CollectionList from "./page/governmentCenter/policyManagement/collectionList/index.js"; //采集列表
+
+
+import ProjectList from "./page/governmentCenter/projectManagement/projectList/index.js"; //项目列表
+import AddProject from "./page/governmentCenter/projectManagement/addProject/index.js"; //添加项目
+import ProjectPreview from "./page/governmentCenter/projectManagement/projectPreview/index.js"; //项目预览
+
+import RoleManagement from "./page/governmentCenter/systemManagement/roleManagement/index.js"; //角色权限
+import Enterprise from "./page/governmentCenter/systemManagement/enterprise/index.js"; //角色权限
 
 
 
@@ -57,6 +65,11 @@ ReactDOM.render(
             <Route exact path="/mySubscribe" component={MySubscribe} />
             <Route exact path="/myCollection" component={MyCollection} />
             <Route exact path="/collectionList" component={CollectionList} />
+            <Route exact path="/projectList" component={ProjectList} />
+            <Route exact path="/addProject" component={AddProject} />
+            <Route exact path="/projectPreview/:id" component={ProjectPreview} />
+            <Route exact path="/roleManagement" component={RoleManagement} />
+            <Route exact path="/enterprise" component={Enterprise} />
 
         </div>
             <Footer />

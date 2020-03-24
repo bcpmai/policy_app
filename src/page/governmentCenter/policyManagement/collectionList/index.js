@@ -6,12 +6,12 @@ import {render} from 'react-dom';
 import { Table, Input, Row, Col, Button, Select, DatePicker, Breadcrumb } from 'antd';
 import { ArrowUpOutlined,ArrowDownOutlined,PlusOutlined,MinusOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
-import Top from '../../../component/top/index';
-import Label from "../../../component/label/index";
-import PolicyManagementMenu from "../../../component/policyManagementMenu/index";
-import Title from "../../../component/title/index";
+import Top from '../../../../component/top/index';
+import Label from "../../../../component/label/index";
+import PolicyManagementMenu from "../../../../component/policyManagementMenu/index";
+import Title from "../../../../component/title/index";
 import './index.css';
-import {request} from "../../../utils/request";
+import {request} from "../../../../utils/request";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;

@@ -50,16 +50,11 @@ class PolicyMenu extends Component {
                         <Menu.Item key="policyList"><a href="/policyList" >政策列表</a></Menu.Item>
                         <Menu.Item key="collectionList"><a href="/collectionList">采集列表</a></Menu.Item>
                     </SubMenu>
-                    <SubMenu
-                        key="sub2"
-                        title={
-                            <span>
-                                          <ProfileOutlined />
-                                          <span>项目管理</span>
-                                        </span>
-                        }
-                    >
-                    </SubMenu>
+                    <Menu.Item
+                        key="projectList"
+                        className="project-management">
+                            <a href="/projectList"><ProfileOutlined />项目管理</a>
+                    </Menu.Item>
                     <SubMenu
                         key="sub3"
                         title={
@@ -69,9 +64,9 @@ class PolicyMenu extends Component {
                                         </span>
                         }
                     >
-                        <Menu.Item key="31"><a href="/information" >角色权限</a></Menu.Item>
-                        <Menu.Item key="32">企业用户</Menu.Item>
-                        <Menu.Item key="33">政府用户</Menu.Item>
+                        <Menu.Item key="31"><a href="/RoleManagement">角色权限</a></Menu.Item>
+                        <Menu.Item key="32"><a href="/enterprise">企业用户</a></Menu.Item>
+                        <Menu.Item key="33"><a href="/policyUser">政府用户</a></Menu.Item>
                         <Menu.Item key="34">标签管理</Menu.Item>
                         <Menu.Item key="35">轮播图管理</Menu.Item>
                         <Menu.Item key="36">账户管理</Menu.Item>
