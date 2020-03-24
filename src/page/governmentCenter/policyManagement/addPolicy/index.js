@@ -84,7 +84,7 @@ class AddPolicy extends Component {
             },
             customInsert: function (insertImg, result, editor) {
                 console.log(insertImg, result, editor, "file")
-                var url = result.url  //监听图片上传成功更新页面
+                var url = result.image_url  //监听图片上传成功更新页面
                 insertImg(url)
             }
         };
