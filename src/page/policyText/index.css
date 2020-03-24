@@ -23,14 +23,14 @@
     padding: 10px 0;
 }
 /*面包屑*/
-.policyText-template .ant-breadcrumb {
-    background: #ae242b;
-    height: 50px;
-    line-height: 50px;
-    color: #fff;
-    font-size: 18px;
-    padding-left: 110px;
-}
+/*.policyText-template .ant-breadcrumb {*/
+    /*background: #ae242b;*/
+    /*height: 50px;*/
+    /*line-height: 50px;*/
+    /*color: #fff;*/
+    /*font-size: 18px;*/
+    /*padding-left: 110px;*/
+/*}*/
 .policyText-template .ant-descriptions-item-label{
     font-size: 16px;
     color: #000;
@@ -39,10 +39,10 @@
     font-size: 16px;
     color: #666;
 }
-.policyText-template .ant-breadcrumb > span:last-child a,
-.policyText-template .ant-breadcrumb .ant-breadcrumb-separator {
-    color: #fff;
-}
+/*.policyText-template .ant-breadcrumb > span:last-child a,*/
+/*.policyText-template .ant-breadcrumb .ant-breadcrumb-separator {*/
+    /*color: #fff;*/
+/*}*/
 .policyText-template .labelAdd .ant-descriptions-item-label{
      vertical-align: top;
  }

@@ -1,44 +1,44 @@
-.addPolicy-template{
+.addProject-template{
 }
-.addPolicy-template .addPolicy-serach{
+.addProject-template .addProject-serach{
     margin-left: 300px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
-.addPolicy-template .addPolicy-serach .serach-arrow{
+.addProject-template .addProject-serach .serach-arrow{
     display: inline-block;
     margin-top: 10px;
     margin-left: 10px;
     cursor: pointer;
 }
-.addPolicy-template .label-box{
-    padding: 10px;
-    margin-bottom: 20px;
-}
-.addPolicy-template .label-box .ant-col-2 {
+/*.addProject-template .label-box{*/
+    /*padding: 10px;*/
+    /*margin-bottom: 20px;*/
+/*}*/
+.addProject-template .label-box .ant-col-2 {
     text-align: center;
     color: #333;
 }
-.addPolicy-template .addPolicy-button{
+.addProject-template .addProject-button{
     text-align: center;
     margin-top: 20px;
 }
-.addPolicy-template .label-product-box{
+.addProject-template .label-product-box{
     position: relative;
 }
-.addPolicy-template .label-product-box .more-label{
+.addProject-template .label-product-box .more-label{
     color:#333;
     position: absolute;
     right:10px;
     top:0;
     cursor: pointer;
 }
-.addPolicy-template .information-title{
+.addProject-template .information-title{
     margin-top: 20px;
     color: #333;
     margin-bottom: 10px;
 }
-.addPolicy-template .information-title:before{
+.addProject-template .information-title:before{
     content: '';
     width: 5px;
     height: 20px;
@@ -46,61 +46,109 @@
     background: #1890ff;
     margin-right: 5px;
 }
-/*面包屑*/
-.addPolicy-template .ant-breadcrumb {
-    background: #ae242b;
-    height: 50px;
-    line-height: 50px;
-    color: #fff;
-    font-size: 18px;
-    padding-left: 110px;
-}
-.addPolicy-template .ant-breadcrumb > span:last-child a,
-.addPolicy-template .ant-breadcrumb a,
-.addPolicy-template .ant-breadcrumb .ant-breadcrumb-separator {
-    color: #fff;
-}
-/*.addPolicy-template .title-component-template{*/
+/*!*面包屑*!*/
+/*.addProject-template .ant-breadcrumb {*/
+    /*background: #ae242b;*/
+    /*height: 50px;*/
+    /*line-height: 50px;*/
+    /*color: #fff;*/
+    /*font-size: 18px;*/
+    /*padding-left: 110px;*/
+/*}*/
+/*.addProject-template .ant-breadcrumb > span:last-child a,*/
+/*.addProject-template .ant-breadcrumb a,*/
+/*.addProject-template .ant-breadcrumb .ant-breadcrumb-separator {*/
+    /*color: #fff;*/
+/*}*/
+/*.addProject-template .title-component-template{*/
     /*margin-top: 60px;*/
     /*margin-bottom: 40px;*/
 /*}*/
-.addPolicy-template .addPolicy-button{
+.addProject-template .addProject-button{
     padding:50px 0
 }
-.addPolicy-template .addPolicy-button .ant-btn{
+.addProject-template .addProject-button .ant-btn{
     background: #fff;
     color: #ae242b;
     border:1px solid #ae242b;
     border-radius: 20px;
-    height: 40px;
+    height: 35px;
     padding: 0 45px;
-    font-size: 18px;
+    font-size: 16px;
     margin-right: 20px;
 }
-.addPolicy-template .addPolicy-button .ant-btn{
+.addProject-template .addProject-button .ant-btn{
     color: #333;
 }
-.addPolicy-template .label-box{
-    padding: 40px 10px 60px 100px;
-    margin-bottom: 20px;
-}
-.addPolicy-template .label-box .ant-col-4 {
-    color: #000;
+/*.addProject-template .label-box{*/
+    /*padding: 40px 10px 60px 100px;*/
+    /*margin-bottom: 20px;*/
+/*}*/
+/*.addProject-template .label-box .ant-col-4 {*/
+    /*color: #000;*/
+    /*text-align: left;*/
+/*}*/
+/*.addProject-template .label-box .ant-col-4 label{*/
+    /*font-size: 18px;*/
+/*}*/
+/*.addProject-template .label-box .ant-col-4:before{*/
+    /*content: '';*/
+    /*width: 12px;*/
+    /*height: 22px;*/
+    /*background: #aa2426;*/
+    /*display: inline-block;*/
+    /*vertical-align: -5px;*/
+    /*margin-right: 10px;*/
+/*}*/
+/*.addProject-template .ant-form-item-label > label.ant-form-item-required::before,*/
+/*.addProject-template .ant-form-item-label > label::after{*/
+    /*display: none;*/
+/*}*/
+.main-box .addProject-template .label-box .ant-col-4{
     text-align: left;
 }
-.addPolicy-template .label-box .ant-col-4 label{
-    font-size: 18px;
-}
-.addPolicy-template .label-box .ant-col-4:before{
-    content: '';
-    width: 12px;
-    height: 22px;
-    background: #aa2426;
-    display: inline-block;
-    vertical-align: -5px;
-    margin-right: 10px;
-}
-.addPolicy-template .ant-form-item-label > label.ant-form-item-required::before,
-.addPolicy-template .ant-form-item-label > label::after{
+.main-box .addProject-template .label-box .ant-col-4:before{
     display: none;
 }
+.main-box .addProject-template .label-box .ant-col-4 .ant-form-item-label > label{
+    font-size: 16px;
+}
+.label-table th{
+    background: #e0e0e0;
+}
+.label-table th,.label-table td{
+    padding: 7px 20px;
+}
+.label-table{
+    border: 1px solid #f5f5f5;
+}
+.label-table td{
+    border-left: 1px solid #f5f5f5;
+    border-top: 1px solid #f5f5f5;
+}
+.main-box .addProject-template .label-box{
+    border:0px;
+}
+.select-porject-modal .ant-input-search{
+    margin-bottom: 10px;
+}
+.select-porject-modal .ant-input-group .ant-input{
+    border:1px solid #a72329;
+    border-radius:15px 0 0 15px;
+    padding:3px 11px;
+    text-indent: 0;
+}
+.select-porject-modal .ant-input-group .ant-btn{
+    border:1px solid #a72329;
+    background: #a72329;
+    border-radius:0 15px 15px 0;
+    padding: 0px 10px;
+    height: 30px;
+    font-size: 20px;
+    color:#fff;
+}
+/*.main-box .ant-btn:hover{*/
+    /*background: #fff;*/
+    /*color: #ae242b;*/
+    /*border: 1px solid #ae242b;*/
+/*}*/

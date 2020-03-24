@@ -156,7 +156,7 @@ class AddPolicy extends Component {
         }
     }
     onSubmit = async(values,url) => {
-        const {release_date,life_date,editorContent,id,fileList} = this.state;
+        const {release_date,life_date,editorContent,id,fileList=[]} = this.state;
         values.release_date = release_date;
         values.life_date = life_date;
         values.content = editorContent;
@@ -331,11 +331,11 @@ class AddPolicy extends Component {
                                                                                         key={item.id}>{item.name}</Option>) : ''}
                                 </Select>
                             </Form.Item>
-                            <Form.Item name="content" label="政策正文">
+                            <Form.Item name="content" label="政策正文" required>
                                 <div ref="editorElem">
                                 </div>
                             </Form.Item>
-                            <Form.Item name="username" label="上传附件">
+                            <Form.Item name="username" label="上传附件" required>
                                 <Upload {...props} fileList={this.state.fileList}>
                                     <Button>
                                         <UploadOutlined /> 上传文件

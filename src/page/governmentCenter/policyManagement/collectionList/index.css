@@ -43,55 +43,55 @@
     background: #1890ff;
     margin-right: 5px;
 }
-.collectionList-template .ant-breadcrumb {
-    background: #ae242b;
-    height: 50px;
-    line-height: 50px;
-    color: #fff;
-    font-size: 18px;
-    padding-left: 110px;
-}
-.collectionList-template .ant-breadcrumb > span:last-child a,
-.collectionList-template .ant-breadcrumb a,
-.collectionList-template .ant-breadcrumb .ant-breadcrumb-separator {
-    color: #fff;
-}
-.collectionList-template .title-component-template{
-    margin-top: 60px;
-    margin-bottom: 40px;
-}
-.collectionList-template .label-box .ant-col-4 {
-    color: #000;
-    font-size: 18px;
-}
-.collectionList-template .label-box .ant-col-4:before{
-    content: '';
-    width: 12px;
-    height: 22px;
-    background: #aa2426;
-    display: inline-block;
-    vertical-align: -5px;
-    margin-right: 10px;
-}
-.collectionList-template .ant-row{
-    margin-bottom: 30px;
-}
-.collectionList-template .collectionList-button{
-    text-align: center;
-    margin-top: 20px;
-}
+/*.collectionList-template .ant-breadcrumb {*/
+    /*background: #ae242b;*/
+    /*height: 50px;*/
+    /*line-height: 50px;*/
+    /*color: #fff;*/
+    /*font-size: 18px;*/
+    /*padding-left: 110px;*/
+/*}*/
+/*.collectionList-template .ant-breadcrumb > span:last-child a,*/
+/*.collectionList-template .ant-breadcrumb a,*/
+/*.collectionList-template .ant-breadcrumb .ant-breadcrumb-separator {*/
+    /*color: #fff;*/
+/*}*/
+/*.collectionList-template .title-component-template{*/
+    /*margin-top: 60px;*/
+    /*margin-bottom: 40px;*/
+/*}*/
+/*.collectionList-template .label-box .ant-col-4 {*/
+    /*color: #000;*/
+    /*font-size: 18px;*/
+/*}*/
+/*.collectionList-template .label-box .ant-col-4:before{*/
+    /*content: '';*/
+    /*width: 12px;*/
+    /*height: 22px;*/
+    /*background: #aa2426;*/
+    /*display: inline-block;*/
+    /*vertical-align: -5px;*/
+    /*margin-right: 10px;*/
+/*}*/
+/*.collectionList-template .ant-row{*/
+    /*margin-bottom: 30px;*/
+/*}*/
+/*.collectionList-template .collectionList-button{*/
+    /*text-align: center;*/
+    /*margin-top: 20px;*/
+/*}*/
 
-.collectionList-template .collectionList-button .ant-btn,
-.collectionList-template .operation-button .ant-btn{
-    background: #fff;
-    color: #ae242b;
-    border:1px solid #ae242b;
-    border-radius: 20px;
-    height: 40px;
-    padding: 0 70px;
-    font-size: 18px;
-    margin: 20px 40px 0px 40px;
-}
+/*.collectionList-template .collectionList-button .ant-btn,*/
+/*.collectionList-template .operation-button .ant-btn{*/
+    /*background: #fff;*/
+    /*color: #ae242b;*/
+    /*border:1px solid #ae242b;*/
+    /*border-radius: 20px;*/
+    /*height: 40px;*/
+    /*padding: 0 70px;*/
+    /*font-size: 18px;*/
+    /*margin: 20px 40px 0px 40px;*/
+/*}*/
 .collectionList-template .operation-button{
     margin-bottom: 20px;
     margin-top: 27px;

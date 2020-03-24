@@ -49,6 +49,7 @@ class Top extends Component {
         console.log(current,"current");
         this.state = {
             isLogin:cookie.load('userId'),
+            userType:cookie.load('userType'),
             current
         }
 
@@ -77,7 +78,7 @@ class Top extends Component {
     }
 
     render() {
-        const { isLogin, current } = this.state;
+        const { isLogin, current, userType } = this.state;
         return (
             <div className="top-component-template">
                 <div className="welcome-box">
@@ -97,7 +98,7 @@ class Top extends Component {
                                 <a href="#">申报政策</a>
                             </Menu.Item>
                             <Menu.Item key="login">
-                                <a href={isLogin ? "/policyList" : "/login"}>个人中心</a>
+                                <a href={isLogin ? (userType == 1 ? "/information" : "/policyList") : "/login"}>个人中心</a>
                             </Menu.Item>
                         </Menu>
                     </Col>

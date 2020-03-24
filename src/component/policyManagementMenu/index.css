@@ -1,12 +1,13 @@
 .policy-menu-component-template{
-    padding-top: 140px;
+    padding-top: 78px;
     /*position: fixed;*/
     /*top:180px;*/
     position: absolute;
     left:0
 }
 .policy-menu-component-template .ant-menu-submenu-title,
-.policy-menu-component-template .project-management{
+.policy-menu-component-template .project-management,
+.policy-menu-component-template .ant-menu:not(.ant-menu-horizontal) .project-management.ant-menu-item-active{
     background: #ae242b;
     font-size: 17px;
     color: #fff;
@@ -16,7 +17,8 @@
     cursor: pointer;
 }
 .policy-menu-component-template .project-management a,
-.policy-menu-component-template .project-management .anticon{
+.policy-menu-component-template .project-management .anticon,
+.policy-menu-component-template .ant-menu:not(.ant-menu-horizontal) .project-management.ant-menu-item-active .anticon{
     color:#fff;
     margin-right:10px;
 }
@@ -44,7 +46,11 @@
     background: #fff;
     color: #ae242b;
 }
+.policy-menu-component-template .project-management.ant-menu-item-selected{
+    text-indent: 5px;
+}
 .policy-menu-component-template .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected a,
+.policy-menu-component-template .project-management.ant-menu-item-selected a .anticon,
 .policy-menu-component-template .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-active a{
     color: #ae242b;
 }

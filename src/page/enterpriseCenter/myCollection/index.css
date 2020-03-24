@@ -43,10 +43,10 @@
     width: 60%;
     margin: 0 auto 20px;
 }
-.myCollection-template .title-component-template{
-    margin-top: 80px;
-    margin-bottom: 60px;
-}
+/*.myCollection-template .title-component-template{*/
+    /*margin-top: 80px;*/
+    /*margin-bottom: 60px;*/
+/*}*/
 .myCollection-template .ant-btn{
     background: #fff;
     color: #ae242b;

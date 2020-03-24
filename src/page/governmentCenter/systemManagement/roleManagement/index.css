@@ -11,15 +11,15 @@
     margin-left: 10px;
     cursor: pointer;
 }
-.policyUser-template .label-box{
-    border:1px solid #efefef;
-    padding: 10px;
-    margin-bottom: 20px;
-}
-.policyUser-template .label-box .ant-col-2 {
-    text-align: center;
-    color: #333;
-}
+/*.policyUser-template .label-box{*/
+    /*border:1px solid #efefef;*/
+    /*padding: 10px;*/
+    /*margin-bottom: 20px;*/
+/*}*/
+/*.policyUser-template .label-box .ant-col-2 {*/
+    /*text-align: center;*/
+    /*color: #333;*/
+/*}*/
 .policyUser-template .policyUser-button{
     text-align: center;
     margin-top: 20px;

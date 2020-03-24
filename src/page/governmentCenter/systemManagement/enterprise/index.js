@@ -3,13 +3,15 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import { Table, Input, Row, Col, Button, Breadcrumb,Form } from 'antd';
+import { Table, Input, Row, Col, Button, Breadcrumb,Form, Modal, Checkbox } from 'antd';
 import { Link } from "react-router-dom";
-import axios from 'axios';
 import Top from '../../../../component/top/index';
 import Label from "../../../../component/label/index";
 import PolicyManagementMenu from "../../../../component/policyManagementMenu/index";
+import Title from "../../../../component/title/index";
 import './index.css';
+import {message} from "antd/lib/index";
+import {request} from "../../../../utils/request";
 
 const { Search } = Input;
 const layout = {
@@ -89,9 +91,9 @@ class enterprise extends Component {
                 key: 'action',
                 render: (text, record) => (
                     <span>
-                        <a>修改</a>
-                        <a className="ml15">禁用</a>
-                        <a className="ml15">重置密码</a>
+                        <a onClick={(type,id)=>this.showModal("addVisible")}>修改</a>
+                        <a className="ml15" onClick={(type,id)=>this.showModal("visible",record.id)}>禁用</a>
+                        <a className="ml15" onClick={(type,id)=>this.showModal("passwordVisible",record.id)}>重置密码</a>
                     </span>),
             },
         ];
@@ -161,6 +163,35 @@ class enterprise extends Component {
             onShowSizeChange:onShowSizeChange
         }
     }
+    showModal = (type,id) => {
+        this.setState({
+            [type]: true,
+            id
+        });
+    };
+
+    handleOk = async (e) => {
+        const deleteData = await request('/policy/del', 'POST', {id: this.state.id}); //删除数据
+        if (deleteData.data && deleteData.data.success) {
+            message.success(deleteData.data.msg);
+            this.setState({
+                visible: false,
+                id: null
+            });
+            setTimeout(() => {
+                this.getTableData(this.state.formValues);
+            }, 1000);
+        } else {
+            message.error(deleteData.data.msg);
+        }
+    };
+
+    handleCancel = type => {
+        this.setState({
+            [type]: false,
+        });
+    };
+
     render() {
         const {labelStatus,status} = this.state;
         return (
@@ -169,10 +200,10 @@ class enterprise extends Component {
                 <div className="policyUser-label-box max-weight-box">
                 <Row>
                     <Col span={4}>
-                        <PolicyManagementMenu />
+                        <PolicyManagementMenu menu="systemManagement" current="enterprise" />
                     </Col>
                     <Col span={20}>
-                    <div className="information-title">企业用户</div>
+                    <Title name="企业用户" />
                     <Breadcrumb separator=">">
                         <Breadcrumb.Item>系统管理</Breadcrumb.Item>
                         <Breadcrumb.Item href="">企业用户</Breadcrumb.Item>
@@ -200,18 +231,125 @@ class enterprise extends Component {
                                         </Row>
                                         <Label callback={this.onSelectStatus} defalutValue={status} isRadio={true} span={{title:4,label:20}} title={labelStatus.title} item={labelStatus.item} key="labelStatus"/>
                                     </div>
-                                <div className="policyList-button">
+                                <div className="search-button">
                                     <Button type="primary" htmlType="submit">检索</Button>
                                     <Button className="ml15" onClick={this.onReset}>重置</Button>
                                 </div>
                             </Form>
                         </div>
-                        <p><Link to="/addPolicy"><Button type="primary">添加用户</Button></Link></p>
+                        <p align="right" className="operation-button">
+                            <Button type="primary" onClick={(type,id)=>this.showModal("addVisible")}>添加用户</Button></p>
                     <Table columns={this.columns} dataSource={this.data} pagination={this.pagination} />
                     </Col>
                 </Row>
                 </div>
-                {/*<Footer/>*/}
+                <Modal
+                    title="温馨提示"
+                    visible={this.state.visible}
+                    onOk={this.handleOk}
+                    onCancel={(type)=>this.handleCancel("visible")}
+                    footer={[
+                        <Button key="back" onClick={this.handleOk}>
+                            确定
+                        </Button>,
+                        <Button key="submit" type="primary" onClick={(type)=>this.handleCancel("visible")}>
+                            取消
+                        </Button>
+                    ]}
+                >
+                    <p style={{
+                        padding: "40px 0 10px 0",
+                        textAlign: "center",
+                        fontSize: "16px",
+                        color: "#6e6e6e"
+                    }}>确认禁用该角色吗？</p>
+                </Modal>
+                <Modal
+                    title="重置密码"
+                    visible={this.state.passwordVisible}
+                    onOk={this.handleOk}
+                    onCancel={(type)=>this.handleCancel("passwordVisible")}
+                    footer={[
+                        <Button key="back" onClick={this.handleOk}>
+                            确认
+                        </Button>,
+                        <Button key="submit" type="primary" onClick={(type)=>this.handleCancel("passwordVisible")}>
+                            取消
+                        </Button>
+                    ]}
+                >
+                    <p style={{
+                        padding: "40px 30px 10px 30px",
+                        fontSize: "16px",
+                        color: "#6e6e6e"
+                    }}>确认重置密码？确认后，初始密码为123abc，请及时通知联系人。</p>
+                </Modal>
+
+                <Modal
+                    title="添加/修改角色"
+                    visible={this.state.addVisible}
+                    onOk={this.handleOk}
+                    onCancel={(type)=>this.handleCancel("addVisible")}
+                    footer={[
+                        <Button key="back" onClick={this.handleOk}>
+                            确认
+                        </Button>,
+                        <Button key="submit" type="primary" onClick={(type)=>this.handleCancel("addVisible")}>
+                            取消
+                        </Button>
+                    ]}
+                >
+                    <Form ref="form" {...layout} name="dynamic_rule" onFinish={this.onFinish} validateMessages={validateMessages}>
+                        <Row className="mt10">
+                            <Col span={4}>用户名</Col>
+                            <Col span={18}>
+                                <Form.Item name="title" rules={[{required: true}]}>
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row className="mt10">
+                            <Col span={4}>手机号</Col>
+                            <Col span={18}>
+                                <Form.Item name="title" rules={[{required: true}]}>
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row className="mt10">
+                            <Col span={4}>企业名称</Col>
+                            <Col span={18}>
+                                <Form.Item name="title" rules={[{required: true}]}>
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row className="mt10">
+                            <Col span={4}>统一社会信用代码</Col>
+                            <Col span={18}>
+                                <Form.Item name="title" rules={[{required: true}]}>
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row className="mt10">
+                            <Col span={4}>所属行业</Col>
+                            <Col span={18}>
+                                <Form.Item name="title" rules={[{required: true}]}>
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row className="mt10">
+                            <Col span={4}>初始密码</Col>
+                            <Col span={18}>
+                                <Form.Item name="title" rules={[{required: true}]}>
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    </Form>
+                </Modal>
             </div>
         );
     };

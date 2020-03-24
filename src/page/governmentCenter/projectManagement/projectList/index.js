@@ -393,7 +393,7 @@ class ProjectList extends Component {
                 <div className="policyList-label-box max-weight-box">
                     <Row>
                         <Col span={4}>
-                            <PolicyManagementMenu key="menu"/>
+                            <PolicyManagementMenu menu="projectList" current="projectList"/>
                         </Col>
                         <Col span={20}>
                             <Title name="项目列表" />
@@ -461,13 +461,13 @@ class ProjectList extends Component {
                                 <Label callback={this.onSelectStatus} defalutValue={status} isRadio={true} span={{title:4,label:20}} title={labelStatus.title} item={labelStatus.item} key="labelStatus"/>
                                 {/*<Label callback={this.onSelectSource} defalutValue={source} isRadio={true} span={{title:4,label:20}} title={labelSource.title} item={labelSource.item} key="labelSource"/>*/}
                                     </div>
-                                        <div className="policyList-button">
+                                        <div className="search-button">
                                     <Button type="primary" htmlType="submit">检索</Button>
                                     <Button className="ml15" onClick={this.onReset}>重置</Button>
                                 </div>
                                 </Form>
                             </div>
-                            <p align="right" className="add-button"><Link to="/addProject"><Button type="primary">添加项目</Button></Link></p>
+                            <p align="right" className="operation-button"><Link to="/addProject"><Button type="primary">添加项目</Button></Link></p>
                             {tableData ? <Table columns={this.columns} dataSource={tableData.result} pagination={pagination} rowKey="id" /> : null}
                         </Col>
                     </Row>

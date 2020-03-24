@@ -243,7 +243,7 @@ class CollectionList extends Component {
                                 <RangePicker showTime />
                             </Col>
                         </Row>
-                        <div className="collectionList-button">
+                        <div className="search-button">
                             <Button type="primary">检索</Button>
                             <Button className="ml15">重置</Button>
                         </div>

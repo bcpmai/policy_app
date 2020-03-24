@@ -44,11 +44,12 @@ class policyPreview extends Component {
     getDefalutData = async() =>{
         const {data} = await request(`/policy/get/${this.state.id}`, 'GET'); //请求默认数据
         this.setState({
-            policy:data.policy
+            policy:data.policy,
+            resource_file_list:data.resource_file_list
         })
     }
     render() {
-        const {policy} = this.state;
+        const {policy,resource_file_list=[]} = this.state;
         const labelStr = policy.label_add_str ? policy.label_add_str.split(",") : null;
         return (
             <div className="policyPreview-template">
@@ -74,6 +75,15 @@ class policyPreview extends Component {
                                 {/*<p className="policyPreview-content-title">云南省工业和信息化委关于申报2018年省级工业和信息化发展专项资金(技术改造方向)项目的通知</p>*/}
                                 <div className="policyPreview-content-text">
                                     <div dangerouslySetInnerHTML = {{ __html:policy.content }}></div>
+                                    <Row>
+                                        <Col span={2}>附件：</Col>
+                                        <Col>
+                                            {resource_file_list ?
+                                                resource_file_list.map((item,idx)=><p><a href={item.image_url} key={idx}>{item.file_ori_name}</a></p>)
+                                                : null}
+
+                                        </Col>
+                                    </Row>
                                 </div>
                             </div>
                         </div>

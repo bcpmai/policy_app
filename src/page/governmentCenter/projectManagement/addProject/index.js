@@ -37,7 +37,7 @@ const validateMessages = {
     },
 };
 
-
+const { RangePicker } = DatePicker;
 
 class AddProject extends Component {
     constructor(props){
@@ -49,18 +49,13 @@ class AddProject extends Component {
     }
 
     componentDidMount(){
-        const elem = this.refs.editorElem; //获取editorElem盒子
-        //const submit = this.refs.submit; //获取提交按钮
-        const editor = new E(elem)  //new 一个 editorElem富文本
-        editor.customConfig.uploadFileName = 'file'; //置上传接口的文本流字段
-        editor.customConfig.uploadImgServer = uploadUrl;//服务器接口地址
-        editor.customConfig.onchange = html => {
-            this.setState({
-                editorContent: html
-            })
-        }
-        editor.create() //创建
-        this.getDefalutData(editor);
+        this.createEditor("editorElem1","editorElemContent");
+        this.createEditor("editorElem2","editorElem2Content");
+        this.createEditor("editorElem3","editorElem3Content");
+        this.createEditor("editorElem4","editorElem4Content");
+        this.createEditor("editorElem5","editorElem5Content");
+        this.createEditor("editorElem6","editorElem6Content");
+        this.getDefalutData();
         this.columns = [
             {
                 title: '政策标题',
@@ -89,12 +84,53 @@ class AddProject extends Component {
                 title: '操作',
                 key: 'action',
                 width:120,
-                render: (text, record) => (<p align="center"><a onClick={()=>this.props.history.push(`/addPolicy/${record.id}`)}>编辑</a><a onClick={()=>this.showModal(record.id)} className="ml15">删除</a></p>),
+                render: (text, record) => (<p align="center"><a onClick={()=>this.props.history.push(`/addProject/${record.id}`)}>编辑</a><a onClick={()=>this.showModal(record.id)} className="ml15">删除</a></p>),
             },
         ];
 
     }
-    getDefalutData = async(editor) =>{
+    createEditor = (editorElem,editorContent) =>{
+        const elem = this.refs[editorElem]; //获取editorElem盒子
+        //const submit = this.refs.submit; //获取提交按钮
+        const editor = new E(elem)  //new 一个 editorElem富文本
+        editor.customConfig.uploadFileName = 'file'; //置上传接口的文本流字段
+        editor.customConfig.uploadImgServer = uploadUrl;//服务器接口地址
+        editor.customConfig.onchange = html => {
+            this.setState({
+                [editorContent]: html
+            })
+        };
+        editor.customConfig.uploadImgHooks = {
+            before: function (xhr, editor, files) {
+                console.log(xhr, editor, files,"before")
+            },
+            success: function (xhr, editor, result) {
+                console.log("上传成功");
+                console.log(xhr, editor, result,"success")
+            },
+            fail: function (xhr, editor, result) {
+                console.log("上传失败,原因是" + result);
+                console.log(xhr, editor, result,"fail")
+            },
+            error: function (xhr, editor) {
+                console.log("上传出错");
+                console.log(xhr, editor,"error")
+            },
+            timeout: function (xhr, editor) {
+                console.log("上传超时");
+                console.log(xhr, editor,"timeout")
+            },
+            customInsert: function (insertImg, result, editor) {
+                console.log(insertImg, result, editor, "file")
+                if(result.success) {
+                    var url = result.data.image_url  //监听图片上传成功更新页面
+                    insertImg(url)
+                }
+            }
+        };
+        editor.create() //创建
+    }
+    getDefalutData = async() =>{
         const labelThemeData = await request('/common/get-all-policy-theme-label', 'POST'); //政策主题
         const labelTypeData = await request('/common/get-all-use-type-label', 'POST'); //应用类型
         const selectBelongData = await request('/common/get-all-belong-label', 'POST'); //所属层级
@@ -134,7 +170,7 @@ class AddProject extends Component {
                 policy.life_date = moment(policy.life_date, 'YYYY-MM-DD');
 
                 this.refs.form.setFieldsValue(policy);
-                editor.txt.html(policy.content);
+                //editor.txt.html(policy.content);
                 this.belongChange(policy.belong); //请求发布机构
             }
         }
@@ -249,8 +285,14 @@ class AddProject extends Component {
     switchChange = (checked) =>{
         console.log(`switch to ${checked}`);
     }
+
+    onSelectChange = selectedRowKeys => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        this.setState({ selectedRowKeys });
+    };
+
     render() {
-        const {industryData,belongData,themeData,typeData,productData,id,data,tableData,formValues} = this.state;
+        const {industryData,belongData,typeData,productData,id,tableData,selectedRowKeys} = this.state;
         const props = {
             //action: 'http://web.js.policy.com/api/common/upload-file',
             action:uploadUrl,
@@ -263,25 +305,19 @@ class AddProject extends Component {
             },
             accept:".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf,ppt,.pptx,.xls,.xlsx,.pdf,.zip,.rar"
         };
-        const pagination = {
-            current:formValues && formValues.page ? formValues.page : 1,
-            showSizeChanger: true,
-            defaultCurrent: 1,
-            defaultPageSize:20,
-            total:tableData && tableData.sum || 0,
-            // showTotal:(total, range) => `共 ${tableData.page_num} 页 总计 ${tableData.sum} 条政策`,
-            pageSizeOptions: ['10', '20', '30', '50', '100', '150'],
-            onShowSizeChange: this.onShowSizeChange,
-            onChange:this.onPaginChange
-        }
+        const rowSelection = {
+            selectedRowKeys,
+            type:"radio",
+            onChange: this.onSelectChange,
+        };
 
         return (
-            <div className="addPolicy-template">
+            <div className="addProject-template">
                 <Top />
-                <div className="addPolicy-label-box max-weight-box">
+                <div className="addProject-label-box max-weight-box">
                 <Row>
                     <Col span={4}>
-                        <PolicyManagementMenu />
+                        <PolicyManagementMenu menu="projectList" current="projectList" />
                     </Col>
                     <Col span={20}>
                     <Title name={id ? "编辑项目" : "添加项目"} />
@@ -296,7 +332,7 @@ class AddProject extends Component {
                             <Form.Item name="title" label="项目标题" rules={[{required: true}]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item name="belong" label="关联政策" rules={[{required: true}]}>
+                            <Form.Item name="belong1" label="关联政策" rules={[{required: true}]}>
                                 <span></span>
                                 <Button onClick={this.showPolicy}>选择政策</Button>
                             </Form.Item>
@@ -319,8 +355,8 @@ class AddProject extends Component {
                             <Form.Item name="organization_label_list" label="官文网址" rules={[{required: true}]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item name="release_date" label="申报时间" rules={[{required: true}]}>
-                                <DatePicker onChange={this.onDateChange} />
+                            <Form.Item name="release_date" label="申报时间">
+                                <RangePicker onChange={this.onDateChange} />
                             </Form.Item>
                             <Form.Item name="use_type_list" label="应用类型" rules={[{required: true}]}>
                                 <Select
@@ -344,31 +380,31 @@ class AddProject extends Component {
 
                                 </Select>
                             </Form.Item>
-                            <Form.Item name="content" label="扶持方向">
-                                <div ref="editorElem">
+                            <Form.Item name="content" label="扶持方向" required>
+                                <div ref="editorElem1">
                                 </div>
                             </Form.Item>
-                            <Form.Item name="content" label="申报条件">
-                                <div ref="editorElem">
+                            <Form.Item name="content" label="申报条件" required>
+                                <div ref="editorElem2">
                                 </div>
                             </Form.Item>
-                            <Form.Item name="content" label="扶持内容">
-                                <div ref="editorElem">
+                            <Form.Item name="content" label="扶持内容" required>
+                                <div ref="editorElem3">
                                 </div>
                             </Form.Item>
-                            <Form.Item name="organization_label_list" label="联系方式" rules={[{required: true}]}>
+                            <Form.Item name="organization_label_list" label="联系方式">
                                 <Input />
                             </Form.Item>
-                            <Form.Item name="content" label="申报材料">
-                                <div ref="editorElem">
+                            <Form.Item name="content" label="申报材料" required>
+                                <div ref="editorElem4">
                                 </div>
                             </Form.Item>
-                            <Form.Item name="content" label="申报流程">
-                                <div ref="editorElem">
+                            <Form.Item name="content" label="申报流程" required>
+                                <div ref="editorElem5">
                                 </div>
                             </Form.Item>
                             <Form.Item name="content" label="评审流程">
-                                <div ref="editorElem">
+                                <div ref="editorElem6">
                                 </div>
                             </Form.Item>
                             <Form.Item name="username" label="上传附件">
@@ -379,25 +415,23 @@ class AddProject extends Component {
                                 </Upload>
                                 <span>支持扩展名为.doc/.docx/.ppt/.pptx/.xls/.xlsx/.pdf/.zip/.rar，大小不超过100M</span>
                             </Form.Item>
-                            <Form.Item name="post_shop_name" label="发文字号" rules={[{required: true}]}>
-                                <Input/>
-                            </Form.Item>
-                            <p>请选择申报方式（可多选）</p>
-                            <div>
-                                <Checkbox>网上申报</Checkbox>
-                                <Form.Item name="username">
+                            <p style={{fontWight:"bold",color:"#000",fontSize:"16px"}}><span style={{color: "#ff4d4f"}}>*</span>请选择申报方式（可多选）</p>
+                            <Row>
+                                <Col span={4}><Checkbox>网上申报</Checkbox></Col>
+                                <Col span={10}><Form.Item name="username">
                                     <Input/>
-                                </Form.Item>
-                            </div>
-                            <div>
-                                <Checkbox>纸质材料提交至</Checkbox>
-                                <Form.Item name="username">
+                                </Form.Item></Col>
+                            </Row>
+                            <Row>
+                                <Col span={4}><Checkbox>纸质材料提交至</Checkbox></Col>
+                                <Col span={20}><Form.Item name="username">
                                     <TextArea rows={4}/>
-                                </Form.Item>
-                            </div>
-                            <div>
-                                <span>申报条件标签：</span>
-                                <table style={{width:"100%"}}>
+                                </Form.Item></Col>
+                            </Row>
+                            <Row>
+                                <Col span={4}>申报条件标签：</Col>
+                                <Col span={20}>
+                                <table style={{width:"100%"}} className="label-table">
                                     <tr>
                                         <th>标签</th>
                                         <th>规则设置</th>
@@ -406,14 +440,20 @@ class AddProject extends Component {
                                     <tr>
                                         <td>成立年限</td>
                                         <td>
-                                            <Select
-                                                style={{ width: '50px' }}
-                                            >
-                                                <Option value="≥" key="≥">≥</Option>
-                                                <Option value="=" key="=">=</Option>
-                                                <Option value="≤" key="≤">≤</Option>
-                                            </Select>
-                                            <Input/>
+                                            <Row>
+                                                <Col span={4}>
+                                                    <Select
+                                                        style={{ width: '90%' }}
+                                                    >
+                                                        <Option value="≥" key="≥">≥</Option>
+                                                        <Option value="=" key="=">=</Option>
+                                                        <Option value="≤" key="≤">≤</Option>
+                                                    </Select>
+                                                </Col>
+                                                <Col span={19}>
+                                                    <Input/>
+                                                </Col>
+                                            </Row>
                                         </td>
                                         <td><Switch defaultChecked onChange={this.switchChange}/></td>
                                     </tr>
@@ -421,7 +461,7 @@ class AddProject extends Component {
                                         <td>注册地址</td>
                                         <td>
                                             <Select
-                                                style={{ width: '50px' }}
+                                                style={{ width: '50px',marginRight:"5px" }}
                                             >
                                                 <Option value="≥" key="≥">≥</Option>
                                                 <Option value="=" key="=">=</Option>
@@ -429,7 +469,7 @@ class AddProject extends Component {
                                             </Select>
                                             省
                                             <Select
-                                                style={{ width: '50px' }}
+                                                style={{ width: '50px',marginLeft:"20px",marginRight:"5px" }}
                                             >
                                                 <Option value="≥" key="≥">≥</Option>
                                                 <Option value="=" key="=">=</Option>
@@ -437,7 +477,7 @@ class AddProject extends Component {
                                             </Select>
                                             市
                                             <Select
-                                                style={{ width: '50px' }}
+                                                style={{ width: '50px',marginLeft:"20px",marginRight:"5px" }}
                                             >
                                                 <Option value="≥" key="≥">≥</Option>
                                                 <Option value="=" key="=">=</Option>
@@ -450,115 +490,149 @@ class AddProject extends Component {
                                     <tr>
                                         <td>知识产权</td>
                                         <td>
-                                            <Select
-                                                style={{ width: '50px' }}
-                                            >
-                                                <Option value="≥" key="≥">≥</Option>
-                                                <Option value="=" key="=">=</Option>
-                                                <Option value="≤" key="≤">≤</Option>
-                                            </Select>
-                                            <Input/>
-                                            个
+                                            <Row>
+                                                <Col span={4}>
+                                                    <Select
+                                                        style={{ width: '90%' }}
+                                                    >
+                                                        <Option value="≥" key="≥">≥</Option>
+                                                        <Option value="=" key="=">=</Option>
+                                                        <Option value="≤" key="≤">≤</Option>
+                                                    </Select>
+                                                </Col>
+                                                <Col span={19}>
+                                                    <Input suffix="个"/>
+                                                </Col>
+                                            </Row>
                                         </td>
                                         <td><Switch defaultChecked onChange={this.switchChange}/></td>
                                     </tr>
                                     <tr>
                                         <td>发明专利</td>
                                         <td>
-                                            <Select
-                                                style={{ width: '50px' }}
-                                            >
-                                                <Option value="≥" key="≥">≥</Option>
-                                                <Option value="=" key="=">=</Option>
-                                                <Option value="≤" key="≤">≤</Option>
-                                            </Select>
-                                            <Input/>
-                                            个
+                                            <Row>
+                                                <Col span={4}>
+                                                    <Select
+                                                        style={{ width: '90%' }}
+                                                    >
+                                                        <Option value="≥" key="≥">≥</Option>
+                                                        <Option value="=" key="=">=</Option>
+                                                        <Option value="≤" key="≤">≤</Option>
+                                                    </Select>
+                                                </Col>
+                                                <Col span={19}>
+                                                    <Input suffix="个"/>
+                                                </Col>
+                                            </Row>
                                         </td>
                                         <td><Switch defaultChecked onChange={this.switchChange}/></td>
                                     </tr>
                                     <tr>
                                         <td>所属行业</td>
                                         <td>
-                                            <Input/>
+                                            <Select
+                                                mode="multiple"
+                                                style={{ width: '100%' }}
+                                                onChange={this.handleChange}
+                                            >
+                                                {industryData ? industryData.map((item, idx) => <Option value={item.id}
+                                                                                                        key={item.id}>{item.name}</Option>) : ''}
+
+                                            </Select>
                                         </td>
                                         <td><Switch defaultChecked onChange={this.switchChange}/></td>
                                     </tr>
                                     <tr>
                                         <td>财务数据</td>
                                         <td>
-                                            <div>
-                                                研发投入
-                                                <Select
-                                                    style={{ width: '50px' }}
-                                                >
-                                                    <Option value="≥" key="≥">≥</Option>
-                                                    <Option value="=" key="=">=</Option>
-                                                    <Option value="≤" key="≤">≤</Option>
-                                                </Select>
-                                                <Input/>
-                                                万元
-                                            </div>
-                                            <div>
-                                                企业报税收入
-                                                <Select
-                                                    style={{ width: '50px' }}
-                                                >
-                                                    <Option value="≥" key="≥">≥</Option>
-                                                    <Option value="=" key="=">=</Option>
-                                                    <Option value="≤" key="≤">≤</Option>
-                                                </Select>
-                                                <Input/>
-                                                万元
-                                            </div>
-                                            <div>
-                                                研发资产总额
-                                                <Select
-                                                    style={{ width: '50px' }}
-                                                >
-                                                    <Option value="≥" key="≥">≥</Option>
-                                                    <Option value="=" key="=">=</Option>
-                                                    <Option value="≤" key="≤">≤</Option>
-                                                </Select>
-                                                <Input/>
-                                                万元
-                                            </div>
+                                            <Row>
+                                                <Col span={7}>研发投入</Col>
+                                                <Col span={4}>
+                                                    <Select
+                                                        style={{ width: '90%' }}
+                                                    >
+                                                        <Option value="≥" key="≥">≥</Option>
+                                                        <Option value="=" key="=">=</Option>
+                                                        <Option value="≤" key="≤">≤</Option>
+                                                    </Select>
+                                                </Col>
+                                                <Col span={10}>
+                                                    <Input suffix="万元"/>
+                                                </Col>
+                                            </Row>
+                                            <Row className="mt10">
+                                                <Col span={7}>企业报税收入</Col>
+                                                <Col span={4}>
+                                                    <Select
+                                                        style={{ width: '90%' }}
+                                                    >
+                                                        <Option value="≥" key="≥">≥</Option>
+                                                        <Option value="=" key="=">=</Option>
+                                                        <Option value="≤" key="≤">≤</Option>
+                                                    </Select>
+                                                </Col>
+                                                <Col span={10}>
+                                                    <Input suffix="万元"/>
+                                                </Col>
+                                            </Row>
+                                            <Row className="mt10">
+                                                <Col span={7}>研发资产总额</Col>
+                                                <Col span={4}>
+                                                    <Select
+                                                        style={{ width: '90%' }}
+                                                    >
+                                                        <Option value="≥" key="≥">≥</Option>
+                                                        <Option value="=" key="=">=</Option>
+                                                        <Option value="≤" key="≤">≤</Option>
+                                                    </Select>
+                                                </Col>
+                                                <Col span={10}>
+                                                    <Input suffix="万元"/>
+                                                </Col>
+                                            </Row>
                                         </td>
                                         <td><Switch defaultChecked onChange={this.switchChange}/></td>
                                     </tr>
                                     <tr>
                                         <td>人员数量</td>
                                         <td>
-                                            <div>
-                                                最近一年缴纳社保人数
-                                                <Select
-                                                    style={{ width: '50px' }}
-                                                >
-                                                    <Option value="≥" key="≥">≥</Option>
-                                                    <Option value="=" key="=">=</Option>
-                                                    <Option value="≤" key="≤">≤</Option>
-                                                </Select>
-                                                <Input/>
-                                                人
-                                            </div>
-                                            <div>
-                                                研发人员
-                                                <Select
-                                                    style={{ width: '50px' }}
-                                                >
-                                                    <Option value="≥" key="≥">≥</Option>
-                                                    <Option value="=" key="=">=</Option>
-                                                    <Option value="≤" key="≤">≤</Option>
-                                                </Select>
-                                                <Input/>
-                                                人
-                                            </div>
+                                            <Row className="mt10">
+                                                <Col span={7}>最近一年缴纳社保人数</Col>
+                                                <Col span={4}>
+                                                    <Select
+                                                        style={{ width: '90%' }}
+                                                    >
+                                                        <Option value="≥" key="≥">≥</Option>
+                                                        <Option value="=" key="=">=</Option>
+                                                        <Option value="≤" key="≤">≤</Option>
+                                                    </Select>
+                                                </Col>
+                                                <Col span={10}>
+                                                    <Input suffix="人"/>
+                                                </Col>
+                                            </Row>
+                                            <Row className="mt10">
+                                                <Col span={7}>研发人员</Col>
+                                                <Col span={4}>
+                                                    <Select
+                                                        style={{ width: '90%' }}
+                                                    >
+                                                        <Option value="≥" key="≥">≥</Option>
+                                                        <Option value="=" key="=">=</Option>
+                                                        <Option value="≤" key="≤">≤</Option>
+                                                    </Select>
+                                                </Col>
+                                                <Col span={10}>
+                                                    <Input suffix="人"/>
+                                                </Col>
+                                            </Row>
                                         </td>
                                         <td><Switch defaultChecked onChange={this.switchChange}/></td>
                                     </tr>
                                 </table>
-                            </div>
-                            <div className="addPolicy-button">
+                                </Col>
+                            </Row>
+                            <div className="addProject-button">
                                 <Button type="primary" htmlType="submit" ref="finish">发布</Button>
                                 <Button type="primary" className="ml15" ref="save" onClick={()=>this.onSave()}>存为草稿</Button>
                                 <Button type="primary" className="ml15" onClick={()=>this.onView()}>预览</Button>
@@ -576,14 +650,14 @@ class AddProject extends Component {
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                     width="800px"
+                    className="select-porject-modal"
                 >
                     <Search
-                        placeholder="input search text"
                         onSearch={value => console.log(value)}
-                        style={{ width: 200 }}
+                        style={{ width: 300 }}
                         enterButton
                     />
-                    <Table columns={this.columns} dataSource={tableData ? tableData.result : []} pagination={false} rowKey="id" />
+                    <Table rowSelection={rowSelection} columns={this.columns} dataSource={tableData ? tableData.result : []} pagination={false} rowKey="id" />
                 </Modal>
             </div>
         );

@@ -3,18 +3,14 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import { Button, Form, Input, InputNumber, Row, Col, Select,DatePicker,Menu} from 'antd';
-//import { EditOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Row, Col} from 'antd';
 import { EditOutlined,AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
-import axios from 'axios';
+import cookie from 'react-cookies';
 import Top from '../../../component/top/index';
-// import Footer from "../../../component/footer/index";
 import './index.css';
 import EnterpriseMenu from '../../../component/enterpriseCenterMenu';
 import Title from "../../../component/title/index";
-
-const { Option } = Select;
-const { SubMenu } = Menu;
+import PolicyManagementMenu from "../../../component/policyManagementMenu/index";
 const layout = {
     labelCol: {span: 8},
     wrapperCol: {span: 16},
@@ -34,7 +30,7 @@ class AccountManagement extends Component {
     constructor(props){
         super(props);
         this.state = {
-
+            userType:cookie.load('userType')
         }
     }
     onChange = (date, dateString) =>{
@@ -47,7 +43,7 @@ class AccountManagement extends Component {
                 <div className="accountManagement-form-box max-weight-box">
                     <Row>
                         <Col span={4}>
-                            <EnterpriseMenu menuKey="accountManagement" />
+                            {this.state.userType == 1 ? <EnterpriseMenu menuKey="accountManagement" /> : <PolicyManagementMenu menu="systemManagement" current="accountManagement" />}
                         </Col>
                         <Col span={20}>
                             <Title name="账户管理" />

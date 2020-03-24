@@ -33,7 +33,9 @@ import AddProject from "./page/governmentCenter/projectManagement/addProject/ind
 import ProjectPreview from "./page/governmentCenter/projectManagement/projectPreview/index.js"; //项目预览
 
 import RoleManagement from "./page/governmentCenter/systemManagement/roleManagement/index.js"; //角色权限
-import Enterprise from "./page/governmentCenter/systemManagement/enterprise/index.js"; //角色权限
+import Enterprise from "./page/governmentCenter/systemManagement/enterprise/index.js"; //企业用户
+import LabelManage from "./page/governmentCenter/systemManagement/labelManage/index.js"; //标签管理
+import CarouselManage from "./page/governmentCenter/systemManagement/carouselManage/index.js"; //轮播图管理
 
 
 
@@ -70,6 +72,9 @@ ReactDOM.render(
             <Route exact path="/projectPreview/:id" component={ProjectPreview} />
             <Route exact path="/roleManagement" component={RoleManagement} />
             <Route exact path="/enterprise" component={Enterprise} />
+            <Route exact path="/labelManage" component={LabelManage} />
+            <Route exact path="/carouselManage" component={CarouselManage} />
+
 
         </div>
             <Footer />

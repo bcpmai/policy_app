@@ -176,7 +176,7 @@ class PolicyList extends Component {
                 title: '操作人员',
                 key: 'username',
                 dataIndex: 'username',
-                width:80,
+                width:100,
             },
             {
                 title: '操作',
@@ -461,13 +461,13 @@ class PolicyList extends Component {
                                 <Label callback={this.onSelectStatus} defalutValue={status} isRadio={true} span={{title:4,label:20}} title={labelStatus.title} item={labelStatus.item} key="labelStatus"/>
                                 <Label callback={this.onSelectSource} defalutValue={source} isRadio={true} span={{title:4,label:20}} title={labelSource.title} item={labelSource.item} key="labelSource"/>
                                     </div>
-                                        <div className="policyList-button">
+                                        <div className="search-button">
                                     <Button type="primary" htmlType="submit">检索</Button>
                                     <Button className="ml15" onClick={this.onReset}>重置</Button>
                                 </div>
                                 </Form>
                             </div>
-                            <p align="right" className="add-button"><Link to="/addPolicy"><Button type="primary">添加政策</Button></Link></p>
+                            <p align="right" className="operation-button"><Link to="/addPolicy"><Button type="primary">添加政策</Button></Link></p>
                             {tableData ? <Table columns={this.columns} dataSource={tableData.result} pagination={pagination} rowKey="id" /> : null}
                         </Col>
                     </Row>

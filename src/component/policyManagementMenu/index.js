@@ -19,7 +19,8 @@ class PolicyMenu extends Component {
         super(props);
         this.state = {
             isLogin:false,
-            current:props.current || "policyList"
+            current:props.current || "policyList",
+            menu:props.menu || 'sub1'
         }
     }
 
@@ -28,14 +29,14 @@ class PolicyMenu extends Component {
     }
 
     render() {
-        const { isLogin,current } = this.state;
+        const { isLogin,current,menu} = this.state;
         return (
             <div className="policy-menu-component-template">
                 <Affix>
                 <Menu
                     style={{ width: 200 }}
                     defaultSelectedKeys={[current]}
-                    defaultOpenKeys={['sub1']}
+                    defaultOpenKeys={[menu]}
                     mode="inline"
                 >
                     <SubMenu
@@ -56,7 +57,7 @@ class PolicyMenu extends Component {
                             <a href="/projectList"><ProfileOutlined />项目管理</a>
                     </Menu.Item>
                     <SubMenu
-                        key="sub3"
+                        key="systemManagement"
                         title={
                             <span>
                                           <DesktopOutlined />
@@ -64,12 +65,12 @@ class PolicyMenu extends Component {
                                         </span>
                         }
                     >
-                        <Menu.Item key="31"><a href="/RoleManagement">角色权限</a></Menu.Item>
-                        <Menu.Item key="32"><a href="/enterprise">企业用户</a></Menu.Item>
-                        <Menu.Item key="33"><a href="/policyUser">政府用户</a></Menu.Item>
-                        <Menu.Item key="34">标签管理</Menu.Item>
-                        <Menu.Item key="35">轮播图管理</Menu.Item>
-                        <Menu.Item key="36">账户管理</Menu.Item>
+                        <Menu.Item key="roleManagement"><a href="/roleManagement">角色权限</a></Menu.Item>
+                        <Menu.Item key="enterprise"><a href="/enterprise">企业用户</a></Menu.Item>
+                        <Menu.Item key="policyUser"><a href="/policyUser">政府用户</a></Menu.Item>
+                        <Menu.Item key="labelManage"><a href="/labelManage">标签管理</a></Menu.Item>
+                        <Menu.Item key="carouselManage"><a href="/carouselManage">轮播图管理</a></Menu.Item>
+                        <Menu.Item key="accountManagement"><a href="/accountManagement">账户管理</a></Menu.Item>
                     </SubMenu>
                 </Menu>
                 </Affix>

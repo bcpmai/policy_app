@@ -43,11 +43,12 @@ class PolicyText extends Component {
     getDefalutData = async() =>{
         const {data} = await request(`/policy/get/${this.state.id}`, 'GET'); //请求默认数据
         this.setState({
-            policy:data.policy
+            policy:data.policy,
+            resource_file_list:data.resource_file_list
         })
     }
     render() {
-        const {policy} = this.state;
+        const {policy,resource_file_list=[]} = this.state;
         const labelStr = policy.label_add_str ? policy.label_add_str.split(",") : null;
         return (
             <div className="policyText-template">
@@ -79,6 +80,15 @@ class PolicyText extends Component {
                             <div className="policyText-content-text">
                                 <div dangerouslySetInnerHTML = {{ __html:policy.content }}></div>
                             </div>
+                            <Row>
+                                <Col span={2}>附件：</Col>
+                                <Col>
+                                    {resource_file_list ?
+                                        resource_file_list.map((item,idx)=><p><a href={item.image_url} key={idx}>{item.file_ori_name}</a></p>)
+                                        : null}
+
+                                </Col>
+                            </Row>
                         </Col>
                         <Col span={6}>
                             <Card title="申报政策">
@@ -88,7 +98,7 @@ class PolicyText extends Component {
                                     renderItem={item => (
                                         <List.Item>
                                             <List.Item.Meta
-                                                title={<a href={item.link}>{item.title}</a>}
+                                                title={<a href={item.link} target="_blank">{item.title}</a>}
                                                 description={item.time}
                                             />
                                         </List.Item>
