@@ -64,12 +64,13 @@ class AddPolicy extends Component {
         }
         editor.create() //创建
         this.getDefalutData(editor);
-        // editor.customConfig.uploadImgHooks = {
-        //     customInsert: function (insertImg, result, editor) {
-        //         var url = result.url  //监听图片上传成功更新页面
-        //         insertImg(url)
-        //     }
-        // }
+        editor.customConfig.uploadImgHooks = {
+            customInsert: function (insertImg, result, editor) {
+                console.log(insertImg, result, editor,"file")
+                var url = result.url  //监听图片上传成功更新页面
+                insertImg(url)
+            }
+        }
         // submit.addEventListener('click', function () {  //监听点击提交按钮
         //     // 读取 html
         //     this.setState({
@@ -130,12 +131,13 @@ class AddPolicy extends Component {
         }
     }
     onSubmit = async(values,url) => {
-        const {release_date,life_date,editorContent,id} = this.state;
+        const {release_date,life_date,editorContent,id,fileList} = this.state;
         values.release_date = release_date;
         values.life_date = life_date;
         values.content = editorContent;
         values.member_id = cookie.load("userId");
         values.username = cookie.load("userName");
+        values.upload_file_list = fileList.map((item,idx)=>item.response.data.id);
         if(id){
             values.id = id;
         }
@@ -195,7 +197,7 @@ class AddPolicy extends Component {
 
         // 1. Limit the number of uploaded files
         // Only to show two recent uploaded files, and old ones will be replaced by the new
-        fileList = fileList.slice(-2);
+        // fileList = fileList.slice(-2);
 
         // 2. Read from response and show file link
         fileList = fileList.map(file => {

@@ -60,10 +60,10 @@
 .addPolicy-template .ant-breadcrumb .ant-breadcrumb-separator {
     color: #fff;
 }
-.addPolicy-template .title-component-template{
-    margin-top: 60px;
-    margin-bottom: 40px;
-}
+/*.addPolicy-template .title-component-template{*/
+    /*margin-top: 60px;*/
+    /*margin-bottom: 40px;*/
+/*}*/
 .addPolicy-template .addPolicy-button{
     padding:50px 0
 }
