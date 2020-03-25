@@ -11,6 +11,8 @@ import Top from './../../component/top';
 import Label from "../../component/label";
 import './index.css';
 import {request} from "../../utils/request";
+import cookie from "react-cookies";
+import {message} from "antd/lib/index";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -101,7 +103,7 @@ class DeclarationItem extends Component {
             {
                 title: '操作',
                 key: 'action',
-                render: (text, record) => (<span><a onClick={this.showModal}>立即申报</a><a className="ml15">收藏</a></span>),
+                render: (text, record) => (<span><a onClick={this.showModal}>立即申报</a><a className="ml15" onClick={()=>this.onCollection(record.id)}>收藏</a></span>),
             },
         ];
 
@@ -182,6 +184,20 @@ class DeclarationItem extends Component {
 
             })
         }
+    }
+    //收藏
+    onCollection = async (id) =>{
+        const responest = await request('/common/my-company-collection', 'POST',{member_id:cookie.load('userId'),resource_id:id,resource_type:2}); //收藏
+        const data = responest.data;
+        if(data && data.success){
+            message.success(data.msg);
+            this.getTableData();
+        }else{
+            message.error(data.msg);
+        }
+    }
+    getTableData = () =>{
+
     }
     belongChange = async (value) => {
         const labelProductData = await request('/common/get-all-organization-label', 'POST', {belong_id: value}); //发布机构

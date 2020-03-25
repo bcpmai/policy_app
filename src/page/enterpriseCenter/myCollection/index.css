@@ -33,9 +33,9 @@
 .myCollection-template .myCollection-form .myCollection-title{
     margin-bottom: 10px;
 }
-.myCollection-template .ant-tabs-tabpane{
-    display: none;
-}
+/*.myCollection-template .ant-tabs-tabpane{*/
+    /*display: none;*/
+/*}*/
 .myCollection-template .myCollection-tab{
     margin-top: 20px;
 }

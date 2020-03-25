@@ -26,6 +26,7 @@
     border-radius: 20px;
     text-indent:10px;
     margin-bottom: 20px;
+    cursor: pointer;
 }
 .enterpriseMenu-component-template .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{
     background: #fff;

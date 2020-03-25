@@ -12,6 +12,9 @@ import Top from '../../../component/top/index';
 import './index.css';
 import EnterpriseMenu from '../../../component/enterpriseCenterMenu';
 import Title from "../../../component/title/index";
+import cookie from "react-cookies";
+import {message} from "antd/lib/index";
+import {request} from "../../../utils/request";
 
 const { Option } = Select;
 const { SubMenu } = Menu;
@@ -70,7 +73,7 @@ class Matching extends Component {
             {
                 title: '操作',
                 key: 'action',
-                render: (text, record) => (<span><a onClick={this.showModal}>立即申报</a><a className="ml15">收藏</a></span>),
+                render: (text, record) => (<span><a onClick={this.showModal}>立即申报</a><a onClick={()=>this.onCollection(record.id)} className="ml15">收藏</a></span>),
             },
         ];
 
@@ -118,6 +121,20 @@ class Matching extends Component {
             pageSizeOptions:['10', '20', '30', '50','100','150'],
             onShowSizeChange:onShowSizeChange
         }
+    }
+    //收藏
+    onCollection = async (id) =>{
+        const responest = await request('/common/my-company-collection', 'POST',{member_id:cookie.load('userId'),resource_id:id,resource_type:2}); //收藏
+        const data = responest.data;
+        if(data && data.success){
+            message.success(data.msg);
+            this.getTableData();
+        }else{
+            message.error(data.msg);
+        }
+    }
+    getTableData = () =>{
+
     }
     onChange = (date, dateString) =>{
         console.log(date, dateString);

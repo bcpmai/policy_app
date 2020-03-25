@@ -3,34 +3,18 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import { Button, Form, Input, InputNumber, Row, Col, Select,DatePicker,Menu,Table,Tabs} from 'antd';
-//import { EditOutlined } from '@ant-design/icons';
+import { Button, Row, Col, Table,Tabs,Modal} from 'antd';
 import { EditOutlined,AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
-import axios from 'axios';
 import Top from '../../../component/top/index';
-// import Footer from "../../../component/footer/index";
 import './index.css';
 import EnterpriseMenu from '../../../component/enterpriseCenterMenu';
 import Title from "../../../component/title/index";
+import cookie from "react-cookies";
+import {message} from "antd/lib/index";
+import {request} from "../../../utils/request";
+import Label from "../../../component/label";
 
-const { Option } = Select;
-const { SubMenu } = Menu;
 const { TabPane } = Tabs;
-const layout = {
-    labelCol: {span: 8},
-    wrapperCol: {span: 16},
-};
-
-const validateMessages = {
-    required: '必填项!',
-    types: {
-        email: 'Not a validate email!',
-        number: 'Not a validate number!',
-    },
-    number: {
-        range: 'Must be between ${min} and ${max}',
-    },
-};
 
 class MySubscribe extends Component {
     constructor(props){
@@ -72,7 +56,7 @@ class MySubscribe extends Component {
             {
                 title: '操作',
                 key: 'action',
-                render: (text, record) => (<span><a>立即申报</a><a className="ml15">收藏</a></span>),
+                render: (text, record) => (<span><a onClick={this.showModal}>立即申报</a><a onClick={()=>this.onCollection(record.id)} className="ml15">收藏</a></span>),
             },
         ];
 
@@ -121,6 +105,76 @@ class MySubscribe extends Component {
             onShowSizeChange:onShowSizeChange
         }
     }
+    async componentWillMount() {
+        this.getLabel();
+    }
+    //获取标题
+    getLabel = async () =>{
+        const labelThemeData = await request('/common/get-all-policy-theme-label', 'POST'); //政策主题
+        const labelTypeData = await request('/common/get-all-use-type-label', 'POST'); //应用类型
+        const selectIndustryData = await request('/common/get-all-industry-label', 'POST'); //所属行业
+
+
+        const themData = labelThemeData.data;
+        const typeData = labelTypeData.data;
+        const industryData = selectIndustryData.data;
+
+        if (themData && themData.success && typeData && themData.success && industryData && industryData.success) {
+            const allItem = {id: 0,name: "全部"};
+            themData.data.unshift(allItem);
+            typeData.data.unshift(allItem);
+            industryData.data.unshift(allItem);
+            this.setState({
+                label:[{
+                    title: "政策主题：",
+                    item: themData.data
+                },
+                    {
+                        title: "应用类型：",
+                        item: typeData.data
+                    },
+                    {
+                        title:"所属行业：",
+                        item: industryData.data
+                    }]
+            })
+        }
+    }
+    //收藏
+    onCollection = async (id) =>{
+        const responest = await request('/common/my-company-collection', 'POST',{member_id:cookie.load('userId'),resource_id:id,resource_type:2}); //收藏
+        const data = responest.data;
+        if(data && data.success){
+            message.success(data.msg);
+            this.getTableData();
+        }else{
+            message.error(data.msg);
+        }
+    }
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+    handleSubscribeCancel = e => {
+        // this.getLabel();
+        this.setState({
+            subscribeVisble: false,
+        });
+    };
+
+    handleCancel = e => {
+        this.setState({
+            visible: false,
+        });
+    };
+    handleOk = () =>{
+
+    }
+
+    getTableData = () =>{
+
+    }
     onChange = (date, dateString) =>{
         console.log(date, dateString);
     }
@@ -128,8 +182,11 @@ class MySubscribe extends Component {
         const mode = e.target.value;
         this.setState({ mode });
     };
+    subscribeVisble = () =>{
+        this.setState({ subscribeVisble:true });
+    }
     render() {
-        const {mode,tabTitle} = this.state;
+        const {mode,tabTitle,label} = this.state;
         return (
             <div className="mySubscribe-template">
                 <Top />
@@ -140,6 +197,9 @@ class MySubscribe extends Component {
                         </Col>
                         <Col span={20}>
                         <Title name="我的订阅" />
+                            <div align="right">
+                                <Button onClick={this.subscribeVisble}>订阅编辑</Button>
+                            </div>
                     <div>
                         <Tabs defaultActiveKey="1" tabPosition={mode}>
                             {tabTitle.map((item,idx) => (
@@ -153,7 +213,54 @@ class MySubscribe extends Component {
                         </Col>
                     </Row>
                 </div>
-                {/*<Footer/>*/}
+                <Modal
+                    title="申报提示"
+                    visible={this.state.visible}
+                    okText="删除"
+                    cancelText="关闭"
+                    onCancel={this.handleCancel}
+                    footer={[
+                        <Button key="submit" type="primary" onClick={this.handleOk}>
+                            关闭
+                        </Button>
+                    ]}
+                >
+                    <p>该项目网上申报后，需提交纸质材料。</p>
+                    <Row>
+                        <Col span={8}>1.点击进入网上申报：</Col>
+                        <Col span={16}>
+                            <span>http://web.js.policy.com</span>
+                            <Button className="model-button" key="submit" onClick={()=>{window.open('http://web.js.policy.com/declarationItem')}}>网上申报</Button>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8}>2.纸质材料提交至</Col>
+                        <Col span={16}>重庆市九龙坡区人民政府<br />王先生  18809870987
+                        </Col>
+                    </Row>
+                </Modal>
+                <Modal
+                    title="订阅编辑"
+                    visible={this.state.subscribeVisble}
+                    onOk={this.handleOk}
+                    onCancel={this.handleSubscribeCancel}
+                    width={900}
+                    footer={[
+                        <div>
+                            <Button key="submit" type="primary" onClick={this.handleOk}>
+                                确定
+                            </Button>
+                            <Button type="primary" onClick={this.handleSubscribeCancel}>
+                            取消
+                            </Button>
+                        </div>
+                    ]}
+                >
+                    <p>请选择您感兴趣的标签，智能匹配相关申报政策。</p>
+                    {label && label.map((labelItem,labelIdx)=>{
+                        return <Label span={{title:3,label:21}} onClick={()=>this.labelChange()} title={labelItem.title} item={labelItem.item} key={labelIdx} />
+                    })}
+                </Modal>
             </div>
         );
     };

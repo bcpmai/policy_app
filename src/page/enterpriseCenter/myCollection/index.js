@@ -67,7 +67,7 @@ class MyCollection extends Component {
             {
                 title: '操作',
                 key: 'action',
-                render: (text, record) => (<span><a>立即申报</a><a className="ml15">收藏</a></span>),
+                render: (text, record) => (<span><a className="ml15">已收藏</a></span>),
             },
         ];
 
@@ -134,17 +134,20 @@ class MyCollection extends Component {
                     <div className="myCollection-tab">
                         <Tabs onChange={this.callback} type="card">
                             <TabPane tab="最新政策" key="1">
-                                Content of Tab Pane 1
+                                <div className="myCollection-search">
+                                    <Search onSearch={value => console.log(value)} enterButton="查询" />
+                                </div>
+                                <Table columns={this.columns} dataSource={this.data} pagination={this.pagination} />
                             </TabPane>
                             <TabPane tab="申报政策" key="2">
-                                Content of Tab Pane 2
+                                <div className="myCollection-search">
+                                    <Search onSearch={value => console.log(value)} enterButton="查询" />
+                                </div>
+                                <Table columns={this.columns} dataSource={this.data} pagination={this.pagination} />
                             </TabPane>
                         </Tabs>
                     </div>
-                            <div className="myCollection-search">
-                                <Search onSearch={value => console.log(value)} enterButton="查询" />
-                            </div>
-                            <Table columns={this.columns} dataSource={this.data} pagination={this.pagination} />
+
                         </Col>
                     </Row>
                 </div>

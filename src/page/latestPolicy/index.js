@@ -11,6 +11,8 @@ import Top from './../../component/top';
 import Label from "../../component/label";
 import './index.css';
 import {request} from "../../utils/request";
+import cookie from "react-cookies";
+import {message} from "antd/lib/index";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -70,7 +72,7 @@ class LatestPolicy extends Component {
                 title: '操作',
                 key: 'action',
                 width:100,
-                render: (text, record) => (<span><a>收藏</a></span>),
+                render: (text, record) => (<span><a onClick={()=>this.onCollection(record.id)}>收藏</a></span>),
             },
         ];
         function onShowSizeChange(current, pageSize) {
@@ -119,6 +121,18 @@ class LatestPolicy extends Component {
                 industryData: industryData.data
 
             })
+        }
+    }
+
+    //收藏
+    onCollection = async (id) =>{
+        const responest = await request('/common/my-company-collection', 'POST',{member_id:cookie.load('userId'),resource_id:id,resource_type:1}); //收藏
+        const data = responest.data;
+        if(data && data.success){
+            message.success(data.msg);
+            this.getTableData();
+        }else{
+            message.error(data.msg);
         }
     }
 

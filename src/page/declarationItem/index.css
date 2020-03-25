@@ -42,6 +42,7 @@
 .declarationItem-template .declarationItem-button{
     text-align: center;
     margin-top: 40px;
+    margin-bottom: 30px;
 }
 .declarationItem-template .declarationItem-button .ant-btn{
     background: #fff;
@@ -49,7 +50,7 @@
     border:1px solid #ae242b;
     border-radius: 20px;
     height: 40px;
-    padding: 0 110px;
+    padding: 0 70px;
     font-size: 18px;
 }
 .declarationItem-template .declarationItem-button .ant-btn:hover{

@@ -10,6 +10,9 @@ import Top from './../../component/top';
 // import Footer from "../../component/footer";
 import './index.css';
 import TitleTwo from "../../component/titleTwo";
+import cookie from "react-cookies";
+import {message} from "antd/lib/index";
+import {request} from "../../utils/request";
 
 
 class ItemText extends Component {
@@ -34,6 +37,19 @@ class ItemText extends Component {
             },
         ];
     }
+    //收藏
+    onCollection = async (id) =>{
+        const responest = await request('/common/my-company-collection', 'POST',{member_id:cookie.load('userId'),resource_id:id,resource_type:2}); //收藏
+        const data = responest.data;
+        if(data && data.success){
+            message.success(data.msg);
+            this.setState({
+                isCollection:true
+            });
+        }else{
+            message.error(data.msg);
+        }
+    }
     render() {
        // const {arrdown,labelTheme,labelType,labelProduct,arrProduct} = this.state;
         return (
@@ -51,9 +67,9 @@ class ItemText extends Component {
                         <Descriptions.Item label="政策标题" span={3}>重庆市发改委关于申报2018年XXXXX专项资金</Descriptions.Item>
                     </Descriptions>
                    </div>
-                    <div>
+                    <div className="collection-butn">
                         <Button type="primary">立即申报</Button>
-                        <Button type="primary" icon={<StarOutlined />} className="ml15">收藏</Button>
+                        <Button onClick={()=>this.onCollection()} type="primary" icon={<StarOutlined />} className="ml15">收藏</Button>
                     </div>
                     <div className="itemText-infor item-box">
                         <TitleTwo name="基本信息" />

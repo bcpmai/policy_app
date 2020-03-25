@@ -10,6 +10,8 @@ import Top from './../../component/top';
 // import Footer from "../../component/footer";
 import './index.css';
 import {request} from "../../utils/request";
+import cookie from "react-cookies";
+import {message} from "antd/lib/index";
 
 
 class PolicyText extends Component {
@@ -47,8 +49,21 @@ class PolicyText extends Component {
             resource_file_list:data.resource_file_list
         })
     }
+    //收藏
+    onCollection = async (id) =>{
+        const responest = await request('/common/my-company-collection', 'POST',{member_id:cookie.load('userId'),resource_id:id,resource_type:1}); //收藏
+        const data = responest.data;
+        if(data && data.success){
+            message.success(data.msg);
+            this.setState({
+                isCollection:true
+            });
+        }else{
+            message.error(data.msg);
+        }
+    }
     render() {
-        const {policy,resource_file_list=[]} = this.state;
+        const {policy,resource_file_list=[],isCollection} = this.state;
         const labelStr = policy.label_add_str ? policy.label_add_str.split(",") : null;
         return (
             <div className="policyText-template">
@@ -72,7 +87,7 @@ class PolicyText extends Component {
                        </Descriptions>
                    </div>
                     <div>
-                        <Button type="primary" icon={<StarOutlined />}>收藏</Button>
+                        <Button onClick={()=>this.onCollection(policy.id)} type="primary" icon={<StarOutlined />}>{isCollection ? "已收藏" : "收藏" }</Button>
                     </div>
                     <Row gutter={16} className="policyText-content-box">
                         <Col span={18} className="policyText-content">
@@ -84,7 +99,7 @@ class PolicyText extends Component {
                                 <Col span={2}>附件：</Col>
                                 <Col>
                                     {resource_file_list ?
-                                        resource_file_list.map((item,idx)=><p><a href={item.image_url} key={idx}>{item.file_ori_name}</a></p>)
+                                        resource_file_list.map((item,idx)=><p key={idx}><a href={item.image_url} key={idx}>{item.file_ori_name}</a></p>)
                                         : null}
 
                                 </Col>

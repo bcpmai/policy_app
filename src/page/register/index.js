@@ -3,7 +3,7 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import cookie from 'react-cookies'
+import cookie from 'react-cookies';
 import {Form, Input, Button, Select,message} from 'antd';
 // import axios from 'axios';
 import {request} from './../../utils/request';
@@ -207,7 +207,7 @@ class Register extends Component {
                         <Form.Item name="yzm" noStyle  rules={[{required: true}]}>
                             <Input min={1} max={10} style={{width:100,marginRight:10}} />
                         </Form.Item>
-                        <Button className="ant-form-text" disabled={time<0} onClick={this.getSms}> {time>0 ? `${time}后可再次发送短信`:"获取短信验证码"}</Button>
+                        <Button className="ant-form-text" disabled={time<0} onClick={time>0 ? null : this.getSms}> {time>0 ? `${time}秒后可再次发送短信`:"获取短信验证码"}</Button>
                     </Form.Item>
                     <div className="register-button">
                         <Form.Item wrapperCol={{...layout.wrapperCol, offset: 8}} >

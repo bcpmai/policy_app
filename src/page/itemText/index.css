@@ -40,3 +40,13 @@
 .itemText-template .item-box{
     margin-top: 20px;
 }
+.itemText-template .collection-butn .ant-btn{
+    background: #fff;
+    color: #ae242b;
+    border:1px solid #ae242b;
+    border-radius: 20px;
+    height: 30px;
+    padding: 0 20px;
+    font-size: 14px;
+    margin: 0px 20px 0px 0px;
+}
