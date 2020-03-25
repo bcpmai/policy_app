@@ -46,7 +46,12 @@ class Login extends Component {
             cookie.save('userName', data.username);
             cookie.save('userType', data.member_type);
             setTimeout(()=>{
-                this.props.history.push('/');
+                if(data.member_type == "1"){
+                    this.props.history.push('/information');
+                }else{
+                    this.props.history.push('/policyList');
+                }
+
             },1000);
         }else{
             message.error(data.msg);

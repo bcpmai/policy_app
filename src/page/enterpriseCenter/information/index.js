@@ -12,6 +12,7 @@ import EnterpriseMenu from '../../../component/enterpriseCenterMenu';
 import cookie from "react-cookies";
 import {message} from "antd/lib/index";
 import {request} from "../../../utils/request";
+import moment from 'moment';
 
 const {Option} = Select;
 const {SubMenu} = Menu;
@@ -40,8 +41,8 @@ class Information extends Component {
     }
 
     componentDidMount() {
-        this.getProvinceData();
-        this.getDefalutData();
+        //this.getProvinceData();
+        this.getDefaultData();
     }
 
     onChange = (date, dateString) => {
@@ -50,16 +51,27 @@ class Information extends Component {
         })
         console.log(date, dateString);
     }
-    getDefalutData = async () => {
+    getDefaultData = async () =>{
+        const requestData = await request('/company/get-company-user', 'POST',{member_id:cookie.load('userId')});
         const selectIndustryData = await request('/common/get-all-industry-label', 'POST'); //所属行业
-
         const industryData = selectIndustryData.data;
-
-        if (industryData && industryData.success) {
+        const data = requestData.data;
+        if (data && industryData && industryData.success) {
+            const register_address = data.register_address.split(",");
+            this.getProvinceData();
+            this.getCityData(parseInt(register_address[1]));
+            this.getAreaData(parseInt(register_address[2]),parseInt(register_address[1]));
             this.setState({
-                industryData: industryData.data
-            })
+                industryData: industryData.data,
+                register_address
+            },()=>{
+                data.set_up_value = moment(data.set_up_value, 'YYYY');;
+                this.refs.form.setFieldsValue(data);
+            });
+
         }
+
+
     }
     getProvinceData = async () => {
         const provinceData = await request('/common/get-province', 'POST'); //获取省
@@ -75,16 +87,17 @@ class Information extends Component {
         const cityData = await request('/common/get-city', 'POST', {province_id: provinceId}); //获取市
         if (cityData.status == 200) {
             this.setState({
-                citySelect: cityData.data.data
+                citySelect: cityData.data.data,
+                areaSelect:null
             });
         }
 
     }
 
-    getAreaData = async (cityId) => {
+    getAreaData = async (cityId,province_id) => {
         // console.log(this.state.addressArr);
         const areaData = await request('/common/get-area', 'POST', {
-            province_id: this.state.addressArr.province,
+            province_id: province_id || this.state.addressArr.province,
             city_id: cityId
         }); //获取区县
         if (areaData.status == 200) {
@@ -103,7 +116,8 @@ class Information extends Component {
         this.setState({
             addressArr,
             citySelect: null,
-            areaSelect: null
+            areaSelect: null,
+            register_address:null
         }, () => {
             this.getCityData(value);
         });
@@ -168,7 +182,7 @@ class Information extends Component {
     };
 
     render() {
-        const {provinceSelect, citySelect, areaSelect, industryData,isEdit} = this.state;
+        const {provinceSelect, citySelect, areaSelect, industryData,isEdit,register_address=[]} = this.state;
         return (
             <div className="information-template">
                 <Top/>
@@ -200,22 +214,22 @@ class Information extends Component {
                                         </Col>
                                         <Col span={14}>
                                             <Form.Item name="username" label="注册地址">
-                                                <Select disabled={isEdit} placeholder="请选择省份" style={{width: 127}}
+                                                {provinceSelect ? <Select defaultValue={register_address && parseInt(register_address[0])} disabled={isEdit} placeholder="请选择省份" style={{width: 127}}
                                                         onChange={(value, option) => this.onProvinceChange(value, option)}>
-                                                    {provinceSelect ? provinceSelect.map((item, idx) => <Option
-                                                        value={item.id} key={idx}>{item.value}</Option>) : null}
-                                                </Select>
-                                                <Select disabled={isEdit} placeholder="请选择市" style={{width: 127, marginLeft: 5}}
+                                                        {provinceSelect.map((item, idx) => <Option
+                                                        value={item.id} key={idx}>{item.value}</Option>)}
+                                                </Select> : null}
+                                                {citySelect ? <Select  defaultValue={register_address && parseInt(register_address[1])} disabled={isEdit} placeholder="请选择市" style={{width: 127, marginLeft: 5}}
                                                         onChange={(value, option) => this.onCityChange(value, option)}>
-                                                    {citySelect ? citySelect.map((item, idx) => <Option value={item.id}
-                                                                                                        key={idx}>{item.value}</Option>) : null}
+                                                    { citySelect.map((item, idx) => <Option value={item.id}
+                                                                                                        key={idx}>{item.value}</Option>)}
 
-                                                </Select>
-                                                <Select disabled={isEdit} placeholder="请选择区县" style={{width: 132, marginLeft: 5}}
+                                                </Select> : null}
+                                                {areaSelect ? <Select defaultValue={register_address && parseInt(register_address[2])} disabled={isEdit} placeholder="请选择区县" style={{width: 132, marginLeft: 5}}
                                                         onChange={(value, option) => this.onAreaChange(value, option)}>
-                                                    {areaSelect ? areaSelect.map((item, idx) => <Option value={item.id}
-                                                                                                        key={idx}>{item.value}</Option>) : null}
-                                                </Select>
+                                                        {areaSelect.map((item, idx) => <Option value={item.id}
+                                                                                                        key={idx}>{item.value}</Option>)}
+                                                </Select> : null}
                                             </Form.Item>
                                         </Col>
                                     </Row>

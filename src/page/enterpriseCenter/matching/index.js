@@ -38,7 +38,7 @@ class Matching extends Component {
     constructor(props){
         super(props);
         this.state = {
-
+            tableData:{}
         }
 
         this.columns = [
@@ -122,6 +122,9 @@ class Matching extends Component {
             onShowSizeChange:onShowSizeChange
         }
     }
+    async componentDidMount() {
+        this.getTableData()
+    }
     //收藏
     onCollection = async (id) =>{
         const responest = await request('/common/my-company-collection', 'POST',{member_id:cookie.load('userId'),resource_id:id,resource_type:2}); //收藏
@@ -133,8 +136,29 @@ class Matching extends Component {
             message.error(data.msg);
         }
     }
-    getTableData = () =>{
+    getTableData = async (values) =>{
+        const tableData = await request('/declare/matching', 'POST',{member_id:cookie.load('userId')}); //获取table
+        if(tableData.status == 200){
+            this.setState({
+                tableData: tableData.data,
+                formValues:values
+            });
+        }
+    }
+    onShowSizeChange = (current, pageSize) =>{
+        console.log(current, pageSize);
+        let {formValues={}} = this.state;
+        formValues.page = current;
+        formValues.max_line = pageSize;
+        this.getTableData(formValues);
+    }
 
+    onPaginChange = (page, pageSize) =>{
+        console.log(page, pageSize);
+        let {formValues={}} = this.state;
+        formValues.page = page;
+        formValues.max_line = pageSize;
+        this.getTableData(formValues);
     }
     onChange = (date, dateString) =>{
         console.log(date, dateString);
@@ -158,6 +182,18 @@ class Matching extends Component {
         });
     };
     render() {
+        const {labelTheme, labelType, labelProduct, arrProduct, labelStatus, labelSource, belongData, industryData, source,policy_theme_label_list,organization_label_list,use_type_list,status,tableData,formValues,arrdown} = this.state;
+        const pagination = {
+            current:formValues && formValues.page ? formValues.page : 1,
+            showSizeChanger: true,
+            defaultCurrent: 1,
+            defaultPageSize:20,
+            total:tableData.sum || 0,
+            showTotal:(total, range) => `共 ${tableData.page_num} 页 总计 ${tableData.sum} 条政策`,
+            pageSizeOptions: ['10', '20', '30', '50', '100', '150'],
+            onShowSizeChange: this.onShowSizeChange,
+            onChange:this.onPaginChange
+        }
         return (
             <div className="matching-template">
                 <Top />
@@ -173,7 +209,7 @@ class Matching extends Component {
                         {/*<Button type="primary" className="button-matching">精准匹配</Button>*/}
                         <Button onClick={()=>{window.location.href="/information"}} type="primary" icon={<EditOutlined />} className="button-edit">完善信息</Button>
                     </div>
-                            <Table columns={this.columns} dataSource={this.data} pagination={this.pagination} />
+                            {tableData ? <Table columns={this.columns} dataSource={tableData.result} pagination={pagination} rowKey="id" /> : null}
                         </Col>
                     </Row>
                 </div>
