@@ -47,6 +47,29 @@ class Register extends Component {
         }
         console.log(responest,"1");
     }
+    getSms = async () => {
+        const responest = await request('/sms/register','POST',{mobile:this.refs.form.getFieldValue("mobile")});
+        const data = responest.data;
+        if(data && data.success){
+            message.success(data.msg);
+        }else{
+            message.error(data.msg);
+        }
+        this.setState({
+            time: 60
+        },()=>{
+            const tTime = setInterval(()=>{
+                if(this.state.time !=0) {
+                    this.setState({
+                        time: this.state.time - 1
+                    })
+                }else{
+                    clearInterval(tTime);
+                }
+            },1000);
+        })
+
+    }
     onFinish = async (values) => {
         const responest = await request('/company/register','POST',{...values});
         const data = responest.data;
@@ -81,15 +104,30 @@ class Register extends Component {
         this.props.history.push('/login');
     }
     render() {
-        const {labelSelect} = this.state;
+        const {labelSelect,time} = this.state;
         console.log(labelSelect);
         return (
             <div className="register-template">
                 <Top />
                 <div className="register-form-box max-weight-box">
                     <div className="register-title">欢迎注册</div>
-                <Form {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
-                    <Form.Item name="username" label="用户名" rules={[{required: true}]}>
+                <Form ref="form" {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
+                    <Form.Item name="username" label="用户名" rules={[
+                        {
+                            required: true,
+                            message: '请输入用户名'
+                        },
+                        ({ getFieldValue }) => ({
+                            async validator(rule, value) {
+                                const responest = await request('/common/check-user','POST',{username:value});
+                                console.log(responest)
+                                if(responest.status == 200 && responest.data.success){
+                                    return Promise.reject(responest.data.msg);
+                                }
+                                return Promise.resolve();
+                            },
+                        }),
+                    ]}>
                         <Input placeholder="字母、数字和符号的6-16字符组合"/>
                     </Form.Item>
                     <Form.Item name="company_name" label="企业名称" rules={[{required: true}]}>
@@ -103,7 +141,21 @@ class Register extends Component {
                             {labelSelect ? labelSelect.map((item,idx)=> <Option value={item.id} key={item.id}>{item.name}</Option>) : ''}
                         </Select>
                     </Form.Item>
-                    <Form.Item name="mobile" label="手机号" rules={[{required: true}]}>
+                    <Form.Item name="mobile" label="手机号"  rules={[
+                        {
+                            required: true,
+                            message: '请输入手机号'
+                        },
+                        ({ getFieldValue }) => ({
+                            async validator(rule, value) {
+                                const responest = await request('/common/check-mobile','POST',{mobile:value});
+                                if(responest.status == 200 && responest.data.success){
+                                    return Promise.reject(responest.data.msg);
+                                }
+                                return Promise.resolve();
+                            },
+                        }),
+                    ]}>
                         <Input/>
                     </Form.Item>
                     <Form.Item name='password' label="登录密码" rules={[
@@ -155,7 +207,7 @@ class Register extends Component {
                         <Form.Item name="yzm" noStyle  rules={[{required: true}]}>
                             <Input min={1} max={10} style={{width:100,marginRight:10}} />
                         </Form.Item>
-                        <Button className="ant-form-text"> 获取短信验证码</Button>
+                        <Button className="ant-form-text" disabled={time<0} onClick={this.getSms}> {time>0 ? `${time}后可再次发送短信`:"获取短信验证码"}</Button>
                     </Form.Item>
                     <div className="register-button">
                         <Form.Item wrapperCol={{...layout.wrapperCol, offset: 8}} >

@@ -176,7 +176,7 @@ class ProjectList extends Component {
                 title: '操作人员',
                 key: 'username',
                 dataIndex: 'username',
-                width:80,
+                width:100,
             },
             {
                 title: '操作',
@@ -225,7 +225,7 @@ class ProjectList extends Component {
     }
 
     getTableData = async (values) =>{
-        const tableData = await request('/policy/list', 'POST',values); //获取table
+        const tableData = await request('/declare/list', 'POST',values); //获取table
         if(tableData.status == 200){
             this.setState({
                 tableData: tableData.data,

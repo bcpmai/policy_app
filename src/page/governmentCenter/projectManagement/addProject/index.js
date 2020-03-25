@@ -195,22 +195,56 @@ class AddProject extends Component {
         }
 
     }
+
+    getCityData = async (provinceId,i) =>{
+        const cityData = await request('/common/get-city', 'POST',{province_id:provinceId}); //获取市
+        if(cityData.status == 200){
+            this.setState({
+                ["citySelect"+i]: cityData.data.data
+            });
+        }
+
+    }
+
+    getAreaData = async (cityId,i) =>{
+        // console.log(this.state.addressArr);
+        const areaData = await request('/common/get-area', 'POST',{province_id:this.state["addressArr"][i].province,city_id:cityId}); //获取区县
+        if(areaData.status == 200){
+            this.setState({
+                ["areaSelect"+i]: areaData.data.data
+            });
+        }
+
+    }
+
     onSubmit = async(values,url) => {
-        const {release_date,life_date,editorContent,id,fileList} = this.state;
-        values.release_date = release_date;
-        values.life_date = life_date;
-        values.content = editorContent;
-        values.member_id = cookie.load("userId");
-        values.username = cookie.load("userName");
-        values.upload_file_list = fileList.map((item,idx)=>item.response.data.id);
+        const {id,fileList=[],addressArr,selectedRowKeys,support_direction,declare_condition,support_content,declare_material,declare_process,review_process,declare_start_date,declare_end_date} = this.state;
+        if(addressArr && addressArr.length) {
+            let register_address = addressArr.map((aitem, aidx) => aitem.province + "," + aitem.city + "," + aitem.area);
+            values.register_address = register_address.join("|"); //地址
+        }
+        if(selectedRowKeys && selectedRowKeys.length) {
+            values.policy_id = selectedRowKeys[0]; //政策id
+        }
+        values.support_direction = support_direction;
+        values.declare_condition = declare_condition;
+        values.support_content = support_content;
+        values.declare_material = declare_material;
+        values.declare_process = declare_process;
+        values.review_process = review_process;
+        values.declare_start_date = declare_start_date;
+        values.declare_end_date = declare_end_date;
+        if(fileList && fileList.length) {
+            values.upload_file_list = fileList.map((item, idx) => item.response.data.id); //附件
+        }
         if(id){
             values.id = id;
         }
-        const data = await request(this.state.id ? '/policy/update' : '/policy/add', 'POST',values);
+        const data = await request(this.state.id ? '/declare/update' : '/declare/add', 'POST',values);
         if(data.data && data.data.success){
             message.success(data.data.msg);
             setTimeout(()=>{
-                this.props.history.push(url ? url+"/"+data.data.data.id : '/policyList');
+                this.props.history.push(url ? url+"/"+data.data.data.id : '/projectList');
             },2000);
         }else{
             message.error(data.data.msg);
@@ -224,15 +258,16 @@ class AddProject extends Component {
     }
     onSave = async () => {
         let values = this.refs.form.getFieldsValue();
-        console.log(values);
+        // const {addressArr,selectedRowKeys,support_direction,declare_condition,support_content,declare_material,declare_process,review_process} = this.state;
+        // console.log(values,selectedRowKeys,addressArr,support_direction,declare_condition,support_content,declare_material,declare_process,review_process);
         values.status = 1;
-        //this.onSubmit(values);
+        this.onSubmit(values);
 
     }
     onView = () =>{
         let values = this.refs.form.getFieldsValue();
         values.status = 1;
-        this.onSubmit(values,"/policyPreview");
+        this.onSubmit(values,"/projectPreview");
     }
     belongChange = async (value) => {
         const labelProductData = await request('/common/get-all-organization-label', 'POST', {belong_id: value}); //发布机构
@@ -284,19 +319,23 @@ class AddProject extends Component {
         })
     }
     handleOk = async(e) => {
-        const deleteData = await request('/policy/del', 'POST',{id:this.state.id}); //删除数据
-        if(deleteData.data && deleteData.data.success){
-            message.success(deleteData.data.msg);
-            this.setState({
-                policyVisible: false,
-                id:null
-            });
-            setTimeout(()=>{
-                this.getTableData(this.state.formValues);
-            },1000);
-        }else{
-            message.error(deleteData.data.msg);
-        }
+        this.setState({
+            policyVisible: false,
+            isSelectPolicy:true
+        });
+        // const deleteData = await request('/policy/del', 'POST',{id:this.state.id}); //删除数据
+        // if(deleteData.data && deleteData.data.success){
+        //     message.success(deleteData.data.msg);
+        //     this.setState({
+        //         policyVisible: false,
+        //         id:null
+        //     });
+        //     setTimeout(()=>{
+        //         this.getTableData(this.state.formValues);
+        //     },1000);
+        // }else{
+        //     message.error(deleteData.data.msg);
+        // }
     };
 
     handleCancel = e => {
@@ -307,8 +346,8 @@ class AddProject extends Component {
     };
 
     onSelectChange = (selectedRowKeys, selectedRows) => {
-        // console.log('selectedRowKeys changed: ', selectedRowKeys,selectedRows);
-        this.setState({ selectedRowKeys,policyTitle:selectedRows.title });
+        // console.log('selectedRowKeys changed: ', selectedRowKeys,selectedRows,selectedRows.title);
+        this.setState({ selectedRowKeys,policyTitle:selectedRows[0].title });
     };
     //复选框选中取消
     setCheckBox = (e) =>{
@@ -359,8 +398,90 @@ class AddProject extends Component {
             addressNum:++this.state.addressNum
         })
     }
+    //选择省
+    onProvinceChange = (value, option,i) =>{
+        let { addressArr=[] } = this.state;
+        addressArr[i] = {
+            province:value
+        };
+        this.setState({
+            addressArr,
+            ["citySelect"+i]:null,
+            ["areaSelect"+i]:null
+        },()=>{
+            this.getCityData(value,i);
+        });
+    }
+    onCityChange = (value,option,i)=>{
+        let { addressArr=[] } = this.state;
+        if(!addressArr[i])addressArr[i] = {};
+        addressArr[i].city = value;
+        addressArr[i].area = '';
+        this.setState({
+            addressArr,
+            ["areaSelect"+i]:null
+        },()=>{
+            this.getAreaData(value,i);
+        });
+    }
+    onAreaChange = (value,option,i) =>{
+        let { addressArr=[] } = this.state;
+        if(!addressArr[i])addressArr[i] = {};
+        addressArr[i].area = value;
+        this.setState({
+            addressArr
+        });
+    }
+    //注册地址
+    addressDom = () =>{
+        const {provinceSelect,addressNum} = this.state;
+        let html=[];
+        for(let i = 0; i<addressNum;i++){
+            html.push(<Row clasName="mt10">
+                {provinceSelect ? <Col span={6}>
+                    <Form.Item>
+                        <Select
+                            style={{ width: '100%',marginRight:"20px"}}
+                            onChange={(value, option)=>this.onProvinceChange(value, option,i)}
+                        >
+                            {provinceSelect.map((item,idx)=><Option value={item.id} key={idx}>{item.value}</Option>)}
+                        </Select>
+                    </Form.Item>
+                    <span className="address-title">省</span>
+                </Col> : null}
+                {this.state["citySelect"+i] ? <Col span={6}>
+                    <Form.Item>
+                        <Select
+                            style={{ width: '100%',marginRight:"20px"}}
+                            onChange={(value, option)=>this.onCityChange(value, option,i)}
+                        >
+                            {this.state["citySelect"+i].map((item,idx)=><Option value={item.id} key={idx}>{item.value}</Option>)}
+                        </Select>
+                    </Form.Item>
+                    <span className="address-title">市</span>
+                </Col> : null}
+                {this.state["areaSelect"+i] ? <Col span={6}>
+                    <Form.Item>
+                        <Select
+                            style={{ width: '100%'}}
+                            onChange={(value, option)=>this.onAreaChange(value, option,i)}
+                        >
+                            {this.state["areaSelect"+i].map((item,idx)=><Option value={item.id} key={idx}>{item.value}</Option>)}
+                        </Select>
+                    </Form.Item>
+                    <span className="address-title">区县</span>
+                </Col> : null}
+                {i==0 ? <Col span={4}>
+                    <Tag className="site-tag-plus" onClick={this.addAddress}>
+                        <PlusOutlined />可多选
+                    </Tag>
+                </Col> : null}
+            </Row>)
+        }
+        return (html);
+    }
     render() {
-        const {industryData,belongData,typeData,productData,id,tableData,selectedRowKeys,formValues,post_material,declare_net,set_up=true,knowledge=true,invention=true,declare=true,industry_label=true,social=true,provinceSelect=[],citySelect,areaSelect,addressNum} = this.state;
+        const {industryData,belongData,typeData,productData,id,tableData,selectedRowKeys,formValues,post_material,declare_net,set_up=true,knowledge=true,invention=true,declare=true,industry_label=true,social=true,isSelectPolicy} = this.state;
         const props = {
             //action: 'http://web.js.policy.com/api/common/upload-file',
             action:uploadUrl,
@@ -411,7 +532,7 @@ class AddProject extends Component {
                                 <Input />
                             </Form.Item>
                             <Form.Item name="policy_id" label="关联政策" rules={[{required: true}]}>
-                                <span>{this.state.policyTitle}</span>
+                                {isSelectPolicy ? <span>{this.state.policyTitle}</span> : null}
                                 <Button onClick={this.showPolicy}>选择政策</Button>
                             </Form.Item>
                             <Form.Item name="belong" label="所属层级" rules={[{required: true}]}>
@@ -433,7 +554,7 @@ class AddProject extends Component {
                             <Form.Item name="web_url" label="官文网址" rules={[{required: true}]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item name="declare_date" label="申报时间">
+                            <Form.Item name="declare_start_date" label="申报时间">
                                 <RangePicker onChange={this.onDateChange} />
                             </Form.Item>
                             <Form.Item name="use_type" label="应用类型" rules={[{required: true}]}>
@@ -512,9 +633,9 @@ class AddProject extends Component {
                                 <table style={{width:"100%"}} className="label-table">
                                     <thead>
                                     <tr>
-                                        <th>标签</th>
+                                        <th style={{width:"100px"}}>标签</th>
                                         <th>规则设置</th>
-                                        <th>操作</th>
+                                        <th style={{width:"100px"}}>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -546,43 +667,7 @@ class AddProject extends Component {
                                     <tr>
                                         <td>注册地址</td>
                                         <td>
-                                              <Row>
-                                                {provinceSelect ? <Col span={6}>
-                                                    <Form.Item>
-                                                        <Select
-                                                            style={{ width: '100%'}}
-                                                        >
-                                                            {provinceSelect.map((item,idx)=><Option value={item.id} key={idx}>{item.value}</Option>)}
-                                                        </Select>
-                                                    </Form.Item>
-                                                </Col> : null}
-                                                {provinceSelect ? <Col span={1}>省</Col> : null}
-                                                {citySelect ? <Col span={5}>
-                                                    <Form.Item name="set_up_sign">
-                                                        <Select
-                                                            style={{ width: '100%',marginLeft:"20px"}}
-                                                        >
-                                                            {citySelect.map((item,idx)=><Option value={item.id} key={idx}>{item.name}</Option>)}
-                                                        </Select>
-                                                    </Form.Item>
-                                                </Col> : null}
-                                                {citySelect ? <Col span={1}>市</Col> : null}
-                                                {areaSelect ? <Col span={5}>
-                                                    <Form.Item name="set_up_sign">
-                                                        <Select
-                                                            style={{ width: '100%',marginLeft:"20px"}}
-                                                        >
-                                                            {areaSelect.map((item,idx)=><Option value={item.id} key={idx}>{item.name}</Option>)}
-                                                        </Select>
-                                                    </Form.Item>
-                                                </Col> : null}
-                                                {areaSelect ? <Col span={2}>区县</Col> : null}
-                                                <Col span={4}>
-                                                <Tag className="site-tag-plus" onClick={this.addAddress}>
-                                                <PlusOutlined />可多选
-                                                </Tag>
-                                                </Col>
-                                            </Row>
+                                              {this.addressDom()}
                                         </td>
                                         <td><Switch defaultChecked onChange={(checked)=>this.switchChange(checked,"set_up")}/></td>
                                     </tr>
@@ -680,7 +765,7 @@ class AddProject extends Component {
                                             <Row className="mt10">
                                                 <Col span={7}>企业报税收入</Col>
                                                 <Col span={4}>
-                                                    <Form.Item name="declare_value">
+                                                    <Form.Item name="declare_sign">
                                                     <Select
                                                         disabled={!declare}
                                                         style={{ width: '90%' }}
