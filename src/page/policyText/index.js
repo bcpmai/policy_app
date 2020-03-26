@@ -86,7 +86,7 @@ class PolicyText extends Component {
                            </Descriptions.Item> : null}
                        </Descriptions>
                    </div>
-                    <div>
+                    <div className="policy-butn">
                         <Button onClick={()=>this.onCollection(policy.id)} type="primary" icon={<StarOutlined />}>{isCollection ? "已收藏" : "收藏" }</Button>
                     </div>
                     <Row gutter={16} className="policyText-content-box">

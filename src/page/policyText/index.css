@@ -53,7 +53,7 @@
 .policyText-template .labelAdd .ant-descriptions-item-content .ant-tag{
     margin-bottom: 10px;
 }
-.policyText-template .ant-btn{
+.policyText-template .policy-butn .ant-btn{
     background: #fff;
     color: #ae242b;
     border:1px solid #ae242b;

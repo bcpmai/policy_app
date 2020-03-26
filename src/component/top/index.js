@@ -36,7 +36,12 @@ class Top extends Component {
                 case "latestPolicy":
                 case "declarationItem":
                     current = "latestPolicy";
-                    break
+                    break;
+                case "projectList":
+                case "addProject":
+                case "projectPreview":
+                    current = "projectList";
+                    break;
 
             }
             if(pathName.indexOf("addPolicy") != -1 || pathName.indexOf("policyPreview") != -1){
@@ -94,8 +99,8 @@ class Top extends Component {
                             <Menu.Item key="latestPolicy">
                                 <a href="/latestPolicy">最新政策</a>
                             </Menu.Item>
-                            <Menu.Item key="#">
-                                <a href="#">申报政策</a>
+                            <Menu.Item key="projectList">
+                                <a href="/projectList">申报政策</a>
                             </Menu.Item>
                             <Menu.Item key="login">
                                 <a href={isLogin ? (userType == 1 ? "/information" : "/policyList") : "/login"}>个人中心</a>
