@@ -186,7 +186,7 @@ class Register extends Component {
                                 <Col span={8}>
                                     <div className="item">
                                         <span className="tips">资金</span>
-                                        <p className="title"><a href="/policyText/0">关于应对新型冠状病毒肺炎疫情设立渝北区抗击疫情转贷应急周转资金的实施细则</a></p>
+                                        <p className="title"><a href="/policyText/2807">关于应对新型冠状病毒肺炎疫情设立渝北区抗击疫情转贷应急周转资金的实施细则</a></p>
                                         <span className="line"></span>
                                         <p className="time">2019-03-15</p>
                                         <div className="desc">
@@ -199,7 +199,7 @@ class Register extends Component {
                                 <Col span={8}>
                                     <div className="item">
                                         <span className="tips">资金</span>
-                                        <p className="title"><a href="/policyText/0">关于应对新型冠状病毒肺炎疫情设立渝北区抗击疫情转贷应急周转资金的实施细则</a></p>
+                                        <p className="title"><a href="/policyText/2807">关于应对新型冠状病毒肺炎疫情设立渝北区抗击疫情转贷应急周转资金的实施细则</a></p>
                                         <span className="line"></span>
                                         <p className="time">2019-03-15</p>
                                         <div className="desc">
@@ -212,7 +212,7 @@ class Register extends Component {
                                 <Col span={8}>
                                     <div className="item">
                                         <span className="tips">资金</span>
-                                        <p className="title"><a href="/policyText/0">关于应对新型冠状病毒肺炎疫情设立渝北区抗击疫情转贷应急周转资金的实施细则</a></p>
+                                        <p className="title"><a href="/policyText/2807">关于应对新型冠状病毒肺炎疫情设立渝北区抗击疫情转贷应急周转资金的实施细则</a></p>
                                         <span className="line"></span>
                                         <p className="time">2019-03-15</p>
                                         <div className="desc">
