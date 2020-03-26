@@ -30,6 +30,13 @@ class Top extends Component {
                 case "login":
                 case "register":
                 case "forgotYour":
+                case "projectList":
+                case "roleManagement":
+                case "enterprise":
+                case "policyUser":
+                case "labelManage":
+                case "carouselManage":
+                case "accountManagement":
                     current = "login";
                         break;
                 case "policyText":
