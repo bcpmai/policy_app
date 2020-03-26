@@ -48,7 +48,7 @@ class LatestPolicy extends Component {
                 key: 'title',
                 width:500,
                 render: (text, record) => {
-                    return <Tooltip placement="topLeft" title={text}><a onClick={()=>this.props.history.push(`/policyText/${record.id}`)}>{text.length < 65 ? text : text.substr(0,65)+"..."}</a></Tooltip>
+                    return <Tooltip placement="topLeft" title={text}><a href={`/policyText/${record.id}`} target="_blank">{text.length < 65 ? text : text.substr(0,65)+"..."}</a></Tooltip>
                 }
             },
             {

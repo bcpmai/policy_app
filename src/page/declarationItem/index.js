@@ -78,7 +78,7 @@ class DeclarationItem extends Component {
                 title: '项目标题',
                 dataIndex: 'title',
                 key: 'title',
-                render: text => <a href="/itemText">{text}</a>,
+                render: text => <a href="/itemText" target="_blank">{text}</a>,
             },
             {
                 title: '应用类型',

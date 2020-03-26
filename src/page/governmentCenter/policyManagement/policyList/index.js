@@ -93,7 +93,7 @@ class PolicyList extends Component {
                 key: 'title',
                 width: 180,
                 render: (text, record) => {
-                    return <Tooltip placement="topLeft" title={text}><a onClick={()=>this.props.history.push(`/policyPreview/${record.id}`)}>{text.length < 15 ? text : text.substr(0,15)+"..."}</a></Tooltip>
+                    return <Tooltip placement="topLeft" title={text}><a onClick={()=>this.props.history.push(`/policyPreview/${record.id}`)} target="_blank">{text.length < 15 ? text : text.substr(0,15)+"..."}</a></Tooltip>
                 }
             },
             {

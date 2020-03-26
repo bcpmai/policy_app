@@ -34,12 +34,12 @@ class Top extends Component {
                         break;
                 case "policyText":
                 case "latestPolicy":
-                case "declarationItem":
                     current = "latestPolicy";
                     break;
                 case "projectList":
                 case "addProject":
                 case "projectPreview":
+                case "declarationItem":
                     current = "projectList";
                     break;
 
@@ -100,7 +100,7 @@ class Top extends Component {
                                 <a href="/latestPolicy">最新政策</a>
                             </Menu.Item>
                             <Menu.Item key="projectList">
-                                <a href="/projectList">申报政策</a>
+                                <a href="/declarationItem" target="_blank">申报政策</a>
                             </Menu.Item>
                             <Menu.Item key="login">
                                 <a href={isLogin ? (userType == 1 ? "/information" : "/policyList") : "/login"}>个人中心</a>
