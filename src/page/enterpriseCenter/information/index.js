@@ -57,10 +57,12 @@ class Information extends Component {
         const industryData = selectIndustryData.data;
         const data = requestData.data;
         if (data && industryData && industryData.success) {
-            const register_address = data.register_address.split(",");
+            const register_address = data.register_address != "" ? data.register_address.split(",") : null;
             this.getProvinceData();
-            this.getCityData(parseInt(register_address[1]));
-            this.getAreaData(parseInt(register_address[2]),parseInt(register_address[1]));
+            if(register_address && register_address.length>1) {
+                this.getCityData(parseInt(register_address[1]));
+                this.getAreaData(parseInt(register_address[2]), parseInt(register_address[1]));
+            }
             this.setState({
                 industryData: industryData.data,
                 register_address
@@ -97,7 +99,7 @@ class Information extends Component {
     getAreaData = async (cityId,province_id) => {
         // console.log(this.state.addressArr);
         const areaData = await request('/common/get-area', 'POST', {
-            province_id: province_id || this.state.addressArr.province,
+            province_id: province_id || this.state.addressArr && this.state.addressArr.province,
             city_id: cityId
         }); //获取区县
         if (areaData.status == 200) {
@@ -182,7 +184,7 @@ class Information extends Component {
     };
 
     render() {
-        const {provinceSelect, citySelect, areaSelect, industryData,isEdit,register_address=[]} = this.state;
+        const {provinceSelect, citySelect, areaSelect, industryData,isEdit,register_address} = this.state;
         return (
             <div className="information-template">
                 <Top/>
@@ -214,7 +216,7 @@ class Information extends Component {
                                         </Col>
                                         <Col span={14}>
                                             <Form.Item name="username" label="注册地址">
-                                                {provinceSelect ? <Select defaultValue={register_address && parseInt(register_address[0])} disabled={isEdit} placeholder="请选择省份" style={{width: 127}}
+                                                {provinceSelect ? <Select defaultValue={register_address ? parseInt(register_address[0]) : null} disabled={isEdit} placeholder="请选择省份" style={{width: 127}}
                                                         onChange={(value, option) => this.onProvinceChange(value, option)}>
                                                         {provinceSelect.map((item, idx) => <Option
                                                         value={item.id} key={idx}>{item.value}</Option>)}
