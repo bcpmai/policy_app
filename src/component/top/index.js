@@ -38,9 +38,9 @@ class Top extends Component {
                     break;
                 case "projectList":
                 case "addProject":
-                case "projectPreview":
+                case "itemText":
                 case "declarationItem":
-                    current = "projectList";
+                    current = "declarationItem";
                     break;
 
             }
@@ -99,7 +99,7 @@ class Top extends Component {
                             <Menu.Item key="latestPolicy">
                                 <a href="/latestPolicy">最新政策</a>
                             </Menu.Item>
-                            <Menu.Item key="projectList">
+                            <Menu.Item key="declarationItem">
                                 <a href="/declarationItem" target="_blank">申报政策</a>
                             </Menu.Item>
                             <Menu.Item key="login">

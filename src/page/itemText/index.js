@@ -61,7 +61,7 @@ class ItemText extends Component {
                         <Breadcrumb.Item href="">项目正文</Breadcrumb.Item>
                     </Breadcrumb>
                    <div className="itemText-descriptions">
-                    <Descriptions title="政策标题：重庆市发改委关于申报2018年XXXXX专项资金的通知">
+                    <Descriptions title="项目标题：重庆市发改委关于申报2018年XXXXX专项资金的通知">
                         <Descriptions.Item label="发布机构" span={2}><span title="重庆市发改委重庆市发改委重庆市发改委">重庆市发改委</span></Descriptions.Item>
                         <Descriptions.Item label="发文日期">2018-04-13</Descriptions.Item>
                         <Descriptions.Item label="政策标题" span={3}>重庆市发改委关于申报2018年XXXXX专项资金</Descriptions.Item>

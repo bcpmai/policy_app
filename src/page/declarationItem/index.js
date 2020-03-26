@@ -22,7 +22,7 @@ class DeclarationItem extends Component {
     constructor(props){
         super(props);
         this.state = {
-            arrdown:true,
+            arrdown:false,
             arrProduct:false,
             labelDate:{
                 title:"发文日期",
