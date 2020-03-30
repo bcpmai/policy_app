@@ -13,7 +13,10 @@ import cookie from "react-cookies";
 import {message} from "antd/lib/index";
 import {request} from "../../../utils/request";
 import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
 
+const {MonthPicker} = DatePicker;
 const {Option} = Select;
 const {SubMenu} = Menu;
 const layout = {
@@ -69,9 +72,10 @@ class Information extends Component {
             }
             this.setState({
                 industryData: industryData.data,
-                register_address
+                register_address,
+                set_up_value:data.set_up_value
             },()=>{
-                data.set_up_value = moment(data.set_up_value, 'YYYY');;
+                data.set_up_value = moment(data.set_up_value, 'YYYY-MM');;
                 this.refs.form.setFieldsValue(data);
             });
 
@@ -155,9 +159,11 @@ class Information extends Component {
         if(addressArr) {
             values.register_address =addressArr.province+","+addressArr.city+","+addressArr.area;
         }else if(register_address){
-            values.register_address =register_address.join(",");
+            values.register_address = register_address.join(",");
         }
-        values.set_up_value = set_up_value;
+        if(set_up_value) {
+            values.set_up_value = (set_up_value+"").replace("-", "");
+        }
         values.member_id = cookie.load('userId');
         const responest = await request('/company/update_info', 'POST', values);
         const data = responest.data;
@@ -248,7 +254,7 @@ class Information extends Component {
                                     <Row>
                                         <Col span={10}>
                                             <Form.Item name="set_up_value" label="成立时间">
-                                                <DatePicker disabled={isEdit} onChange={this.onChange} picker="year"/>
+                                                <MonthPicker disabled={isEdit} onChange={this.onChange} format="YYYY-MM" picker="month"/>
                                             </Form.Item>
                                         </Col>
                                         <Col span={14}>

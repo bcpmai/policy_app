@@ -3,18 +3,17 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import {Form, Input, InputNumber, Button, Row, Col, Select,message} from 'antd';
-// import axios from 'axios';
+import {Form, Input, Button, Select,message,Divider} from 'antd';
 import {request} from './../../utils/request';
 import Top from './../../component/top';
-// import Footer from "../../component/footer";
 import './index.css';
 import cookie from "react-cookies";
+import { UserOutlined,LockOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 const layout = {
-    labelCol: {span: 8},
-    wrapperCol: {span: 16},
+    labelCol: {span: 0},
+    wrapperCol: {span: 24},
 };
 
 const validateMessages = {
@@ -77,22 +76,27 @@ class Login extends Component {
             <div className="login-template">
                 <Top />
                 <div className="login-form-box">
-                    <div className="login-title">用户登录</div>
-                    <Form {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
-                        <Form.Item name="username" label="用户账号" rules={[{required: true}]}>
-                            <Input placeholder="请输入用户账号"/>
-                        </Form.Item>
-                        <Form.Item name='password' label="登录密码" rules={[{required: true}]}>
-                            <Input.Password placeholder="请输入密码"/>
-                        </Form.Item>
-                        <Form.Item wrapperCol={{span: 19, offset: 5}} className="login-button">
-                            <p><a href="/forgotYour">忘记密码？</a></p>
-                            <Button type="primary" htmlType="submit">
-                                登录
-                            </Button>
-                            <p><a href="/register">免费注册</a></p>
-                        </Form.Item>
-                    </Form>
+                    <div className="max-weight-box login-max-weight">
+                        <div className="login-form-bg"></div>
+                        <div className="login-form">
+                            <div className="width-min-title"><Divider>用户登录</Divider></div>
+                            <Form {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
+                                <Form.Item name="username" rules={[{required: true}]}>
+                                    <Input prefix={<UserOutlined />} placeholder="请输入用户账号"/>
+                                </Form.Item>
+                                <Form.Item name='password' rules={[{required: true}]}>
+                                    <Input.Password prefix={<LockOutlined />} placeholder="请输入密码"/>
+                                </Form.Item>
+                                <Form.Item wrapperCol={{span: 24, offset: 0}} className="login-button">
+                                    <p><a href="/forgotYour">忘记密码？</a></p>
+                                    <Button type="primary" htmlType="submit">
+                                        登录
+                                    </Button>
+                                    <p><a href="/register">免费注册</a></p>
+                                </Form.Item>
+                            </Form>
+                        </div>
+                    </div>
                 </div>
                 {/*<Footer/>*/}
             </div>

@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import cookie from 'react-cookies';
-import {Form, Input, Button, Select,message} from 'antd';
+import {Form, Input, Button, Select,message,Divider} from 'antd';
 // import axios from 'axios';
 import {request} from './../../utils/request';
 import Top from './../../component/top';
@@ -13,8 +13,8 @@ import './index.css';
 
 const { Option } = Select;
 const layout = {
-    labelCol: {span: 8},
-    wrapperCol: {span: 10},
+    labelCol: {span: 6},
+    wrapperCol: {span: 14},
 };
 
 const validateMessages = {
@@ -110,7 +110,9 @@ class Register extends Component {
             <div className="register-template">
                 <Top />
                 <div className="register-form-box max-weight-box">
-                    <div className="register-title">欢迎注册</div>
+                    <div className="register-form-bg"></div>
+                    <div className="register-form">
+                    <div className="width-min-title"><Divider>欢迎注册</Divider></div>
                 <Form ref="form" {...layout} name="nest-messages" onFinish={this.onFinish} validateMessages={validateMessages}>
                     <Form.Item name="username" label="用户名" rules={[
                         {
@@ -220,6 +222,7 @@ class Register extends Component {
                         </Form.Item>
                     </div>
                 </Form>
+                </div>
                 </div>
             {/*<Footer/>*/}
             </div>

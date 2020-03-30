@@ -22,8 +22,8 @@
 .declarationItem-template .label-product-box .more-label{
     color:#333;
     position: absolute;
-    right:10px;
-    top:0;
+    right:-20px;
+    top:4px;
     cursor: pointer;
 }
 .declarationItem-template .label-box .ant-col-4 {

@@ -72,7 +72,7 @@ class LatestPolicy extends Component {
                 title: '操作',
                 key: 'action',
                 width:100,
-                render: (text, record) => (<span><a onClick={()=>this.onCollection(record.id)}>收藏</a></span>),
+                render: (text, record) => (<span><a onClick={()=>this.onCollection(record.id,record.resource_id != "0")}>{record.resource_id != "0" ? "已收藏": "收藏"}</a></span>),
             },
         ];
         function onShowSizeChange(current, pageSize) {
@@ -125,18 +125,25 @@ class LatestPolicy extends Component {
     }
 
     //收藏
-    onCollection = async (id) =>{
-        const responest = await request('/common/my-company-collection', 'POST',{member_id:cookie.load('userId'),resource_id:id,resource_type:1}); //收藏
+    onCollection = async (id,isCollection) =>{
+        let url = '/common/my-company-collection';
+        if(isCollection){
+            url = '/common/cancel-company-collection';
+        }
+        const responest = await request(url, 'POST',{member_id:cookie.load('userId'),resource_id:id,resource_type:1}); //收藏
         const data = responest.data;
         if(data && data.success){
             message.success(data.msg);
-            this.getTableData();
+            this.getTableData(this.state.formValues);
         }else{
             message.error(data.msg);
         }
     }
 
-    getTableData = async (values) =>{
+    getTableData = async (values={}) =>{
+        if(cookie.load('userId')){
+            values.member_id = parseInt(cookie.load('userId'));
+        }
         const tableData = await request('/policy/list', 'POST',{...values,status:2}); //获取table
         if(tableData.status == 200){
             this.setState({

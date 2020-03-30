@@ -41,6 +41,7 @@ class PolicyText extends Component {
     }
     componentDidMount() {
         this.getDefalutData();
+        this.getCollection(this.state.id);
     }
     getDefalutData = async() =>{
         const {data} = await request(`/policy/get/${this.state.id}`, 'GET'); //请求默认数据
@@ -49,14 +50,34 @@ class PolicyText extends Component {
             resource_file_list:data.resource_file_list
         })
     }
+    getCollection = async (id) =>{
+        const res = await request('/common/get-collection-info', 'POST',{ member_id:cookie.load('userId'), resource_id:parseInt(id), resource_type:1}); //是否收茂
+        console.log(res);
+        if (res.data.success && res.data.res){
+            this.setState({
+                isCollection:true
+            });
+        }else{
+            this.setState({
+                isCollection: false
+            });
+        }
+
+    }
     //收藏
     onCollection = async (id) =>{
-        const responest = await request('/common/my-company-collection', 'POST',{member_id:cookie.load('userId'),resource_id:id,resource_type:1}); //收藏
+        // const {id} = this.props.match.params;
+        const {isCollection} = this.state;
+        let url = '/common/my-company-collection';
+        if(isCollection){
+            url = '/common/cancel-company-collection';
+        }
+        const responest = await request(url, 'POST',{member_id:cookie.load('userId'),resource_id:id,resource_type:1}); //收藏
         const data = responest.data;
         if(data && data.success){
             message.success(data.msg);
             this.setState({
-                isCollection:true
+                isCollection:!isCollection
             });
         }else{
             message.error(data.msg);

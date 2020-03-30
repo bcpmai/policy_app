@@ -37,6 +37,10 @@ class Top extends Component {
                 case "labelManage":
                 case "carouselManage":
                 case "accountManagement":
+                case "myCollection":
+                case "information":
+                case "matching":
+                case "mySubscribe":
                     current = "login";
                         break;
                 case "policyText":

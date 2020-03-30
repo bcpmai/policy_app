@@ -39,7 +39,7 @@ code {
   position: relative;
   z-index: 2;
   background: #fff;
-  min-height: 800px;
+  min-height: 797px;
 }
 /*分页*/
 .ant-pagination .ant-pagination-item-active{
@@ -87,6 +87,8 @@ code {
   height: 25px;
   margin-left: 10px;
   font-size: 12px;
+  display: inline-block;
+  line-height: 25px;
 }
 .ant-modal-footer button:hover,
 .ant-modal .model-button:hover{
@@ -201,4 +203,7 @@ code {
 }
 .main-box .manage-add-butn .ant-btn{
   margin-left: 0;
+}
+.mr10{
+  margin-right: 10px;
 }

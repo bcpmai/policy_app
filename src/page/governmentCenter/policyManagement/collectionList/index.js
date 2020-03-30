@@ -50,7 +50,7 @@ class CollectionList extends Component {
                 dataIndex: 'title',
                 key: 'title',
                 width:400,
-                render: text => <a>{text}</a>,
+                render: (text,record) => <a href={`/policyText/2807`}>{text}</a>,
             },
             {
                 title: '所属层级',
