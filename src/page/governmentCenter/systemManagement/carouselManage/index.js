@@ -11,7 +11,7 @@ import './index.css';
 import cookie from "react-cookies";
 import { UploadOutlined } from '@ant-design/icons';
 
-const uploadUrl = 'http://web.js.policy.com/api/common/upload-file';
+const uploadUrl = 'http://58.144.217.13:5002/api/common/upload-file';
 class CarouselManage extends Component {
     constructor(props) {
         super(props);
@@ -20,7 +20,7 @@ class CarouselManage extends Component {
 
     render() {
         const props = {
-            //action: 'http://web.js.policy.com/api/common/upload-file',
+            //action: 'http://58.144.217.13:5002/api/common/upload-file',
             action:uploadUrl,
             onChange: this.handleUploadChange,
             multiple: true,

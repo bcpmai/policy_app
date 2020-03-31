@@ -24,7 +24,7 @@ const layout = {
     wrapperCol: {span: 18},
 };
 
-const uploadUrl = 'http://web.js.policy.com/api/common/upload-file';
+const uploadUrl = 'http://58.144.217.13:5002/api/common/upload-file';
 
 const validateMessages = {
     required: '必填项!',
@@ -483,7 +483,7 @@ class AddProject extends Component {
     render() {
         const {industryData,belongData,typeData,productData,id,tableData,selectedRowKeys,formValues,post_material,declare_net,set_up=true,knowledge=true,invention=true,declare=true,industry_label=true,social=true,isSelectPolicy} = this.state;
         const props = {
-            //action: 'http://web.js.policy.com/api/common/upload-file',
+            //action: 'http://58.144.217.13:5002/api/common/upload-file',
             action:uploadUrl,
             onChange: this.handleUploadChange,
             multiple: true,

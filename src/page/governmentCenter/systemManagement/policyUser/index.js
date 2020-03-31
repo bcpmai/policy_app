@@ -120,6 +120,7 @@ class policyUser extends Component {
             if(this.state.record){
                 url = '/admin/update_user';
                 values.username = this.state.record.username;
+                values.member_id = this.state.record.id;
             }
             const deleteData = await request(url, 'POST', values); //添加用户
             if (deleteData.data && deleteData.data.success) {
@@ -166,7 +167,7 @@ class policyUser extends Component {
     }
     resetPasswordOk = async () =>{
         const {record} = this.state;
-        const res = await request('/admin/reset-password', 'POST',{member_id:record.id,password:record.password}); //获取table
+        const res = await request('/admin/reset-password', 'POST',{member_id:record.id}); //获取table
         if (res.data && res.data.success) {
             message.success(res.data.msg);
             this.setState({

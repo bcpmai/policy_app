@@ -3,7 +3,7 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import { Table, Input, Row, Col, Button, Breadcrumb,Form, Modal, Select, message } from 'antd';
+import { Table, Input, Row, Col, Button, Breadcrumb,Form, Modal, Select, message ,Tooltip } from 'antd';
 import Top from '../../../../component/top/index';
 import Label from "../../../../component/label/index";
 import PolicyManagementMenu from "../../../../component/policyManagementMenu/index";
@@ -37,7 +37,7 @@ class enterprise extends Component {
                 title: "状 态",
                 item: [
                     {
-                        id: 0,
+                        id: -1,
                         name: "全部"
                     },
                     {
@@ -53,47 +53,59 @@ class enterprise extends Component {
         this.columns = [
             {
                 title: '企业名称',
-                dataIndex: 'title',
-                key: 'title'
+                dataIndex: 'username',
+                key: 'username'
             },
             {
                 title: '统一社会信用代码',
-                dataIndex: 'test2',
-                key: 'test2'
+                dataIndex: 'code',
+                key: 'code',
+                width:150,
+                render: (text, record) => {
+                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 6 ? text : text.substr(0,6)+"..."}</span></Tooltip>
+                }
             },
             {
                 title: '所属行业',
-                dataIndex: 'type',
-                key: 'type'
+                dataIndex: 'industry_label_str',
+                key: 'industry_label_str',
+                width:150,
+                render: (text, record) => {
+                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 6 ? text : text.substr(0,6)+"..."}</span></Tooltip>
+                }
             },
             {
                 title: '用户名',
-                dataIndex: 'hierarchy',
-                key: 'hierarchy'
+                dataIndex: 'username',
+                key: 'username'
             },
             {
                 title: '手机号',
-                dataIndex: 'address',
-                key: 'address',
+                dataIndex: 'mobile',
+                key: 'mobile',
             },
             {
                 title: '注册时间',
-                dataIndex: 'theme',
-                key: 'theme'
+                dataIndex: 'created_date',
+                width:120,
+                key: 'created_date'
             },
             {
                 title: '状态',
                 dataIndex: 'status',
-                key: 'status'
+                key: 'status',
+                width:70,
+                render: (text, record) => (<span>{text == 0 ? "正常" : "已禁用"}</span>),
             },
             {
                 title: '操作',
                 key: 'action',
+                width:180,
                 render: (text, record) => (
                     <span>
-                        <a onClick={(type,id)=>this.showModal("addVisible")}>修改</a>
-                        <a className="ml15" onClick={(type,id)=>this.showModal("visible",record.id)}>禁用</a>
-                        <a className="ml15" onClick={(type,id)=>this.showModal("passwordVisible",record.id)}>重置密码</a>
+                        <a onClick={(type,id)=>this.showModal("addVisible",record)}>修改</a>
+                        <a className="ml15" onClick={(type,id)=>this.showModal("visible",record)}>{record.status == 0 ? "禁用" : "启用"}</a>
+                        <a className="ml15" onClick={(type,id)=>this.showModal("passwordVisible",record)}>重置密码</a>
                     </span>),
             },
         ];
@@ -105,7 +117,6 @@ class enterprise extends Component {
         if (industryData && industryData.success) {
             this.setState({
                 industryData: industryData.data
-
             })
         }
     }
@@ -137,22 +148,29 @@ class enterprise extends Component {
         formValues.max_line = pageSize;
         this.getTableData(formValues);
     }
-    showModal = (type,id) => {
+    showModal = (type,record) => {
         this.setState({
             [type]: true,
-            id
+            record
         });
     };
 
     handleOk = async (e) => {
+
         this.refs.form.validateFields().then(async(values) => {
             console.log(values,"values")
-            const deleteData = await request('/company/register', 'POST', values); //添加用户
+            let url = '/company/register';
+            if(this.state.record){
+                url = '/company/update_info';
+                values.username = this.state.record.username;
+                values.member_id = this.state.record.id;
+            }
+            const deleteData = await request(url, 'POST', values); //添加用户
             if (deleteData.data && deleteData.data.success) {
                 message.success(deleteData.data.msg);
                 this.setState({
                     addVisible: false,
-                    id: null
+                    record: null
                 });
                 setTimeout(() => {
                     this.getTableData(this.state.formValues);
@@ -170,9 +188,50 @@ class enterprise extends Component {
             [type]: false,
         });
     };
-
+    resetPasswordOk = async () =>{
+        const {record} = this.state;
+        const res = await request('/admin/reset-password', 'POST',{member_id:record.id,password:record.password}); //获取table
+        if (res.data && res.data.success) {
+            message.success(res.data.msg);
+            this.setState({
+                passwordVisible: false,
+                record: null
+            });
+            setTimeout(() => {
+                this.getTableData(this.state.formValues);
+            }, 1000);
+        } else {
+            message.error(res.data.msg);
+        }
+    }
+    handleStateOk = async () =>{
+        const {record} = this.state;
+        const res = await request('/admin/update-status-user', 'POST',{member_id:record.id,status:record.status}); //获取table
+        if (res.data && res.data.success) {
+            message.success(res.data.msg);
+            this.setState({
+                visible: false,
+                record: null
+            });
+            setTimeout(() => {
+                this.getTableData(this.state.formValues);
+            }, 1000);
+        } else {
+            message.error(res.data.msg);
+        }
+    }
+    onSelectStatus = (value) =>{
+        this.setState({
+            serarchStatus:value
+        })
+        console.log(value);
+    }
+    onSearchFinish = (values) =>{
+        console.log(values);
+        this.getTableData({...this.state.formValues,...values,status:this.state.serarchStatus == -1 ? undefined : this.state.serarchStatus});
+    }
     render() {
-        const {labelStatus,status,industryData,formValues,tableData} = this.state;
+        const {labelStatus,status,industryData,formValues,tableData,record} = this.state;
         const pagination = {
             current:formValues && formValues.page ? formValues.page : 1,
             showSizeChanger: true,
@@ -199,12 +258,12 @@ class enterprise extends Component {
                         <Breadcrumb.Item href="">企业用户</Breadcrumb.Item>
                     </Breadcrumb>
                         <div className="label-box">
-                            <Form ref="form" {...layout} name="dynamic_rule" onFinish={this.onFinish} validateMessages={validateMessages}>
+                            <Form ref="searchForm" {...layout} name="dynamic_rule" onFinish={this.onSearchFinish} validateMessages={validateMessages}>
                                     <div>
                                         <Row>
                                             <Col span={4}>企业名称</Col>
                                             <Col span={18}>
-                                                <Form.Item name="title">
+                                                <Form.Item name="company_name">
                                                     <Input />
                                                 </Form.Item>
 
@@ -213,7 +272,7 @@ class enterprise extends Component {
                                         <Row>
                                             <Col span={4}>统一社会信用代码</Col>
                                             <Col span={18}>
-                                                <Form.Item name="title">
+                                                <Form.Item name="code">
                                                     <Input />
                                                 </Form.Item>
 
@@ -239,7 +298,7 @@ class enterprise extends Component {
                     onOk={this.handleOk}
                     onCancel={(type)=>this.handleCancel("visible")}
                     footer={[
-                        <Button key="back" onClick={this.handleOk}>
+                        <Button key="back" onClick={this.handleStateOk}>
                             确定
                         </Button>,
                         <Button key="submit" type="primary" onClick={(type)=>this.handleCancel("visible")}>
@@ -252,7 +311,7 @@ class enterprise extends Component {
                         textAlign: "center",
                         fontSize: "16px",
                         color: "#6e6e6e"
-                    }}>确认禁用该角色吗？</p>
+                    }}>确认{record && record.status != 0 ? "启用" : "禁用"}该角色吗？</p>
                 </Modal>
                 <Modal
                     title="重置密码"
@@ -260,7 +319,7 @@ class enterprise extends Component {
                     onOk={this.handleOk}
                     onCancel={(type)=>this.handleCancel("passwordVisible")}
                     footer={[
-                        <Button key="back" onClick={this.handleOk}>
+                        <Button key="back" onClick={this.resetPasswordOk}>
                             确认
                         </Button>,
                         <Button key="submit" type="primary" onClick={(type)=>this.handleCancel("passwordVisible")}>
@@ -275,24 +334,24 @@ class enterprise extends Component {
                     }}>确认重置密码？确认后，初始密码为123abc，请及时通知联系人。</p>
                 </Modal>
 
-                <Modal
-                    title="添加/修改角色"
-                    visible={this.state.addVisible}
-                    onOk={this.handleOk}
-                    onCancel={(type)=>this.handleCancel("addVisible")}
-                    footer={[
-                        <Button key="back" onClick={this.handleOk}>
-                            确认
-                        </Button>,
-                        <Button key="submit" type="primary" onClick={(type)=>this.handleCancel("addVisible")}>
-                            取消
-                        </Button>
-                    ]}
-                >
-                    <Form ref="form" {...layout} name="dynamic_rule" onFinish={this.onFinish} validateMessages={validateMessages}>
+                {this.state.addVisible ? <Modal
+                        title={record ? "修改角色" :"添加角色"}
+                        visible
+                        onOk={this.handleOk}
+                        onCancel={(type)=>this.handleCancel("addVisible")}
+                        footer={[
+                            <Button key="back" onClick={this.handleOk}>
+                                确认
+                            </Button>,
+                            <Button key="submit" type="primary" onClick={(type)=>this.handleCancel("addVisible")}>
+                                取消
+                            </Button>
+                        ]}
+                    >
+                    <Form ref="form" {...layout} name="dynamic_rule" validateMessages={validateMessages}>
                         <Row className="mt10">
                             <Col span={24}>
-                                <Form.Item label="用户名" name="username" rules={[
+                                <Form.Item label="用户名" name="username" rules={record && record.username ? [] : [
                                     {
                                         required: true,
                                         message: '请输入用户名'
@@ -308,7 +367,7 @@ class enterprise extends Component {
                                         },
                                     }),
                                 ]}>
-                                    <Input />
+                                    {record && record.username ? <span>{record.username}</span> : <Input />}
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -369,7 +428,7 @@ class enterprise extends Component {
                             </Col>
                         </Row>
                     </Form>
-                </Modal>
+                </Modal> : null}
             </div>
         );
     };

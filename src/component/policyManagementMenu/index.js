@@ -65,11 +65,11 @@ class PolicyMenu extends Component {
                                         </span>
                         }
                     >
-                        <Menu.Item key="roleManagement"><a href="/roleManagement">角色权限</a></Menu.Item>
+                        {/*<Menu.Item key="roleManagement"><a href="/roleManagement">角色权限</a></Menu.Item>*/}
                         <Menu.Item key="enterprise"><a href="/enterprise">企业用户</a></Menu.Item>
                         <Menu.Item key="policyUser"><a href="/policyUser">政府用户</a></Menu.Item>
-                        <Menu.Item key="labelManage"><a href="/labelManage">标签管理</a></Menu.Item>
-                        <Menu.Item key="carouselManage"><a href="/carouselManage">轮播图管理</a></Menu.Item>
+                        {/*<Menu.Item key="labelManage"><a href="/labelManage">标签管理</a></Menu.Item>*/}
+                        {/*<Menu.Item key="carouselManage"><a href="/carouselManage">轮播图管理</a></Menu.Item>*/}
                         <Menu.Item key="accountManagement"><a href="/accountManagement">账户管理</a></Menu.Item>
                     </SubMenu>
                 </Menu>
