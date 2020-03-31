@@ -273,13 +273,13 @@ class AddPolicy extends Component {
                             <Form.Item name="title" label="政策标题" rules={[{required: true}]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item name="post_shop_name" label="发文字号" rules={[{required: true}]}>
+                            <Form.Item name="post_shop_name" label="发文字号">
                                 <Input/>
                             </Form.Item>
                             <Form.Item name="release_date" label="发文日期" rules={[{required: true}]}>
                                 <DatePicker onChange={this.onDateChange} />
                             </Form.Item>
-                            <Form.Item name="life_date" label="政策有效期" rules={[{required: true}]}>
+                            <Form.Item name="life_date" label="政策有效期">
                                 <DatePicker onChange={this.onDateLifeChange} />
                             </Form.Item>
                             <Form.Item name="industry_label_id_list" label="所属行业" rules={[{required: true}]}>
@@ -335,7 +335,7 @@ class AddPolicy extends Component {
                                 <div ref="editorElem">
                                 </div>
                             </Form.Item>
-                            <Form.Item name="username" label="上传附件" required>
+                            <Form.Item name="username" label="上传附件">
                                 <Upload {...props} fileList={this.state.fileList}>
                                     <Button>
                                         <UploadOutlined /> 上传文件

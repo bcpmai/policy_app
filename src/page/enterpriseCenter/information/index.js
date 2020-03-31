@@ -60,7 +60,7 @@ class Information extends Component {
         const industryData = selectIndustryData.data;
         const data = requestData.data;
         if (data && industryData && industryData.success) {
-            const register_address = data.register_address != "" ? data.register_address.split(",") : null;
+            const register_address = data.register_address != "" && data.register_address ? data.register_address.split(",") : null;
             this.getProvinceData();
             if(register_address && register_address.length>=1) {
                 this.getCityData(parseInt(register_address[0]));
