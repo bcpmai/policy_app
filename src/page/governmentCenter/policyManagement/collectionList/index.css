@@ -26,8 +26,8 @@
 .collectionList-template .label-product-box .more-label{
     color:#333;
     position: absolute;
-    right:10px;
-    top:0;
+    right:-10px;
+    top:4px;
     cursor: pointer;
 }
 .collectionList-template .information-title{
