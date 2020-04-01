@@ -221,7 +221,7 @@ class Register extends Component {
                             <div className="width-min-title"><Divider>申报政策</Divider></div>
                             <div className="max-weight-box">
                             <Row className="application-item-box">
-                                {dataList ? dataList.map((item,idx)=>{
+                                {dataList && dataList.length ? dataList.map((item,idx)=>{
                                    return <Col span={8} key={idx}>
                                         <div className="item">
                                             <p className="title"><a href="/itemText" target="_blank" title={item.title}>{item.title.length < 30 ? item.title : item.title.substr(0,30)+"..."}</a></p>
@@ -236,7 +236,7 @@ class Register extends Component {
                                             <p className="button-center" onClick={()=>this.showModal(idx)}><Button type="primary" shape="round" >立即申报</Button></p>
                                         </div>
                                     </Col>
-                                }) : null}
+                                }) : <Col span={24} className="no-data">暂无数据！</Col>}
                             </Row>
                             </div>
                             <div className="application-more max-weight-box"><a href="/declarationItem">查看更多</a></div>

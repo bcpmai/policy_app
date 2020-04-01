@@ -255,3 +255,8 @@
     color: #000;
     font-size: 16px;
 }
+.index-template .application-item-box .no-data{
+    text-align: center;
+    padding: 30px 0;
+    font-size: 16px;
+}

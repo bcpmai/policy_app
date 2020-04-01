@@ -166,7 +166,9 @@ class AddPolicy extends Component {
         values.content = editorContent;
         values.member_id = cookie.load("userId");
         values.username = cookie.load("userName");
-        values.upload_file_list = fileList.length && fileList.map((item,idx)=>item.response.data.id);
+        if(fileList.length) {
+            values.upload_file_list = fileList.map((item, idx) => item.response.data.id);
+        }
         if(id){
             values.id = id;
         }
