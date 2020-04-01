@@ -338,7 +338,8 @@ class AddProject extends Component {
         if(data.data && data.data.success){
             message.success(data.data.msg);
             setTimeout(()=>{
-                this.props.history.push(url ? url+"/"+data.data.data.id : '/projectList');
+                window.open(url ? url+"/"+data.data.data.id : '/projectList');
+                // this.props.history.push(url ? url+"/"+data.data.data.id : '/projectList');
             },2000);
         }else{
             message.error(data.data.msg);
