@@ -143,7 +143,7 @@ class AddProject extends Component {
     }
     getDefalutData = async() =>{
         const labelThemeData = await request('/common/get-all-policy-theme-label', 'POST'); //政策主题
-        const labelTypeData = await request('/common/get-all-use-type-label', 'POST'); //应用类型
+        const labelTypeData = await request('/common/get-all-use-type-declare-label', 'POST'); //应用类型
         const selectBelongData = await request('/common/get-all-belong-label', 'POST'); //所属层级
         const selectIndustryData = await request('/common/get-all-industry-label', 'POST'); //所属行业
 
@@ -154,11 +154,11 @@ class AddProject extends Component {
         const industryData = selectIndustryData.data;
 
         if (themData && themData.success && typeData && themData.success && belongData && belongData.success && industryData && industryData.success) {
-            const allItem = {id: 0,name: "全部"};
-            themData.data.unshift(allItem);
-            typeData.data.unshift(allItem);
+            // const allItem = {id: 0,name: "全部"};
+            // themData.data.unshift(allItem);
+            // typeData.data.unshift(allItem);
             // belongData.data.unshift(allItem);
-            industryData.data.unshift(allItem);
+            // industryData.data.unshift(allItem);
             this.setState({
                 themeData: themData.data,
                 typeData: typeData.data,
