@@ -10,10 +10,12 @@ import cookie from "react-cookies";
 import {request} from './../../utils/request';
 import Top from './../../component/top';
 import Label from "../../component/label";
-import policyIcon from "./img/policy-icon.jpg";
-import projectIcon from "./img/project-icon.jpg";
-import bannerImg from "./img/WechatIMG9515.jpeg";
+// import policyIcon from "./img/policy-icon.jpg";
+// import projectIcon from "./img/project-icon.jpg";
+// import bannerImg from "./img/WechatIMG9515.jpeg";
 import bannerImg1 from "./img/WechatIMG9516.jpeg";
+import policyImg from "./img/policy.jpg";
+import projectImg from "./img/project.jpg";
 
 import './index.css';
 
@@ -159,27 +161,29 @@ class Register extends Component {
                             {/*</div>*/}
                         </Carousel>
                     </div>
-                    {/*<div className="max-weight-box">*/}
-                    {/*<Row className="item-box" gutter={16}>*/}
-                        {/*<Col span={11} className="item-policy">*/}
-                            {/*<div className="item-policy-box">*/}
-                                {/*<Link to="/latestPolicy">*/}
+                    <div className="max-weight-box">
+                    <Row className="item-box" gutter={80}>
+                        <Col span={11} className="item-policy">
+                            <div className="item-policy-box">
+                                <Link to="/latestPolicy">
                                     {/*<img src={policyIcon}></img>*/}
                                     {/*<span>找政策</span>*/}
-                                {/*</Link>*/}
-                            {/*</div>*/}
-                        {/*</Col>*/}
-                        {/*<Col span={1}></Col>*/}
-                        {/*<Col span={11} className="item-project">*/}
-                            {/*<div className="item-project-box">*/}
-                                {/*<Link to="/declarationItem">*/}
+                                    <img src={policyImg} style={{width:"50%"}} />
+                                </Link>
+                            </div>
+                        </Col>
+                        <Col span={1}></Col>
+                        <Col span={11} className="item-project">
+                            <div className="item-project-box">
+                                <Link to="/declarationItem">
+                                    <img src={projectImg} style={{width:"50%"}} />
                                     {/*<img src={projectIcon}></img>*/}
                                     {/*<span>报项目</span>*/}
-                                {/*</Link>*/}
-                            {/*</div>*/}
-                        {/*</Col>*/}
-                    {/*</Row>*/}
-                    {/*</div>*/}
+                                </Link>
+                            </div>
+                        </Col>
+                    </Row>
+                    </div>
                     <div className="matching-box">
                         {/*<Divider>快速匹配</Divider>*/}
                         {/*<div className="matching-divider">*/}

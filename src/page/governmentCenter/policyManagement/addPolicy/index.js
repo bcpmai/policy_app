@@ -146,8 +146,12 @@ class AddPolicy extends Component {
                     release_date:policy.release_date,
                     content:policy.content
                 });
-                policy.release_date = moment(policy.release_date, 'YYYY-MM-DD');
-                policy.life_date = moment(policy.life_date, 'YYYY-MM-DD');
+                if(policy.release_date) {
+                    policy.release_date = moment(policy.release_date, 'YYYY-MM-DD');
+                }
+                if(policy.life_date) {
+                    policy.life_date = moment(policy.life_date, 'YYYY-MM-DD');
+                }
 
                 this.refs.form.setFieldsValue(policy);
                 editor.txt.html(policy.content);
@@ -162,7 +166,7 @@ class AddPolicy extends Component {
         values.content = editorContent;
         values.member_id = cookie.load("userId");
         values.username = cookie.load("userName");
-        values.upload_file_list = fileList.map((item,idx)=>item.response.data.id);
+        values.upload_file_list = fileList.length && fileList.map((item,idx)=>item.response.data.id);
         if(id){
             values.id = id;
         }

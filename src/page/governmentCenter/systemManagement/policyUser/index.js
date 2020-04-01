@@ -216,7 +216,7 @@ class policyUser extends Component {
                         <div className="policyUser-search">
                             <Search onSearch={this.searchTabel} enterButton />
                         </div>
-                        <p className="operation-button"><Button type="primary" onClick={(type,id)=>this.showModal("addVisible")}>添加用户</Button></p>
+                        <p className="operation-button" style={{textAlign:"right"}}><Button style={{marginRight:0}} type="primary" onClick={(type,id)=>this.showModal("addVisible")}>添加用户</Button></p>
                         {tableData ? <Table columns={this.columns} dataSource={tableData.result} pagination={pagination} rowKey="id" /> : null}
                     </Col>
                 </Row>

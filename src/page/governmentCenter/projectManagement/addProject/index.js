@@ -51,12 +51,14 @@ class AddProject extends Component {
     }
 
     componentDidMount(){
-        this.createEditor("editorElem1","support_direction");//扶持方向
-        this.createEditor("editorElem2","declare_condition");//申报条件
-        this.createEditor("editorElem3","support_content");//扶持内容
-        this.createEditor("editorElem4","declare_material");//申报材料
-        this.createEditor("editorElem5","declare_process");//申报流程
-        this.createEditor("editorElem6","review_process");//评审流程
+        if(!this.state.id) {
+            this.createEditor("editorElem1", "support_direction");//扶持方向
+            this.createEditor("editorElem2", "declare_condition");//申报条件
+            this.createEditor("editorElem3", "support_content");//扶持内容
+            this.createEditor("editorElem4", "declare_material");//申报材料
+            this.createEditor("editorElem5", "declare_process");//申报流程
+            this.createEditor("editorElem6", "review_process");//评审流程
+        }
         this.getDefalutData();
         this.getTableData();
         this.getProvinceData();//获取省
@@ -119,7 +121,7 @@ class AddProject extends Component {
         formValues.max_line = pageSize;
         this.getTableData(formValues);
     }
-    createEditor = (editorElem,editorContent) =>{
+    createEditor = (editorElem,editorContent,value) =>{
         const elem = this.refs[editorElem]; //获取editorElem盒子
         //const submit = this.refs.submit; //获取提交按钮
         const editor = new E(elem)  //new 一个 editorElem富文本
@@ -140,6 +142,10 @@ class AddProject extends Component {
             }
         };
         editor.create() //创建
+
+        if(value){
+            editor.txt.html(value);
+        }
     }
     getDefalutData = async() =>{
         const labelThemeData = await request('/common/get-all-policy-theme-label', 'POST'); //政策主题
@@ -172,21 +178,97 @@ class AddProject extends Component {
             const {data} = await request(`/declare/get-one/${this.state.id}`, 'GET'); //请求默认数据
             console.log(data,"dddd")
             if(data){
-                const {declare} = data;
+                const {declare,resource_file_list=[]} = data;
+                let fileList=[];
+                resource_file_list.forEach((item,idx)=>{
+                    item.name = item.file_ori_name;
+                    item.uid = item.id;
+                    item.url = item.image_url;
+                    fileList.push(item);
+                })
+                let addressList= [];
+                declare.register_address && declare.register_address.split("|").forEach((item,idx)=>{
+                    const itemList = item.split(",");
+                    if(itemList.length >0){
+                        let {addressArr=[]} = this.state;
+                        if(!addressArr[idx])addressArr[idx]={}
+                        addressArr[idx].province = parseInt(itemList[0]);
+                        if(itemList.length >= 3){
+                            addressArr[idx].city = parseInt(itemList[1]);
+                            addressArr[idx].area = parseInt(itemList[2]);
+                        }else if(itemList.length == 2){
+                            addressArr[idx].city = parseInt(itemList[1]);
+                        }
+                        this.setState({
+                            addressArr
+                        });
+                    }
+                    itemList.forEach((iItem,iIdx)=>{
+                        if(iIdx==1){
+                            this.getCityData(parseInt(itemList[0]),idx);
+                        }
+                        if(iIdx == 2){
+                            this.getAreaData(parseInt(itemList[1]),idx)
+                        }
+                    });
+                    addressList.push(itemList);
+                });
                 this.setState({
                     data,
+                    addressList,
+                    fileList,
                     release_date:declare.release_date,
-                    content:declare.content
+                    content:declare.content,
+                    policyTitle:declare.pc_title,
+                    selectedRowKeys:[declare.policy_id],
+                    isSelectPolicy:true,
+                    declare_net:declare.declare_net,
+                    post_material:declare.post_material,
+                    addressNum:addressList.length,
+                    declare_start_date:declare.declare_start_date,
+                    declare_end_date:declare.declare_end_date,
+                    support_direction:declare.support_direction,
+                    declare_condition:declare.declare_condition,
+                    support_content:declare.support_content,
+                    declare_material:declare.declare_material,
+                    declare_process:declare.declare_process,
+                    review_process:declare.review_process
                 });
 
-                declare.declare_start_date =[moment(declare.declare_start_date, 'YYYY-MM-DD'),moment(declare.declare_end_date, 'YYYY-MM-DD')];
+                if(declare.declare_start_date && declare.declare_end_date) {
+                    declare.declare_start_date = [moment(declare.declare_start_date, 'YYYY-MM-DD'), moment(declare.declare_end_date, 'YYYY-MM-DD')];
+                }
                 // values.declare_end_date = declare_end_date;
                 //  declare.release_date = moment(declare.release_date, 'YYYY-MM-DD');
                 // declare.life_date = moment(declare.life_date, 'YYYY-MM-DD');
 
+                declare.organization_label_ids = declare.organization_label_list;
+                declare.use_type = declare.use_type_list;
+                let d_industry_label_ids;
+                if(declare.d_industry_label_ids) {
+                    d_industry_label_ids=[];
+                    declare.d_industry_label_ids.split(",").forEach((item) => {
+                        d_industry_label_ids.push(parseInt(item));
+                    });
+                }
+                let industry_label_ids = [];
+                declare.industry_label_ids.split(",").forEach((item)=>{
+                    industry_label_ids.push(parseInt(item));
+                })
+                declare.d_industry_label_ids = d_industry_label_ids;
+                declare.industry_label_ids = industry_label_ids;
+
                 this.refs.form.setFieldsValue(declare);
+
                 //editor.txt.html(policy.content);
                 this.belongChange(declare.belong); //请求发布机构
+
+                this.createEditor("editorElem1", "support_direction",declare.support_direction);//扶持方向
+                this.createEditor("editorElem2", "declare_condition",declare.declare_condition);//申报条件
+                this.createEditor("editorElem3", "support_content",declare.support_content);//扶持内容
+                this.createEditor("editorElem4", "declare_material",declare.declare_material);//申报材料
+                this.createEditor("editorElem5", "declare_process",declare.declare_process);//申报流程
+                this.createEditor("editorElem6", "review_process",declare.review_process);//评审流程
             }
         }
     }
@@ -238,8 +320,16 @@ class AddProject extends Component {
         values.review_process = review_process;
         values.declare_start_date = declare_start_date;
         values.declare_end_date = declare_end_date;
+        values.d_industry_label_list = values.d_industry_label_ids;
         if(fileList && fileList.length) {
-            values.upload_file_list = fileList.map((item, idx) => item.response.data.id); //附件
+            console.log(fileList);
+            values.upload_file_list = fileList.map((item, idx) => {
+                if(item.response){
+                    return item.response.data.id
+                }else{
+                    return item.id
+                }
+            }); //附件
         }
         if(id){
             values.id = id;
@@ -438,41 +528,44 @@ class AddProject extends Component {
     }
     //注册地址
     addressDom = () =>{
-        const {provinceSelect,addressNum} = this.state;
+        const {provinceSelect,addressNum,addressArr=[]} = this.state;
         let html=[];
         for(let i = 0; i<addressNum;i++){
-            html.push(<Row clasName="mt10">
+            html.push(<Row key={i}>
                 {provinceSelect ? <Col span={6}>
-                    <Form.Item>
+                    <div style={{marginRight:"40px"}}>
                         <Select
                             style={{ width: '100%',marginRight:"20px"}}
                             onChange={(value, option)=>this.onProvinceChange(value, option,i)}
+                            value={addressArr[i] && addressArr[i].province}
                         >
                             {provinceSelect.map((item,idx)=><Option value={item.id} key={idx}>{item.value}</Option>)}
                         </Select>
-                    </Form.Item>
+                    </div>
                     <span className="address-title">省</span>
                 </Col> : null}
                 {this.state["citySelect"+i] ? <Col span={6}>
-                    <Form.Item>
+                    <div style={{marginRight:"40px"}}>
                         <Select
                             style={{ width: '100%',marginRight:"20px"}}
                             onChange={(value, option)=>this.onCityChange(value, option,i)}
+                            value={addressArr[i] && addressArr[i].city}
                         >
                             {this.state["citySelect"+i].map((item,idx)=><Option value={item.id} key={idx}>{item.value}</Option>)}
                         </Select>
-                    </Form.Item>
+                    </div>
                     <span className="address-title">市</span>
                 </Col> : null}
                 {this.state["areaSelect"+i] ? <Col span={6}>
-                    <Form.Item>
+                    <div style={{marginRight:"40px"}}>
                         <Select
                             style={{ width: '100%'}}
                             onChange={(value, option)=>this.onAreaChange(value, option,i)}
+                            value={addressArr[i] && addressArr[i].area}
                         >
                             {this.state["areaSelect"+i].map((item,idx)=><Option value={item.id} key={idx}>{item.value}</Option>)}
                         </Select>
-                    </Form.Item>
+                    </div>
                     <span className="address-title">区县</span>
                 </Col> : null}
                 {i==0 ? <Col span={4}>
@@ -581,7 +674,7 @@ class AddProject extends Component {
 
                                 </Select>
                             </Form.Item>
-                            <Form.Item name="industry_label_ids" label="所属行业" rules={[{required: true}]}>
+                            <Form.Item name="d_industry_label_ids" label="所属行业" rules={[{required: true}]}>
                                 <Select
                                     mode="multiple"
                                     style={{ width: '100%' }}
@@ -620,7 +713,7 @@ class AddProject extends Component {
                                 </div>
                             </Form.Item>
                             <Form.Item name="username" label="上传附件">
-                                <Upload {...props} fileList={this.state.fileList}>
+                                <Upload {...props} fileList={this.state.fileList} defaultFileList={this.state.fileList}>
                                     <Button>
                                         <UploadOutlined /> 上传文件
                                     </Button>
@@ -629,13 +722,13 @@ class AddProject extends Component {
                             </Form.Item>
                             <p style={{fontWight:"bold",color:"#000",fontSize:"16px"}}><span style={{color: "#ff4d4f"}}>*</span>请选择申报方式（可多选）</p>
                             <Row>
-                                <Col span={4}><Checkbox value="declare_net" onChange={this.setCheckBox}>网上申报</Checkbox></Col>
+                                <Col span={4}><Checkbox value="declare_net" checked={this.state.declare_net ? true : false} onChange={this.setCheckBox}>网上申报</Checkbox></Col>
                                 <Col span={10}><Form.Item name="declare_net">
                                     <Input disabled={!declare_net}/>
                                 </Form.Item></Col>
                             </Row>
                             <Row>
-                                <Col span={4}><Checkbox value="post_material" onChange={this.setCheckBox}>纸质材料提交至</Checkbox></Col>
+                                <Col span={4}><Checkbox value="post_material" checked={this.state.post_material ? true : false} onChange={this.setCheckBox}>纸质材料提交至</Checkbox></Col>
                                 <Col span={20}><Form.Item name="post_material">
                                     <TextArea disabled={!post_material} rows={4}/>
                                 </Form.Item></Col>
@@ -889,7 +982,7 @@ class AddProject extends Component {
                     className="select-porject-modal"
                 >
                     <Search
-                        onSearch={value => console.log(value)}
+                        onSearch={value => this.getTableData({title:value})}
                         style={{ width: 300 }}
                         enterButton
                     />

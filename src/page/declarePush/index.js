@@ -105,7 +105,7 @@ class DeclarePush extends Component {
         const tableData = await request('/declare/list', 'POST', {
             organization_label_list:organization_label_list!=-1 ? organization_label_list.split(",") : undefined,
             use_type_list:use_type_list != -1 ? use_type_list.split(",") : undefined,
-            industry_label_list:industry_label_list != -1 ? [industry_label_list] : undefined,
+            d_industry_label_list:industry_label_list != -1 ? [industry_label_list] : undefined,
             ...values
         });
 

@@ -53,10 +53,10 @@ class enterprise extends Component {
         this.columns = [
             {
                 title: '企业名称',
-                dataIndex: 'username',
-                key: 'username',
+                dataIndex: 'company_name',
+                key: 'company_name',
                 render: (text, record) => {
-                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 8 ? text : text.substr(0,8)+"..."}</span></Tooltip>
+                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 4 ? text : text.substr(0,4)+"..."}</span></Tooltip>
                 }
             },
             {
