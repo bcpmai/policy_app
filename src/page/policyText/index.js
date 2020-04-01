@@ -108,7 +108,7 @@ class PolicyText extends Component {
                        </Descriptions>
                    </div>
                     <div className="policy-butn">
-                        <Button onClick={()=>this.onCollection(policy.id)} type="primary" icon={<StarOutlined />}>{isCollection ? "已收藏" : "收藏" }</Button>
+                        {cookie.load("userType") != 2 ? <Button onClick={()=>this.onCollection(policy.id)} type="primary" icon={<StarOutlined />}>{isCollection ? "已收藏" : "收藏" }</Button> : null}
                     </div>
                     <Row gutter={16} className="policyText-content-box">
                         <Col span={24} className="policyText-content">

@@ -114,13 +114,17 @@ class DeclarationItem extends Component {
                 title: '发文日期',
                 key: 'created_date',
                 dataIndex: 'created_date'
-            },
-            {
+            }
+        ];
+        if(cookie.load("userType") != 2){
+            this.columns.push({
                 title: '操作',
                 key: 'action',
-                render: (text, record) => (<span><a onClick={()=>this.showModal(record)}>立即申报</a><a className="ml15" onClick={()=>this.onCollection(record.id,record.resource_id != "0")}>{record.resource_id != "0" ? "已收藏": "收藏"}</a></span>),
-            },
-        ];
+                render: (text, record) => (
+                    <span><a onClick={() => this.showModal(record)}>立即申报</a><a className="ml15"
+                                                                               onClick={() => this.onCollection(record.id, record.resource_id != "0")}>{record.resource_id != "0" ? "已收藏" : "收藏"}</a></span>),
+            })
+        }
 
     }
     async componentWillMount() {

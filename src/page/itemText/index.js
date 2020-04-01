@@ -105,7 +105,7 @@ class ItemText extends Component {
                    </div>
                     <div className="collection-butn">
                         <Button onClick={()=>this.showModal()} type="primary">立即申报</Button>
-                        <Button onClick={()=>this.onCollection()} type="primary" icon={<StarOutlined />} className="ml15">{butnText}</Button>
+                        {cookie.load("userType") != 2 ? <Button onClick={()=>this.onCollection()} type="primary" icon={<StarOutlined />} className="ml15">{butnText}</Button> : null}
                     </div>
                     <div className="itemText-infor item-box">
                         <TitleTwo name="基本信息" />

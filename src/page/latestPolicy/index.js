@@ -73,14 +73,17 @@ class LatestPolicy extends Component {
                 key: 'release_date',
                 width:150,
                 dataIndex: 'release_date'
-            },
-            {
+            }
+
+        ];
+        if(cookie.load("userType") != 2){
+            this.columns.push({
                 title: '操作',
                 key: 'action',
                 width:100,
                 render: (text, record) => (<span><a onClick={()=>this.onCollection(record.id,record.resource_id != "0")}>{record.resource_id != "0" ? "已收藏": "收藏"}</a></span>),
-            },
-        ];
+            })
+        }
         function onShowSizeChange(current, pageSize) {
             console.log(current, pageSize);
         }
