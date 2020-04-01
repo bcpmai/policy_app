@@ -48,19 +48,25 @@ class LatestPolicy extends Component {
                 key: 'title',
                 width:500,
                 render: (text, record) => {
-                    return <Tooltip placement="topLeft" title={text}><a href={`/policyText/${record.id}`} target="_blank">{text.length < 65 ? text : text.substr(0,65)+"..."}</a></Tooltip>
+                    return <Tooltip placement="topLeft" title={text}><a href={`/policyText/${record.id}`} target="_blank">{text.length < 30 ? text : text.substr(0,30)+"..."}</a></Tooltip>
                 }
             },
             {
                 title: '发布机构',
                 dataIndex: 'organization_label_str',
                 key: 'organization_label_str',
+                render: (text, record) => {
+                    return <Tooltip placement="topLeft" title={text}>{text.length < 15 ? text : text.substr(0,15)+"..."}</Tooltip>
+                }
             },
             {
                 title: '发文字号',
                 key: 'post_shop_name',
-                width:150,
-                dataIndex: 'post_shop_name'
+                width:250,
+                dataIndex: 'post_shop_name',
+                render: (text, record) => {
+                    return <Tooltip placement="topLeft" title={text}>{text.length < 15 ? text : text.substr(0,15)+"..."}</Tooltip>
+                }
             },
             {
                 title: '发文日期',

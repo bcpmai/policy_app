@@ -24,7 +24,7 @@ const layout = {
     wrapperCol: {span: 18},
 };
 
-const uploadUrl = 'http://58.144.217.13:5002/api/common/upload-file';
+const uploadUrl = 'http://58.144.217.13:5001/api/common/upload-file';
 
 const validateMessages = {
     required: '必填项!',

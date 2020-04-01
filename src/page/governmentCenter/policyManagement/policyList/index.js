@@ -182,7 +182,7 @@ class PolicyList extends Component {
                 title: '操作',
                 key: 'action',
                 width:120,
-                render: (text, record) => (<p align="center"><a onClick={()=>this.props.history.push(`/addPolicy/${record.id}`)}>编辑</a><a onClick={()=>this.showModal(record.id)} className="ml15">删除</a></p>),
+                render: (text, record) => (<p align="center" style={{marginBottom:0}}><a onClick={()=>this.props.history.push(`/addPolicy/${record.id}`)}>编辑</a><a onClick={()=>this.showModal(record.id)} className="ml15">删除</a></p>),
             },
         ];
 

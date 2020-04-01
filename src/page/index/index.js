@@ -10,10 +10,9 @@ import cookie from "react-cookies";
 import {request} from './../../utils/request';
 import Top from './../../component/top';
 import Label from "../../component/label";
-// import policyIcon from "./img/policy-icon.jpg";
-// import projectIcon from "./img/project-icon.jpg";
-// import bannerImg from "./img/WechatIMG9515.jpeg";
-import bannerImg1 from "./img/WechatIMG9516.jpeg";
+import bannerImg1 from "./img/g1.jpg";
+import bannerImg2 from "./img/g2.jpg";
+import bannerImg3 from "./img/g3.jpg";
 import policyImg from "./img/policy.jpg";
 import projectImg from "./img/project.jpg";
 
@@ -156,9 +155,12 @@ class Register extends Component {
                             <div>
                                 <img src={bannerImg1} />
                             </div>
-                            {/*<div>*/}
-                                {/*<img src={bannerImg} />*/}
-                            {/*</div>*/}
+                            <div>
+                                <img src={bannerImg2} />
+                            </div>
+                            <div>
+                                <img src={bannerImg3} />
+                            </div>
                         </Carousel>
                     </div>
                     <div className="max-weight-box">
@@ -222,7 +224,7 @@ class Register extends Component {
                                 {dataList ? dataList.map((item,idx)=>{
                                    return <Col span={8} key={idx}>
                                         <div className="item">
-                                            <p className="title"><a href="/itemText" target="_blank">{item.title}</a></p>
+                                            <p className="title"><a href="/itemText" target="_blank" title={item.title}>{item.title.length < 30 ? item.title : item.title.substr(0,30)+"..."}</a></p>
                                             {item.use_type_label_str ? item.use_type_label_str.map((tagItem,tagIdx)=>{
                                                 return <span className="tips mr10">{tagItem}</span>
                                             }) : null}

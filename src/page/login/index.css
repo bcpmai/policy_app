@@ -84,3 +84,11 @@
 .login-template .ant-form-item{
     margin-top: 40px;
 }
+.login-template .ant-input:focus,.login-template .ant-input:hover{
+    border: 0!important;
+    box-shadow: none!important;
+}
+.login-template .ant-input-affix-wrapper:hover{
+    border: 1px solid #a72329!important;
+    box-shadow: 0 0 0 2px rgba(167,35,41,0.2)!important;
+}
