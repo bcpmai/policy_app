@@ -178,8 +178,11 @@ class AddProject extends Component {
                     release_date:declare.release_date,
                     content:declare.content
                 });
-                declare.release_date = moment(declare.release_date, 'YYYY-MM-DD');
-                declare.life_date = moment(declare.life_date, 'YYYY-MM-DD');
+
+                declare.declare_start_date =[moment(declare.declare_start_date, 'YYYY-MM-DD'),moment(declare.declare_end_date, 'YYYY-MM-DD')];
+                // values.declare_end_date = declare_end_date;
+                //  declare.release_date = moment(declare.release_date, 'YYYY-MM-DD');
+                // declare.life_date = moment(declare.life_date, 'YYYY-MM-DD');
 
                 this.refs.form.setFieldsValue(declare);
                 //editor.txt.html(policy.content);
