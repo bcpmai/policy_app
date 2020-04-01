@@ -93,7 +93,7 @@ class ProjectList extends Component {
                 key: 'title',
                 width: 180,
                 render: (text, record) => {
-                    return <Tooltip placement="topLeft" title={text}><a onClick={()=>this.props.history.push(`/policyPreview/${record.id}`)}>{text.length < 15 ? text : text.substr(0,15)+"..."}</a></Tooltip>
+                    return <Tooltip placement="topLeft" title={text}><a onClick={()=>this.props.history.push(`/policyPreview/${record.id}`)}>{text.length < 8 ? text : text.substr(0,8)+"..."}</a></Tooltip>
                 }
             },
             {
@@ -144,7 +144,7 @@ class ProjectList extends Component {
                 title: '状态',
                 dataIndex: 'status',
                 key: 'status',
-                width:70,
+                width:80,
                 render: text => {
                     if(text==1) {
                         return "暂存"

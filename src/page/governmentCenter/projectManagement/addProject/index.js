@@ -157,7 +157,7 @@ class AddProject extends Component {
             const allItem = {id: 0,name: "全部"};
             themData.data.unshift(allItem);
             typeData.data.unshift(allItem);
-            belongData.data.unshift(allItem);
+            // belongData.data.unshift(allItem);
             industryData.data.unshift(allItem);
             this.setState({
                 themeData: themData.data,
@@ -481,7 +481,7 @@ class AddProject extends Component {
         return (html);
     }
     render() {
-        const {industryData,belongData,typeData,productData,id,tableData,selectedRowKeys,formValues,post_material,declare_net,set_up=true,knowledge=true,invention=true,declare=true,industry_label=true,social=true,isSelectPolicy} = this.state;
+        const {industryData,policyTitle,belongData,typeData,productData,id,tableData,selectedRowKeys,formValues,post_material,declare_net,set_up=true,knowledge=true,invention=true,declare=true,industry_label=true,social=true,isSelectPolicy} = this.state;
         const props = {
             //action: 'http://58.144.217.13:5002/api/common/upload-file',
             action:uploadUrl,
@@ -531,7 +531,16 @@ class AddProject extends Component {
                             <Form.Item name="title" label="项目标题" rules={[{required: true}]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item name="policy_id" label="关联政策" rules={[{required: true}]}>
+                            <Form.Item name="policy_id" label="关联政策" required rules={[
+                                ({ getFieldValue }) => ({
+                                    async validator(rule, value) {
+                                        if(!policyTitle){
+                                            return Promise.reject("请选择关联政策");
+                                        }
+                                        return Promise.resolve();
+                                    },
+                                }),
+                            ]}>
                                 {isSelectPolicy ? <span>{this.state.policyTitle}</span> : null}
                                 <Button onClick={this.showPolicy}>选择政策</Button>
                             </Form.Item>

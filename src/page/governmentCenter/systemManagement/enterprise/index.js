@@ -54,7 +54,10 @@ class enterprise extends Component {
             {
                 title: '企业名称',
                 dataIndex: 'username',
-                key: 'username'
+                key: 'username',
+                render: (text, record) => {
+                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 8 ? text : text.substr(0,8)+"..."}</span></Tooltip>
+                }
             },
             {
                 title: '统一社会信用代码',
@@ -77,30 +80,34 @@ class enterprise extends Component {
             {
                 title: '用户名',
                 dataIndex: 'username',
-                key: 'username'
+                key: 'username',
+                render: (text, record) => {
+                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 10 ? text : text.substr(0,10)+"..."}</span></Tooltip>
+                }
             },
             {
                 title: '手机号',
                 dataIndex: 'mobile',
+                width:120,
                 key: 'mobile',
             },
             {
                 title: '注册时间',
                 dataIndex: 'created_date',
-                width:120,
+                width:150,
                 key: 'created_date'
             },
             {
                 title: '状态',
                 dataIndex: 'status',
                 key: 'status',
-                width:70,
+                width:80,
                 render: (text, record) => (<span>{text == 0 ? "正常" : "已禁用"}</span>),
             },
             {
                 title: '操作',
                 key: 'action',
-                width:180,
+                width:190,
                 render: (text, record) => (
                     <span>
                         <a onClick={(type,id)=>this.showModal("addVisible",record)}>修改</a>

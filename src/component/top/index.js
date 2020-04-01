@@ -123,7 +123,7 @@ class Top extends Component {
                         <Link to="/login"><Button size="small" icon={<UserOutlined />}>登录</Button></Link>
                         <u className="line-u">|</u>
                         <Link to="/register"><Button size="small" className="ml15 mr15">注册</Button></Link>
-                    </Col> : <Col span={3} className="right-button"><Button icon={<ExportOutlined />} size="small" className="mr15" onClick={this.removeCookie}>退出</Button></Col>}
+                    </Col> : <Col span={3} className="right-button"><span title={cookie.load('userName')}>{cookie.load('userName').length > 10 ? cookie.load('userName').substr(0,10)+"..." : cookie.load('userName')}</span><Button icon={<ExportOutlined />} size="small" className="mr15" onClick={this.removeCookie}>退出</Button></Col>}
 
                 </Row>
                 </div>

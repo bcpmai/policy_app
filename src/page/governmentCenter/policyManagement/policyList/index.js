@@ -93,7 +93,7 @@ class PolicyList extends Component {
                 key: 'title',
                 width: 180,
                 render: (text, record) => {
-                    return <Tooltip placement="topLeft" title={text}><a onClick={()=>this.props.history.push(`/policyPreview/${record.id}`)} target="_blank">{text.length < 15 ? text : text.substr(0,15)+"..."}</a></Tooltip>
+                    return <Tooltip placement="topLeft" title={text}><a onClick={()=>this.props.history.push(`/policyPreview/${record.id}`)} target="_blank">{text.length < 8 ? text : text.substr(0,8)+"..."}</a></Tooltip>
                 }
             },
             {
@@ -144,7 +144,7 @@ class PolicyList extends Component {
                 title: '状态',
                 dataIndex: 'status',
                 key: 'status',
-                width:80,
+                width:90,
                 render: text => {
                     if(text==1) {
                         return "暂存"

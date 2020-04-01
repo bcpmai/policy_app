@@ -126,7 +126,7 @@ class AddPolicy extends Component {
             const allItem = {id: 0,name: "全部"};
             themData.data.unshift(allItem);
             typeData.data.unshift(allItem);
-            belongData.data.unshift(allItem);
+            // belongData.data.unshift(allItem);
             industryData.data.unshift(allItem);
             this.setState({
                 themeData: themData.data,

@@ -3,8 +3,7 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import { Table, Input, Row, Col, Button, Breadcrumb, Modal, Form ,Checkbox } from 'antd';
-import { Link } from "react-router-dom";
+import { Table, Input, Row, Col, Button, Breadcrumb, Modal, Form ,Tooltip } from 'antd';
 import Top from '../../../../component/top/index';
 import PolicyManagementMenu from "../../../../component/policyManagementMenu/index";
 import Title from "../../../../component/title/index";
@@ -40,12 +39,18 @@ class policyUser extends Component {
             {
                 title: '用户名',
                 dataIndex: 'username',
-                key: 'username'
+                key: 'username',
+                render: (text, record) => {
+                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 30 ? text : text.substr(0,30)+"..."}</span></Tooltip>
+                }
             },
             {
                 title: '姓名',
                 dataIndex: 'real_name',
-                key: 'real_name'
+                key: 'real_name',
+                render: (text, record) => {
+                    return <Tooltip placement="topLeft" title={text}><span>{text.length < 5 ? text : text.substr(0,5)+"..."}</span></Tooltip>
+                }
             },
             {
                 title: '手机号',

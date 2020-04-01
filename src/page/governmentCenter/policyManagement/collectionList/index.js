@@ -3,7 +3,7 @@
  * */
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import { Table, Input, Row, Col, Button, Select, DatePicker, Breadcrumb, Modal,message, Form } from 'antd';
+import { Table, Input, Row, Col, Button, Select, DatePicker, Breadcrumb, Modal,message, Form,Tooltip } from 'antd';
 import { ArrowUpOutlined,ArrowDownOutlined,PlusOutlined,MinusOutlined } from '@ant-design/icons';
 import Top from '../../../../component/top/index';
 import Label from "../../../../component/label/index";
@@ -45,7 +45,9 @@ class CollectionList extends Component {
                 dataIndex: 'title',
                 key: 'title',
                 width:400,
-                render: (text,record) => <a href={`/policyText/2807`}>{text}</a>,
+                render: (text, record) => {
+                    return <Tooltip placement="topLeft" title={text}><a onClick={()=>this.props.history.push(`/policyText/${record.id}`)} target="_blank">{text.length < 25 ? text : text.substr(0,25)+"..."}</a></Tooltip>
+                }
             },
             {
                 title: '所属层级',
@@ -56,6 +58,9 @@ class CollectionList extends Component {
                 title: '发布机构',
                 dataIndex: 'organization_label_str',
                 key: 'organization_label_str',
+                render: (text, record) => {
+                    return <Tooltip placement="topLeft" title={text}>{text.length < 15 ? text : text.substr(0,15)+"..."}</Tooltip>
+                }
             },
             {
                 title: '采集时间',
