@@ -182,7 +182,7 @@ class ProjectList extends Component {
                 title: '操作',
                 key: 'action',
                 width:120,
-                render: (text, record) => (<p align="center"><a onClick={()=>this.props.history.push(`/addPolicy/${record.id}`)}>编辑</a><a onClick={()=>this.showModal(record.id)} className="ml15">删除</a></p>),
+                render: (text, record) => (<p align="center"><a onClick={()=>this.props.history.push(`/addProject/${record.id}`)}>编辑</a><a onClick={()=>this.showModal(record.id)} className="ml15">删除</a></p>),
             },
         ];
 
@@ -206,7 +206,7 @@ class ProjectList extends Component {
             const allItem = {id: 0,name: "全部"};
             themData.data.unshift(allItem);
             typeData.data.unshift(allItem);
-            belongData.data.unshift(allItem);
+            // belongData.data.unshift(allItem);
             industryData.data.unshift(allItem);
             this.setState({
                 labelTheme: {
@@ -280,7 +280,7 @@ class ProjectList extends Component {
     };
 
     handleOk = async(e) => {
-        const deleteData = await request('/policy/del', 'POST',{id:this.state.id}); //删除数据
+        const deleteData = await request('/declare/del', 'POST',{id:this.state.id}); //删除数据
         if(deleteData.data && deleteData.data.success){
             message.success(deleteData.data.msg);
             this.setState({

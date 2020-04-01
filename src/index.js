@@ -68,7 +68,7 @@ ReactDOM.render(
             <Route exact path="/myCollection" component={MyCollection} />
             <Route exact path="/collectionList" component={CollectionList} />
             <Route exact path="/projectList" component={ProjectList} />
-            <Route exact path="/addProject" component={AddProject} />
+            <Route exact path="/addProject/:id?" component={AddProject} />
             <Route exact path="/projectPreview/:id" component={ProjectPreview} />
             <Route exact path="/roleManagement" component={RoleManagement} />
             <Route exact path="/enterprise" component={Enterprise} />

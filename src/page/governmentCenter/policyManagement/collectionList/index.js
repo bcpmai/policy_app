@@ -289,7 +289,6 @@ class CollectionList extends Component {
                             <Col span={20}>
                                 <Form.Item name="industry_label_id_list">
                                 <Select style={{ width: 300 }} onChange={this.belongChange}>
-                                    <Option value={0} key={0}>全部</Option>
                                     {belongData ? belongData.map((item, idx) => <Option value={item.id}
                                                                                         key={item.id}>{item.name}</Option>) : ''}
                                 </Select>

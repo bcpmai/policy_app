@@ -169,20 +169,21 @@ class AddProject extends Component {
         }
         //编辑时，获取默认值
         if(this.state.id){
-            const {data} = await request(`/policy/get/${this.state.id}`, 'GET'); //请求默认数据
+            const {data} = await request(`/declare/get-one/${this.state.id}`, 'GET'); //请求默认数据
+            console.log(data,"dddd")
             if(data){
-                const {policy} = data;
+                const {declare} = data;
                 this.setState({
                     data,
-                    release_date:policy.release_date,
-                    content:policy.content
+                    release_date:declare.release_date,
+                    content:declare.content
                 });
-                policy.release_date = moment(policy.release_date, 'YYYY-MM-DD');
-                policy.life_date = moment(policy.life_date, 'YYYY-MM-DD');
+                declare.release_date = moment(declare.release_date, 'YYYY-MM-DD');
+                declare.life_date = moment(declare.life_date, 'YYYY-MM-DD');
 
-                this.refs.form.setFieldsValue(policy);
+                this.refs.form.setFieldsValue(declare);
                 //editor.txt.html(policy.content);
-                this.belongChange(policy.belong); //请求发布机构
+                this.belongChange(declare.belong); //请求发布机构
             }
         }
     }
