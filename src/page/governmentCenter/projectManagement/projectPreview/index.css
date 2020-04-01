@@ -12,7 +12,7 @@
     border-bottom: 1px dotted #e6e6e6;
 }
 .policyPreview-template .policyPreview-content-box{
-    padding-bottom: 20px;
+    padding: 20px;
 }
 .policyPreview-template .policyPreview-content{
     margin-top: 20px;
@@ -25,7 +25,7 @@
     margin: 0 auto;
 }
 .policyPreview-template .policyPreview-content .policyPreview-content-text{
-    padding: 80px 70px;
+    padding: 0 20px;
     font-size: 14px;
     color: #000;
     line-height: 30px;
@@ -58,4 +58,18 @@
 }
 .policyPreview-template .labelAdd .ant-descriptions-item-content .ant-tag{
     margin-bottom: 10px;
+}
+.policyPreview-template .itemText-infor-table{
+    width: 96%;
+    margin: 20px auto;
+    border:1px solid #eee;
+}
+.policyPreview-template .itemText-infor-table tr td{
+    padding: 5px 10px;
+    border-left:1px solid #eee;
+    border-top:1px solid #eee;
+    text-align: center;
+}
+.policyPreview-template .itemText-infor-table tr:nth-child(2n) td{
+    background: #efefef;
 }
