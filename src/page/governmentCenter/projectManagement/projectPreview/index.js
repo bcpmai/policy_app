@@ -97,7 +97,7 @@ class policyPreview extends Component {
                             <Descriptions.Item label="项目标题" span={2}><span>{detailInfo && detailInfo.declare.title}</span></Descriptions.Item>
                             <Descriptions.Item label="发布机构" span={2}><span title={detailInfo && detailInfo.declare.organization_label_str}>{detailInfo && detailInfo.declare.organization_label_str}</span></Descriptions.Item>
                             <Descriptions.Item label="发文日期">{detailInfo && detailInfo.declare.created_date}</Descriptions.Item>
-                            <Descriptions.Item label="政策标题" span={3}>{detailInfo && detailInfo.declare.policy_theme_label_str}</Descriptions.Item>
+                            <Descriptions.Item label="政策标题" span={3}>{detailInfo && detailInfo.declare.pc_title}</Descriptions.Item>
                         </Descriptions>
                        </div>
                         <div className="policyPreview-content-box">

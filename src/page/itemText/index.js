@@ -100,7 +100,7 @@ class ItemText extends Component {
                     <Descriptions title={detailInfo ? "项目标题：" + detailInfo.declare.title : "项目标题："}>
                         <Descriptions.Item label="发布机构" span={2}><span title={detailInfo && detailInfo.declare.organization_label_str}>{detailInfo && detailInfo.declare.organization_label_str}</span></Descriptions.Item>
                         <Descriptions.Item label="发文日期">{detailInfo && detailInfo.declare.created_date}</Descriptions.Item>
-                        <Descriptions.Item label="政策标题" span={3}>{detailInfo && detailInfo.declare.policy_theme_label_str}</Descriptions.Item>
+                        <Descriptions.Item label="政策标题" span={3}>{detailInfo && detailInfo.declare.pc_title}</Descriptions.Item>
                     </Descriptions>
                    </div>
                     <div className="collection-butn">

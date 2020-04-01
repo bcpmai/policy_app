@@ -755,6 +755,7 @@ class AddProject extends Component {
                                                     <Select
                                                         style={{ width: '90%' }}
                                                         disabled={!set_up}
+                                                        defaultValue="-1,0"
                                                     >
                                                         <Option value="-1,0" key="≥">≥</Option>
                                                         <Option value="0" key="=">=</Option>
@@ -764,7 +765,7 @@ class AddProject extends Component {
                                                 </Col>
                                                 <Col span={19}>
                                                     <Form.Item name="set_up_value">
-                                                        <Input disabled={!set_up}/>
+                                                        <Input defaultValue="2000" disabled={!set_up}/>
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
@@ -787,6 +788,7 @@ class AddProject extends Component {
                                                     <Select
                                                         disabled={!knowledge}
                                                         style={{ width: '90%' }}
+                                                        defaultValue="-1,0"
                                                     >
                                                         <Option value="-1,0" key="≥">≥</Option>
                                                         <Option value="0" key="=">=</Option>
@@ -796,7 +798,7 @@ class AddProject extends Component {
                                                 </Col>
                                                 <Col span={19}>
                                                     <Form.Item name="knowledge_value">
-                                                    <Input disabled={!knowledge} suffix="个"/>
+                                                    <Input defaultValue="0" disabled={!knowledge} suffix="个"/>
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
@@ -812,6 +814,7 @@ class AddProject extends Component {
                                                     <Select
                                                         disabled={!invention}
                                                         style={{ width: '90%' }}
+                                                        defaultValue="-1,0"
                                                     >
                                                         <Option value="-1,0" key="≥">≥</Option>
                                                         <Option value="0" key="=">=</Option>
@@ -821,7 +824,7 @@ class AddProject extends Component {
                                                 </Col>
                                                 <Col span={19}>
                                                     <Form.Item name="invention_value">
-                                                    <Input  disabled={!invention} suffix="个"/>
+                                                    <Input defaultValue="0" disabled={!invention} suffix="个"/>
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
@@ -856,6 +859,7 @@ class AddProject extends Component {
                                                     <Select
                                                         disabled={!declare}
                                                         style={{ width: '90%' }}
+                                                        defaultValue="-1,0"
                                                     >
                                                         <Option value="-1,0" key="≥">≥</Option>
                                                         <Option value="0" key="=">=</Option>
@@ -865,7 +869,7 @@ class AddProject extends Component {
                                                 </Col>
                                                 <Col span={10}>
                                                     <Form.Item name="develop_value">
-                                                    <Input disabled={!declare} suffix="万元"/>
+                                                    <Input defaultValue="0" disabled={!declare} suffix="万元"/>
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
@@ -876,6 +880,7 @@ class AddProject extends Component {
                                                     <Select
                                                         disabled={!declare}
                                                         style={{ width: '90%' }}
+                                                        defaultValue="-1,0"
                                                     >
                                                         <Option value="-1,0" key="≥">≥</Option>
                                                         <Option value="0" key="=">=</Option>
@@ -885,7 +890,7 @@ class AddProject extends Component {
                                                 </Col>
                                                 <Col span={10}>
                                                     <Form.Item name="declare_value">
-                                                    <Input disabled={!declare} suffix="万元"/>
+                                                    <Input defaultValue="0" disabled={!declare} suffix="万元"/>
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
@@ -896,6 +901,7 @@ class AddProject extends Component {
                                                     <Select
                                                         disabled={!declare}
                                                         style={{ width: '90%' }}
+                                                        defaultValue="-1,0"
                                                     >
                                                         <Option value="-1,0" key="≥">≥</Option>
                                                         <Option value="0" key="=">=</Option>
@@ -905,7 +911,7 @@ class AddProject extends Component {
                                                 </Col>
                                                 <Col span={10}>
                                                     <Form.Item name="develop_assets_value">
-                                                    <Input disabled={!declare} suffix="万元"/>
+                                                    <Input defaultValue="0" disabled={!declare} suffix="万元"/>
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
@@ -922,6 +928,7 @@ class AddProject extends Component {
                                                     <Select
                                                         disabled={!social}
                                                         style={{ width: '90%' }}
+                                                        defaultValue="-1,0"
                                                     >
                                                         <Option value="-1,0" key="≥">≥</Option>
                                                         <Option value="0" key="=">=</Option>
@@ -931,7 +938,7 @@ class AddProject extends Component {
                                                 </Col>
                                                 <Col span={10}>
                                                     <Form.Item name="social_people_value">
-                                                    <Input disabled={!social} suffix="人"/>
+                                                    <Input defaultValue="0" disabled={!social} suffix="人"/>
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
@@ -942,6 +949,7 @@ class AddProject extends Component {
                                                     <Select
                                                         disabled={!social}
                                                         style={{ width: '90%' }}
+                                                        defaultValue="-1,0"
                                                     >
                                                         <Option value="-1,0" key="≥">≥</Option>
                                                         <Option value="0" key="=">=</Option>
@@ -951,7 +959,7 @@ class AddProject extends Component {
                                                 </Col>
                                                 <Col span={10}>
                                                     <Form.Item name="develop_people_value">
-                                                    <Input disabled={!social} suffix="人"/>
+                                                    <Input defaultValue="0" disabled={!social} suffix="人"/>
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
