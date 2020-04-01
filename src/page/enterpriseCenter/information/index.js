@@ -75,7 +75,9 @@ class Information extends Component {
                 register_address,
                 set_up_value:data.set_up_value
             },()=>{
-                data.set_up_value = moment(data.set_up_value, 'YYYY-MM');;
+                if(data.set_up_value) {
+                    data.set_up_value = moment(data.set_up_value, 'YYYY-MM');
+                }
                 this.refs.form.setFieldsValue(data);
             });
 
@@ -227,7 +229,7 @@ class Information extends Component {
                                     <Row>
                                         <Col span={10}>
                                             <Form.Item name="company_name" label="企业名称">
-                                                <Input disabled={isEdit} placeholder="请输入用户名" defaultValue="xxxx有限公司"/>
+                                                <Input disabled placeholder="请输入用户名" defaultValue="xxxx有限公司"/>
                                             </Form.Item>
                                         </Col>
                                         <Col span={14}>

@@ -146,10 +146,10 @@ class PolicyList extends Component {
                 key: 'status',
                 width:90,
                 render: text => {
-                    if(text==1) {
-                        return "暂存"
-                    }else {
+                    if(text==2) {
                         return "已发布"
+                    }else {
+                        return "暂存"
                     }
                 }
             },

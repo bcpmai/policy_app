@@ -51,7 +51,7 @@
     background: #ae242b;
     color: #fff;
 }
-.accountManagement-template .ant-form-text{
+.accountManagement-template .accountManagement-form-box .ant-form-text{
     padding: 0 10px;
     font-size: 14px;
     height: 34px;

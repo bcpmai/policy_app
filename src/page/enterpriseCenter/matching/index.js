@@ -47,7 +47,7 @@ class Matching extends Component {
                 dataIndex: 'title',
                 key: 'title',
                 width:350,
-                render: text => <a href="/itemText">{text}</a>,
+                render: (text, record) => <a href={`/itemText/${record.id}`} target="_blank">{text}</a>,
             },
             {
                 title: '应用类型',
@@ -182,7 +182,7 @@ class Matching extends Component {
         });
     };
     render() {
-        const {labelTheme, labelType, labelProduct, arrProduct, labelStatus, labelSource, belongData, industryData, source,policy_theme_label_list,organization_label_list,use_type_list,status,tableData,formValues,arrdown} = this.state;
+        const {labelTheme, labelType,record, labelProduct, arrProduct, labelStatus, labelSource, belongData, industryData, source,policy_theme_label_list,organization_label_list,use_type_list,status,tableData,formValues,arrdown} = this.state;
         const pagination = {
             current:formValues && formValues.page ? formValues.page : 1,
             showSizeChanger: true,
@@ -230,13 +230,13 @@ class Matching extends Component {
                     <Row>
                         <Col span={8}>1.点击进入网上申报：</Col>
                         <Col span={16}>
-                            <span>http://web.js.policy.com</span>
-                            <Button className="model-button" key="submit" onClick={()=>{window.open('http://web.js.policy.com/declarationItem')}}>网上申报</Button>
+                            <span>{record!=undefined ? record.declare_net : null}</span>
+                            {record!=undefined ? <a className="model-button" href={record.declare_net} target="_blank">网上申报</a> : null}
                         </Col>
                     </Row>
                     <Row>
                         <Col span={8}>2.纸质材料提交至</Col>
-                        <Col span={16}>重庆市九龙坡区人民政府<br />王先生  18809870987
+                        <Col span={16}>{record!=undefined ? record.post_material : null}
                         </Col>
                     </Row>
                 </Modal>

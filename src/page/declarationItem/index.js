@@ -413,13 +413,13 @@ class DeclarationItem extends Component {
                     <Row>
                         <Col span={8}>1.点击进入网上申报：</Col>
                         <Col span={16}>
-                            <span>{record!=undefined ? record.web_url : null}</span>
-                            {record!=undefined ? <a className="model-button" href={record.web_url} target="_blank">网上申报</a> : null}
+                            <span>{record!=undefined ? record.declare_net : null}</span>
+                            {record!=undefined ? <a className="model-button" href={record.declare_net} target="_blank">网上申报</a> : null}
                         </Col>
                     </Row>
                     <Row>
                         <Col span={8}>2.纸质材料提交至</Col>
-                        <Col span={16}>{record!=undefined ? record.declare_net : null}
+                        <Col span={16}>{record!=undefined ? record.post_material : null}
                         </Col>
                     </Row>
                 </Modal>

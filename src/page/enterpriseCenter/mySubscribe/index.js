@@ -57,7 +57,7 @@ class MySubscribe extends Component {
             {
                 title: '操作',
                 key: 'action',
-                render: (text, record) => (<span><a onClick={this.showModal}>立即申报</a><a className="ml15" onClick={()=>this.onCollection(record.id,record.resource_id != "0")}>{record.resource_id != "0" ? "已收藏": "收藏"}</a></span>),
+                render: (text, record) => (<span><a onClick={()=>this.showModal(record)}>立即申报</a><a className="ml15" onClick={()=>this.onCollection(record.id,record.resource_id != "0")}>{record.resource_id != "0" ? "已收藏": "收藏"}</a></span>),
             },
         ];
     }
@@ -150,9 +150,10 @@ class MySubscribe extends Component {
             message.error(data.msg);
         }
     }
-    showModal = () => {
+    showModal = (record) => {
         this.setState({
             visible: true,
+            record
         });
     };
     handleSubscribeCancel = e => {
@@ -165,6 +166,7 @@ class MySubscribe extends Component {
     handleCancel = e => {
         this.setState({
             visible: false,
+            record:null
         });
     };
     handleOk = async () =>{
@@ -217,7 +219,7 @@ class MySubscribe extends Component {
         this.getTableData(formValues);
     }
     render() {
-        const {mode,subScribeData,label,tableData,formValues} = this.state;
+        const {mode,subScribeData,label,tableData,formValues,record} = this.state;
         const pagination = {
             current:formValues && formValues.page ? formValues.page : 1,
             showSizeChanger: true,
@@ -289,13 +291,13 @@ class MySubscribe extends Component {
                     <Row>
                         <Col span={8}>1.点击进入网上申报：</Col>
                         <Col span={16}>
-                            <span>http://web.js.policy.com</span>
-                            <Button className="model-button" key="submit" onClick={()=>{window.open('http://web.js.policy.com/declarationItem')}}>网上申报</Button>
+                            <span>{record!=undefined ? record.declare_net : null}</span>
+                            {record!=undefined ? <a className="model-button" href={record.declare_net} target="_blank">网上申报</a> : null}
                         </Col>
                     </Row>
                     <Row>
                         <Col span={8}>2.纸质材料提交至</Col>
-                        <Col span={16}>重庆市九龙坡区人民政府<br />王先生  18809870987
+                        <Col span={16}>{record!=undefined ? record.post_material : null}
                         </Col>
                     </Row>
                 </Modal>

@@ -112,7 +112,7 @@ class ItemText extends Component {
                         <table className="itemText-infor-table">
                             <thead>
                             <tr>
-                                <td>所属层级</td>
+                                <td style={{width:"200px"}}>所属层级</td>
                                 <td>{detailInfo && detailInfo.declare.belong_str}</td>
                             </tr>
                             </thead>
@@ -159,7 +159,7 @@ class ItemText extends Component {
                     <div className="item-box">
                         <TitleTwo name="扶持内容" />
                         <div className="item-desc">
-                        {detailInfo ? <div dangerouslySetInnerHTML = {{ __html:detailInfo.declare.declare_condition }}></div> : null}
+                        {detailInfo ? <div dangerouslySetInnerHTML = {{ __html:detailInfo.declare.support_content }}></div> : null}
                         </div>
                     </div>
                     <div className="item-box">
@@ -212,13 +212,13 @@ class ItemText extends Component {
                     <Row>
                         <Col span={8}>1.点击进入网上申报：</Col>
                         <Col span={16}>
-                            <span>{detailInfo!=undefined ? detailInfo.declare.web_url : null}</span>
-                            {detailInfo!=undefined ? <a className="model-button" href={detailInfo.declare.web_url} target="_blank">网上申报</a> : null}
+                            <span>{detailInfo!=undefined ? detailInfo.declare.declare_net : null}</span>
+                            {detailInfo!=undefined ? <a className="model-button" href={detailInfo.declare.declare_net} target="_blank">网上申报</a> : null}
                         </Col>
                     </Row>
                     <Row>
                         <Col span={8}>2.纸质材料提交至</Col>
-                        <Col span={16}>{detailInfo!=undefined ? detailInfo.declare.declare_net : null}
+                        <Col span={16}>{detailInfo!=undefined ? detailInfo.declare.post_material : null}
                         </Col>
                     </Row>
                 </Modal>

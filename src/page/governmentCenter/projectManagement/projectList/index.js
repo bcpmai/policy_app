@@ -146,23 +146,10 @@ class ProjectList extends Component {
                 key: 'status',
                 width:80,
                 render: text => {
-                    if(text==1) {
-                        return "暂存"
-                    }else {
+                    if(text==2) {
                         return "已发布"
-                    }
-                }
-            },
-            {
-                title: '来源',
-                dataIndex: 'source',
-                key: 'source',
-                width:70,
-                render: text => {
-                    if(text==1) {
-                        return "人工"
                     }else {
-                        return "爬虫"
+                        return "暂存"
                     }
                 }
             },

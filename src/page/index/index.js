@@ -260,13 +260,13 @@ class Register extends Component {
                     <Row>
                         <Col span={8}>1.点击进入网上申报：</Col>
                         <Col span={16}>
-                            <span>{idx!=undefined ? dataList[idx].web_url : null}</span>
-                            {idx!=undefined ? <a className="model-button" href={dataList[idx].web_url} target="_blank">网上申报</a> : null}
+                            <span>{idx!=undefined ? dataList[idx].declare_net : null}</span>
+                            {idx!=undefined ? <a className="model-button" href={dataList[idx].declare_net} target="_blank">网上申报</a> : null}
                         </Col>
                     </Row>
                     <Row>
                         <Col span={8}>2.纸质材料提交至</Col>
-                        <Col span={16}>{idx!=undefined ? dataList[idx].declare_net : null}
+                        <Col span={16}>{idx!=undefined ? dataList[idx].post_material : null}
                         </Col>
                     </Row>
                 </Modal>
