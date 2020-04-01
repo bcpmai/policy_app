@@ -60,7 +60,7 @@ class Register extends Component {
         const labelThemeData = await request('/common/get-all-policy-theme-label', 'POST'); //政策主题
         const labelTypeData = await request('/common/get-all-use-type-label', 'POST'); //应用类型
         const selectIndustryData = await request('/common/get-all-industry-label', 'POST'); //所属行业
-        const listData = await request('/declare/list','POST',{ page: 1, max_line: 3 }); //获取最新政策数据
+        const listData = await request('/declare/list','POST',{ page: 1, max_line: 3,status:2 }); //获取最新政策数据
 
         const themData = labelThemeData.data;
         const typeData = labelTypeData.data;
@@ -224,7 +224,7 @@ class Register extends Component {
                                 {dataList && dataList.length ? dataList.map((item,idx)=>{
                                    return <Col span={8} key={idx}>
                                         <div className="item">
-                                            <p className="title"><a href="/itemText" target="_blank" title={item.title}>{item.title.length < 30 ? item.title : item.title.substr(0,30)+"..."}</a></p>
+                                            <p className="title"><a href={`/itemText/${item.id}`} target="_blank" title={item.title}>{item.title.length < 30 ? item.title : item.title.substr(0,30)+"..."}</a></p>
                                             {item.use_type_label_str ? item.use_type_label_str.map((tagItem,tagIdx)=>{
                                                 return <span className="tips mr10">{tagItem}</span>
                                             }) : null}

@@ -89,9 +89,9 @@ class policyPreview extends Component {
         return (
             <div className="policyPreview-template">
                 <Top />
-                <div className="max-weight-box"><Title name="项目预览" /></div>
                 <div className="policyPreview-label-box">
                     <div className="max-weight-box">
+                        <div className="max-weight-box"><Title name="项目预览" /></div>
                        <div className="policyPreview-descriptions">
                         <Descriptions column={2}>
                             <Descriptions.Item label="项目标题" span={2}><span>{detailInfo && detailInfo.declare.title}</span></Descriptions.Item>

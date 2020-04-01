@@ -111,7 +111,7 @@ class PolicyText extends Component {
                         <Button onClick={()=>this.onCollection(policy.id)} type="primary" icon={<StarOutlined />}>{isCollection ? "已收藏" : "收藏" }</Button>
                     </div>
                     <Row gutter={16} className="policyText-content-box">
-                        <Col span={18} className="policyText-content">
+                        <Col span={24} className="policyText-content">
                             {/*<p className="policyText-content-title">云南省工业和信息化委关于申报2018年省级工业和信息化发展专项资金(技术改造方向)项目的通知</p>*/}
                             <div className="policyText-content-text">
                                 <div dangerouslySetInnerHTML = {{ __html:policy.content }}></div>
@@ -120,28 +120,28 @@ class PolicyText extends Component {
                                 <Col span={2}>附件：</Col>
                                 <Col>
                                     {resource_file_list ?
-                                        resource_file_list.map((item,idx)=><p key={idx}><a href={item.image_url} key={idx}>{item.file_ori_name}</a></p>)
+                                        resource_file_list.map((item,idx)=><p key={idx}><a href={item.image_url} key={idx} target="_blank">{item.file_ori_name}</a></p>)
                                         : null}
 
                                 </Col>
                             </Row>
                         </Col>
-                        <Col span={6}>
-                            <Card title="申报政策">
-                                <List
-                                    itemLayout="horizontal"
-                                    dataSource={this.listData}
-                                    renderItem={item => (
-                                        <List.Item>
-                                            <List.Item.Meta
-                                                title={<a href={item.link} target="_blank">{item.title}</a>}
-                                                description={item.time}
-                                            />
-                                        </List.Item>
-                                    )}
-                                />,
-                            </Card>
-                        </Col>
+                        {/*<Col span={6}>*/}
+                            {/*<Card title="申报政策">*/}
+                                {/*<List*/}
+                                    {/*itemLayout="horizontal"*/}
+                                    {/*dataSource={this.listData}*/}
+                                    {/*renderItem={item => (*/}
+                                        {/*<List.Item>*/}
+                                            {/*<List.Item.Meta*/}
+                                                {/*title={<a href={item.link} target="_blank">{item.title}</a>}*/}
+                                                {/*description={item.time}*/}
+                                            {/*/>*/}
+                                        {/*</List.Item>*/}
+                                    {/*)}*/}
+                                {/*/>,*/}
+                            {/*</Card>*/}
+                        {/*</Col>*/}
                     </Row>
                 </div>
                 {/*<Footer/>*/}
