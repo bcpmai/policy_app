@@ -33,7 +33,7 @@ class EnterpriseMenu extends Component {
         return (
             <div className="enterpriseMenu-component-template">
                 <Menu
-                    style={{ width: 200 }}
+                    style={{ width: 180 }}
                     defaultSelectedKeys={[current]}
                     defaultOpenKeys={['sub1']}
                     mode="inline"

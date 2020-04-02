@@ -177,38 +177,38 @@ class AddProject extends Component {
         if(this.state.id){
             const {data} = await request(`/declare/get-one/${this.state.id}`, 'GET'); //请求默认数据
             console.log(data,"dddd")
-            if(data){
-                const {declare,resource_file_list=[]} = data;
-                let fileList=[];
-                resource_file_list.forEach((item,idx)=>{
+            if(data) {
+                const {declare, resource_file_list = []} = data;
+                let fileList = [];
+                resource_file_list.forEach((item, idx) => {
                     item.name = item.file_ori_name;
                     item.uid = item.id;
                     item.url = item.image_url;
                     fileList.push(item);
                 })
-                let addressList= [];
-                declare.register_address && declare.register_address.split("|").forEach((item,idx)=>{
+                let addressList = [];
+                declare.register_address && declare.register_address.split("|").forEach((item, idx) => {
                     const itemList = item.split(",");
-                    if(itemList.length >0){
-                        let {addressArr=[]} = this.state;
-                        if(!addressArr[idx])addressArr[idx]={}
+                    if (itemList.length > 0) {
+                        let {addressArr = []} = this.state;
+                        if (!addressArr[idx]) addressArr[idx] = {}
                         addressArr[idx].province = parseInt(itemList[0]);
-                        if(itemList.length >= 3){
+                        if (itemList.length >= 3) {
                             addressArr[idx].city = parseInt(itemList[1]);
                             addressArr[idx].area = parseInt(itemList[2]);
-                        }else if(itemList.length == 2){
+                        } else if (itemList.length == 2) {
                             addressArr[idx].city = parseInt(itemList[1]);
                         }
                         this.setState({
                             addressArr
                         });
                     }
-                    itemList.forEach((iItem,iIdx)=>{
-                        if(iIdx==1){
-                            this.getCityData(parseInt(itemList[0]),idx);
+                    itemList.forEach((iItem, iIdx) => {
+                        if (iIdx == 1) {
+                            this.getCityData(parseInt(itemList[0]), idx);
                         }
-                        if(iIdx == 2){
-                            this.getAreaData(parseInt(itemList[1]),idx)
+                        if (iIdx == 2) {
+                            this.getAreaData(parseInt(itemList[1]), idx)
                         }
                     });
                     addressList.push(itemList);
@@ -217,25 +217,25 @@ class AddProject extends Component {
                     data,
                     addressList,
                     fileList,
-                    release_date:declare.release_date,
-                    content:declare.content,
-                    policyTitle:declare.pc_title,
-                    selectedRowKeys:[declare.policy_id],
-                    isSelectPolicy:true,
-                    declare_net:declare.declare_net,
-                    post_material:declare.post_material,
-                    addressNum:addressList.length,
-                    declare_start_date:declare.declare_start_date,
-                    declare_end_date:declare.declare_end_date,
-                    support_direction:declare.support_direction,
-                    declare_condition:declare.declare_condition,
-                    support_content:declare.support_content,
-                    declare_material:declare.declare_material,
-                    declare_process:declare.declare_process,
-                    review_process:declare.review_process
+                    release_date: declare.release_date,
+                    content: declare.content,
+                    policyTitle: declare.pc_title,
+                    selectedRowKeys: [declare.policy_id],
+                    isSelectPolicy: true,
+                    declare_net: declare.declare_net,
+                    post_material: declare.post_material,
+                    addressNum: addressList.length,
+                    declare_start_date: declare.declare_start_date,
+                    declare_end_date: declare.declare_end_date,
+                    support_direction: declare.support_direction,
+                    declare_condition: declare.declare_condition,
+                    support_content: declare.support_content,
+                    declare_material: declare.declare_material,
+                    declare_process: declare.declare_process,
+                    review_process: declare.review_process
                 });
 
-                if(declare.declare_start_date && declare.declare_end_date) {
+                if (declare.declare_start_date && declare.declare_end_date) {
                     declare.declare_start_date = [moment(declare.declare_start_date, 'YYYY-MM-DD'), moment(declare.declare_end_date, 'YYYY-MM-DD')];
                 }
                 // values.declare_end_date = declare_end_date;
@@ -245,16 +245,19 @@ class AddProject extends Component {
                 declare.organization_label_ids = declare.organization_label_list;
                 declare.use_type = declare.use_type_list;
                 let d_industry_label_ids;
-                if(declare.d_industry_label_ids) {
-                    d_industry_label_ids=[];
+                if (declare.d_industry_label_ids && declare.d_industry_label_ids != '') {
+                    d_industry_label_ids = [];
                     declare.d_industry_label_ids.split(",").forEach((item) => {
                         d_industry_label_ids.push(parseInt(item));
                     });
                 }
-                let industry_label_ids = [];
-                declare.industry_label_ids.split(",").forEach((item)=>{
-                    industry_label_ids.push(parseInt(item));
-                })
+                let industry_label_ids;
+                if (declare.industry_label_ids && declare.industry_label_ids != ''){
+                    industry_label_ids =[]
+                    declare.industry_label_ids.split(",").forEach((item) => {
+                        industry_label_ids.push(parseInt(item));
+                    })
+                 }
                 declare.d_industry_label_ids = d_industry_label_ids;
                 declare.industry_label_ids = industry_label_ids;
 
@@ -762,7 +765,7 @@ class AddProject extends Component {
                                 <div ref="editorElem4">
                                 </div>
                             </Form.Item>
-                            <Form.Item name="content" label="申报流程"  required rules={[
+                            <Form.Item name="content" label="申报流程" required rules={[
                                 ({ getFieldValue }) => ({
                                     async validator(rule, value) {
                                         if(!declare_process){

@@ -13,6 +13,7 @@
     background: #aa2426;
     margin-right: 10px;
     margin-top: 3px;
+    display: none;
 }
 .accountManagement-template .accountManagement-title-h1{
     font-size: 24px;
@@ -33,6 +34,10 @@
 }
 .accountManagement-template .accountManagement-form .accountManagement-title{
     margin-bottom: 10px;
+    background: #efefef;
+    padding: 5px 10px;
+    font-size: 14px;
+    margin-bottom: 40px;
 }
 /*.accountManagement-template .title-component-template{*/
     /*margin-top: 80px;*/
@@ -43,9 +48,10 @@
     color: #ae242b;
     border:1px solid #ae242b;
     border-radius: 20px;
-    height: 40px;
+    height: 35px;
     padding: 0 40px;
     font-size: 16px;
+    margin-bottom: 20px;
 }
 .accountManagement-template .accountManagement-form-box .ant-btn:hover{
     background: #ae242b;
@@ -56,8 +62,17 @@
     font-size: 14px;
     height: 34px;
     border-radius: 10px;
+    background: #fff;
+    border:1px solid #ae242b;
+    color: #ae242b;
+}
+.accountManagement-template .accountManagement-form-box .ant-form-text:hover{
     background: #ae242b;
     color: #fff;
+}
+.accountManagement-template .accountManagement-form-box .ant-form-disabled{
+    border:1px solid #d9d9d9;
+    color: #d9d9d9;
 }
 .accountManagement-template .ant-form-item-control,
 .accountManagement-template .ant-form-item-control-input{

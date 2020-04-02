@@ -34,7 +34,7 @@ class PolicyMenu extends Component {
             <div className="policy-menu-component-template">
                 <Affix>
                 <Menu
-                    style={{ width: 200 }}
+                    style={{ width: 180 }}
                     defaultSelectedKeys={[current]}
                     defaultOpenKeys={[menu]}
                     mode="inline"
@@ -67,7 +67,7 @@ class PolicyMenu extends Component {
                     >
                         {/*<Menu.Item key="roleManagement"><a href="/roleManagement">角色权限</a></Menu.Item>*/}
                         <Menu.Item key="enterprise"><a href="/enterprise">企业用户</a></Menu.Item>
-                        <Menu.Item key="policyUser"><a href="/policyUser">政府用户</a></Menu.Item>
+                        <Menu.Item key="policyUser"><a href="/policyUser">运营用户</a></Menu.Item>
                         <Menu.Item key="labelManage"><a href="/labelManage">标签管理</a></Menu.Item>
                         {/*<Menu.Item key="carouselManage"><a href="/carouselManage">轮播图管理</a></Menu.Item>*/}
                         <Menu.Item key="accountManagement"><a href="/accountManagement">账户管理</a></Menu.Item>

@@ -169,9 +169,9 @@ class AccountManagement extends Component {
                                         }
                                     }),
                                 ]}>
-                                    <Input min={1} max={10} style={{width:170,marginRight:10}} />
+                                    <Input min={1} max={10} style={{width:125,marginRight:10}} />
                                 </Form.Item>
-                                <Button className="ant-form-text" disabled={time<0} onClick={time>0 ? null : ()=>this.getSms()}> {time>0 ? `${time}秒后可再次发送短信`:"获取短信验证码"}</Button>
+                                <Button  className={newTime >0 ? "ant-form-text ant-form-disabled" : "ant-form-text"} disabled={time<0} onClick={time>0 ? null : ()=>this.getSms()}> {time>0 ? `${time}秒后可再次发送短信`:"获取短信验证码"}</Button>
                             </Form.Item>
                             <Form.Item name="new_mobile" label="绑定新手机号码" rules={[{required: true}]}>
                                 <Input style={{width:300}}/>
@@ -193,9 +193,9 @@ class AccountManagement extends Component {
                                         }
                                     }),
                                 ]}>
-                                    <Input min={1} max={10} style={{width:170,marginRight:10}} />
+                                    <Input min={1} max={10} style={{width:125,marginRight:10}} />
                                 </Form.Item>
-                                <Button className="ant-form-text" disabled={newTime<0} onClick={newTime>0 ? null : ()=>this.getSms("new_mobile")}> {newTime>0 ? `${newTime}秒后可再次发送短信`:"获取短信验证码"}</Button>
+                                <Button className={newTime >0 ? "ant-form-text ant-form-disabled" : "ant-form-text"} disabled={newTime<0} onClick={newTime>0 ? null : ()=>this.getSms("new_mobile")}> {newTime>0 ? `${newTime}秒后可再次发送短信`:"获取短信验证码"}</Button>
                             </Form.Item>
                             <Form.Item wrapperCol={{...layout.wrapperCol, offset: 8}}>
                                 <Button type="primary" htmlType="submit">

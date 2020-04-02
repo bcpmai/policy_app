@@ -243,7 +243,7 @@ class AddPolicy extends Component {
         this.setState({ fileList });
     };
     render() {
-        const {industryData,belongData,themeData,typeData,productData,id,data} = this.state;
+        const {industryData,belongData,themeData,typeData,productData,id,data,editorContent} = this.state;
         const props = {
             //action: 'http://58.144.217.13:5002/api/common/upload-file',
             action:uploadUrl,
@@ -338,7 +338,16 @@ class AddPolicy extends Component {
                                                                                         key={item.id}>{item.name}</Option>) : ''}
                                 </Select>
                             </Form.Item>
-                            <Form.Item name="content" label="政策正文" required>
+                            <Form.Item name="content" label="政策正文" required rules={[
+                                ({ getFieldValue }) => ({
+                                    async validator(rule, value) {
+                                        if(!editorContent){
+                                            return Promise.reject("必填项");
+                                        }
+                                        return Promise.resolve();
+                                    },
+                                })
+                            ]}>
                                 <div ref="editorElem">
                                 </div>
                             </Form.Item>

@@ -58,7 +58,7 @@ class PolicyList extends Component {
                 title: "状 态",
                 item: [
                     {
-                        id: 0,
+                        id: -1,
                         name: "全部"
                     },
                     {
@@ -73,7 +73,7 @@ class PolicyList extends Component {
             labelSource: {
                 title: "来    源",
                 item: [ {
-                    id: 0,
+                    id: -1,
                     name: "全部"
                 },
                     {
@@ -403,7 +403,7 @@ class PolicyList extends Component {
                             </Breadcrumb>
                             <div className="label-box">
                                 <Form ref="form" {...layout} name="dynamic_rule" onFinish={this.onFinish} validateMessages={validateMessages}>
-                                <Row className="mt10">
+                                <Row>
                                     <Col span={4}>政策标题</Col>
                                     <Col span={18}>
                                         <Form.Item name="title">

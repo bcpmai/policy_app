@@ -345,6 +345,7 @@ class enterprise extends Component {
                         title={record ? "修改角色" :"添加角色"}
                         visible
                         onOk={this.handleOk}
+                        width={550}
                         onCancel={(type)=>this.handleCancel("addVisible")}
                         footer={[
                             <Button key="back" onClick={this.handleOk}>
@@ -357,7 +358,7 @@ class enterprise extends Component {
                     >
                     <Form ref="form" {...layout} name="dynamic_rule" validateMessages={validateMessages}>
                         <Row className="mt10">
-                            <Col span={24}>
+                            <Col span={23}>
                                 <Form.Item label="用户名" name="username" rules={record && record.username ? [] : [
                                     {
                                         required: true,
@@ -379,7 +380,7 @@ class enterprise extends Component {
                             </Col>
                         </Row>
                         <Row className="mt10">
-                            <Col span={24}>
+                            <Col span={23}>
                                 <Form.Item label="手机号" name="mobile" rules={[
                                     {
                                         required: true,
@@ -400,21 +401,21 @@ class enterprise extends Component {
                             </Col>
                         </Row>
                         <Row className="mt10">
-                            <Col span={24}>
+                            <Col span={23}>
                                 <Form.Item label="企业名称" name="company_name" rules={[{required: true}]}>
                                     <Input />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row className="mt10">
-                            <Col span={24}>
+                            <Col span={23}>
                                 <Form.Item label="统一社会信用代码" name="code" rules={[{required: true}]}>
                                     <Input />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row className="mt10">
-                            <Col span={24}>
+                            <Col span={23}>
                                 <Form.Item label="所属行业" name="industry_label_id" rules={[{required: true}]}>
                                     <Select
                                         style={{ width: '100%' }}
@@ -428,7 +429,7 @@ class enterprise extends Component {
                             </Col>
                         </Row>
                         <Row className="mt10">
-                            <Col span={24}>
+                            <Col span={23}>
                                 <Form.Item label="初始密码" name="password" rules={[{required: true}]}>
                                     <Input.Password />
                                 </Form.Item>
