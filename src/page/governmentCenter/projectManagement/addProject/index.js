@@ -579,7 +579,9 @@ class AddProject extends Component {
         return (html);
     }
     render() {
-        const {industryData,policyTitle,belongData,typeData,productData,id,tableData,selectedRowKeys,formValues,post_material,declare_net,set_up=true,knowledge=true,invention=true,declare=true,industry_label=true,social=true,isSelectPolicy} = this.state;
+        const {industryData,policyTitle,belongData,typeData,productData,id,tableData,selectedRowKeys,formValues,post_material,declare_net,set_up=true,knowledge=true,invention=true,declare=true,industry_label=true,social=true,isSelectPolicy,
+            support_direction,declare_condition,support_content,declare_material,declare_process,review_process
+        } = this.state;
         const props = {
             //action: 'http://58.144.217.13:5002/api/common/upload-file',
             action:uploadUrl,
@@ -625,7 +627,26 @@ class AddProject extends Component {
                     </Breadcrumb>
                     <div className="label-box">
                         <Form.Provider>
-                        <Form ref="form" {...layout} name="dynamic_rule" onFinish={this.onFinish} validateMessages={validateMessages}>
+                        <Form ref="form" {...layout} name="dynamic_rule" onFinish={this.onFinish} validateMessages={validateMessages}
+                              initialValues={{
+                                  set_up_sign:"-1,0",
+                                  set_up_value:2000,
+                                  knowledge_sign:"-1,0",
+                                  knowledge_value:0,
+                                  invention_sign:"-1,0",
+                                  invention_value:0,
+                                  develop_sign:"-1,0",
+                                  develop_value:0,
+                                  declare_sign:"-1,0",
+                                  declare_value:0,
+                                  develop_assets_sign:"-1,0",
+                                  develop_assets_value:0,
+                                  social_people_sign:"-1,0",
+                                  social_people_value:0,
+                                  develop_people_sign:"-1,0",
+                                  develop_people_value: 0
+                              }}
+                        >
                             <Form.Item name="title" label="项目标题" rules={[{required: true}]}>
                                 <Input />
                             </Form.Item>
@@ -686,26 +707,71 @@ class AddProject extends Component {
 
                                 </Select>
                             </Form.Item>
-                            <Form.Item name="content" label="扶持方向" required>
+                            <Form.Item name="content" label="扶持方向" required rules={[
+                                ({ getFieldValue }) => ({
+                                    async validator(rule, value) {
+                                        if(!support_direction){
+                                            return Promise.reject("必填项");
+                                        }
+                                        return Promise.resolve();
+                                    },
+                                })
+                            ]}>
                                 <div ref="editorElem1">
                                 </div>
                             </Form.Item>
-                            <Form.Item name="content" label="申报条件" required>
+                            <Form.Item name="content" label="申报条件"  required rules={[
+                                ({ getFieldValue }) => ({
+                                    async validator(rule, value) {
+                                        if(!declare_condition){
+                                            return Promise.reject("必填项");
+                                        }
+                                        return Promise.resolve();
+                                    },
+                                })
+                            ]}>
                                 <div ref="editorElem2">
                                 </div>
                             </Form.Item>
-                            <Form.Item name="content" label="扶持内容" required>
+                            <Form.Item name="content" label="扶持内容"  required rules={[
+                                ({ getFieldValue }) => ({
+                                    async validator(rule, value) {
+                                        if(!support_content){
+                                            return Promise.reject("必填项");
+                                        }
+                                        return Promise.resolve();
+                                    },
+                                })
+                            ]}>
                                 <div ref="editorElem3">
                                 </div>
                             </Form.Item>
                             <Form.Item name="contact" label="联系方式">
                                 <Input />
                             </Form.Item>
-                            <Form.Item name="content" label="申报材料" required>
+                            <Form.Item name="content" label="申报材料"  required rules={[
+                                ({ getFieldValue }) => ({
+                                    async validator(rule, value) {
+                                        if(!declare_material){
+                                            return Promise.reject("必填项");
+                                        }
+                                        return Promise.resolve();
+                                    },
+                                })
+                            ]}>
                                 <div ref="editorElem4">
                                 </div>
                             </Form.Item>
-                            <Form.Item name="content" label="申报流程" required>
+                            <Form.Item name="content" label="申报流程"  required rules={[
+                                ({ getFieldValue }) => ({
+                                    async validator(rule, value) {
+                                        if(!declare_process){
+                                            return Promise.reject("必填项");
+                                        }
+                                        return Promise.resolve();
+                                    },
+                                })
+                            ]}>
                                 <div ref="editorElem5">
                                 </div>
                             </Form.Item>
@@ -755,7 +821,6 @@ class AddProject extends Component {
                                                     <Select
                                                         style={{ width: '90%' }}
                                                         disabled={!set_up}
-                                                        defaultValue="-1,0"
                                                     >
                                                         <Option value="-1,0" key="≥">≥</Option>
                                                         <Option value="0" key="=">=</Option>
@@ -765,7 +830,7 @@ class AddProject extends Component {
                                                 </Col>
                                                 <Col span={19}>
                                                     <Form.Item name="set_up_value">
-                                                        <Input defaultValue="2000" disabled={!set_up}/>
+                                                        <Input disabled={!set_up}/>
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
@@ -788,7 +853,6 @@ class AddProject extends Component {
                                                     <Select
                                                         disabled={!knowledge}
                                                         style={{ width: '90%' }}
-                                                        defaultValue="-1,0"
                                                     >
                                                         <Option value="-1,0" key="≥">≥</Option>
                                                         <Option value="0" key="=">=</Option>
@@ -798,7 +862,7 @@ class AddProject extends Component {
                                                 </Col>
                                                 <Col span={19}>
                                                     <Form.Item name="knowledge_value">
-                                                    <Input defaultValue="0" disabled={!knowledge} suffix="个"/>
+                                                    <Input disabled={!knowledge} suffix="个"/>
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
@@ -814,7 +878,6 @@ class AddProject extends Component {
                                                     <Select
                                                         disabled={!invention}
                                                         style={{ width: '90%' }}
-                                                        defaultValue="-1,0"
                                                     >
                                                         <Option value="-1,0" key="≥">≥</Option>
                                                         <Option value="0" key="=">=</Option>
@@ -824,7 +887,7 @@ class AddProject extends Component {
                                                 </Col>
                                                 <Col span={19}>
                                                     <Form.Item name="invention_value">
-                                                    <Input defaultValue="0" disabled={!invention} suffix="个"/>
+                                                    <Input disabled={!invention} suffix="个"/>
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
@@ -859,7 +922,6 @@ class AddProject extends Component {
                                                     <Select
                                                         disabled={!declare}
                                                         style={{ width: '90%' }}
-                                                        defaultValue="-1,0"
                                                     >
                                                         <Option value="-1,0" key="≥">≥</Option>
                                                         <Option value="0" key="=">=</Option>
@@ -869,7 +931,7 @@ class AddProject extends Component {
                                                 </Col>
                                                 <Col span={10}>
                                                     <Form.Item name="develop_value">
-                                                    <Input defaultValue="0" disabled={!declare} suffix="万元"/>
+                                                    <Input disabled={!declare} suffix="万元"/>
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
@@ -880,7 +942,6 @@ class AddProject extends Component {
                                                     <Select
                                                         disabled={!declare}
                                                         style={{ width: '90%' }}
-                                                        defaultValue="-1,0"
                                                     >
                                                         <Option value="-1,0" key="≥">≥</Option>
                                                         <Option value="0" key="=">=</Option>
@@ -890,7 +951,7 @@ class AddProject extends Component {
                                                 </Col>
                                                 <Col span={10}>
                                                     <Form.Item name="declare_value">
-                                                    <Input defaultValue="0" disabled={!declare} suffix="万元"/>
+                                                    <Input disabled={!declare} suffix="万元"/>
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
@@ -901,7 +962,6 @@ class AddProject extends Component {
                                                     <Select
                                                         disabled={!declare}
                                                         style={{ width: '90%' }}
-                                                        defaultValue="-1,0"
                                                     >
                                                         <Option value="-1,0" key="≥">≥</Option>
                                                         <Option value="0" key="=">=</Option>
@@ -911,7 +971,7 @@ class AddProject extends Component {
                                                 </Col>
                                                 <Col span={10}>
                                                     <Form.Item name="develop_assets_value">
-                                                    <Input defaultValue="0" disabled={!declare} suffix="万元"/>
+                                                    <Input disabled={!declare} suffix="万元"/>
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
@@ -928,7 +988,6 @@ class AddProject extends Component {
                                                     <Select
                                                         disabled={!social}
                                                         style={{ width: '90%' }}
-                                                        defaultValue="-1,0"
                                                     >
                                                         <Option value="-1,0" key="≥">≥</Option>
                                                         <Option value="0" key="=">=</Option>
@@ -938,7 +997,7 @@ class AddProject extends Component {
                                                 </Col>
                                                 <Col span={10}>
                                                     <Form.Item name="social_people_value">
-                                                    <Input defaultValue="0" disabled={!social} suffix="人"/>
+                                                    <Input disabled={!social} suffix="人"/>
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
@@ -949,7 +1008,6 @@ class AddProject extends Component {
                                                     <Select
                                                         disabled={!social}
                                                         style={{ width: '90%' }}
-                                                        defaultValue="-1,0"
                                                     >
                                                         <Option value="-1,0" key="≥">≥</Option>
                                                         <Option value="0" key="=">=</Option>
@@ -959,7 +1017,7 @@ class AddProject extends Component {
                                                 </Col>
                                                 <Col span={10}>
                                                     <Form.Item name="develop_people_value">
-                                                    <Input defaultValue="0" disabled={!social} suffix="人"/>
+                                                    <Input disabled={!social} suffix="人"/>
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
